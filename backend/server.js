@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/links', linkRoutes);
+app.use('/', linkRoutes);
 
 // MongoDB Connection
 mongoose
