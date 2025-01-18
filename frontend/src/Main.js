@@ -70,7 +70,7 @@ function Main() {
   
     try {
       // Call the backend API with the formatted URL and optional custom code
-      const response = await fetch('https://oof.fwshk.ninja/shorten', {
+      const response = await fetch('/shorten', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
