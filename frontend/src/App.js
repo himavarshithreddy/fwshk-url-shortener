@@ -10,7 +10,7 @@ const App = () => {
       <Routes>
         <Route exact path="/track" element={<TrackingPage />} />
         <Route path='/' element={<Main/>}/>
-        <Route path="*" element={<Main />} />
+        <Route path="/:shortcode" element={<Navigate to="https://oof.fwshk.ninja/:shortcode" replace />} />
       </Routes>
     </Router>
   );
