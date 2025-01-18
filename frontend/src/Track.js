@@ -23,7 +23,7 @@ function TrackingPage() {
     setError('');
 
     try {
-      const response = await fetch(`/api/stats/${urlCode}`);
+      const response = await fetch(`/track/${urlCode}`);
       const data = await response.json();
 
       if (response.ok) {
