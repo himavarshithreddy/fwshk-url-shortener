@@ -36,3 +36,347 @@
     transform: rotate(360deg);
   }
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: linear-gradient(45deg, #1e1e1e, #121212);
+  background-size: 400% 400%;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.form-container {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #bbbbbb;
+  margin-bottom: 25px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #ff9900;
+}
+
+.submit-btn {
+  padding: 14px 22px;
+  border-radius: 8px;
+  background-color: #ff9900;
+  border: none;
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #e68900;
+}
+
+.error-message {
+  color: #ff0000;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 12px;
+}
+
+.result {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.shortened-text {
+  color: #ff9900;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.shortened-url-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.shortened-url {
+  color: #00cc99;
+  font-size: 1.1rem;
+  word-wrap: break-word;
+  text-decoration: none;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shortened-url:hover {
+  text-decoration: underline;
+}
+
+.copy-btn {
+  padding: 10px 15px;
+  border-radius: 6px;
+  background-color: #00cc99;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.copy-btn:hover {
+  background-color: #009966;
+}
+
+/* Background Animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/* Add these updated styles to your App.css */
+
+.shortcode-options {
+  width: 100%;
+  margin: 20px 0;
+  background-color: rgba(42, 42, 42, 0.8);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.option-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.option-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background-color: #363636;
+  border-color: #ff9900;
+}
+
+.option-btn.active {
+  background-color: #ff9900;
+  color: #ffffff;
+  border-color: hsl(36, 100%, 50%);
+}
+
+.custom-code-container {
+  animation: slideDown 0.3s ease-out;
+}
+
+.custom-url-preview {
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+
+.base-url {
+  color: #bbbbbb;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.custom-code-input {
+  border: none;
+  background: transparent;
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 1rem;
+  color: #00cc99;
+  min-width: 0;
+}
+
+.custom-code-input::placeholder {
+  color: #666;
+}
+
+.custom-code-input:focus {
+  outline: none;
+}
+
+.custom-code-hint {
+  font-size: 0.9rem;
+  color: #bbbbbb;
+  margin: 8px 0 0 0;
+  text-align: center;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Add these new styles to your existing CSS */
+.track-links-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background-color: rgba(30, 30, 30, 0.8);;
+  border: 1px solid hsl(36, 100%, 50%);
+  color: #ffffff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.track-links-btn:hover {
+  background-color: rgba(255, 153, 0, 0.356);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.track-links-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.result {
+  margin-top: 25px;
+  text-align: center;
+  background-color: rgba(30, 30, 30, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.tracking-info {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-top: 15px;
+}
+
+.tracking-info a {
+  color: #00cc99;
+  text-decoration: none;
+}
+
+.tracking-info a:hover {
+  text-decoration: underline;
+}
+.top-left-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.go-to-shortener-btn {
+  padding: 12px 24px;
+  background-color: rgba(30, 30, 30, 0.8);
+  color: #ffffff;
+  font-size: 1rem;
+  border: 1px solid #ff9900;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.go-to-shortener-btn:hover {
+  background-color: rgba(255, 153, 0, 0.356);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.go-to-shortener-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

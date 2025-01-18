@@ -1,12 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+// client/src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import TrackingPage from './Track';
+import Main from './Main';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-     <h1>heelloo</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/track" element={<TrackingPage />} />
+        <Route path='/' element={<Main/>}/>
+        <Route path="*" element={<Main />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
