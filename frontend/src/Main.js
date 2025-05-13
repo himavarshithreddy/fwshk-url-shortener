@@ -18,7 +18,7 @@ function Main() {
   };
 
   const handleCustomCodeChange = (event) => {
-    // Only allow alphanumeric characters and hyphens
+    
     const sanitizedValue = event.target.value.replace(/[^a-zA-Z0-9-]/g, '');
     setCustomCode(sanitizedValue);
   };
