@@ -23,7 +23,7 @@ function TrackingPage() {
     setError('');
 
     try {
-      const response = await fetch(`https://oof.fwshk.ninja/track/${urlCode}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/track/${urlCode}`);
       const data = await response.json();
 
       if (response.ok) {

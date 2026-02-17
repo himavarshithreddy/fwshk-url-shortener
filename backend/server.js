@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const linkRoutes = require('./routes/linkRoutes');
 
@@ -12,16 +11,13 @@ app.use(cors());
 // Middleware
 app.use(express.json());
 
-// Routes
-app.use('/api', linkRoutes);
+// Routes (no /api prefix so shortened URLs work at root level)
+app.use('/', linkRoutes);
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGO_URI, {  })
-  .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
-    });
-  })
-  .catch((err) => console.log(err));
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// Export for Vercel serverless deployment
+module.exports = app;

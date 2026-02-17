@@ -1,39 +1,35 @@
-const Link = require('../models/Link');
+const { createLink, findByShortCode, incrementClickCount } = require('../models/Link');
 const shortid = require('shortid');
 
 // Controller to create a shortened URL
 const createShortUrl = async (req, res) => {
   const { originalUrl, customShortCode } = req.body;
-  let shortCode = customShortCode || shortid.generate(); // Use custom shortcode or generate a random one
-  
+  const shortCode = customShortCode || shortid.generate();
+
   try {
-    // Check if the shortcode already exists
-    let existingLink = await Link.findOne({ shortCode });
-    if (existingLink) {
+    const link = await createLink(shortCode, originalUrl);
+    if (!link) {
       return res.status(400).json({ error: 'Shortcode already exists' });
     }
 
-    const newLink = new Link({
-      originalUrl,
-      shortCode,
-    });
-    
-    await newLink.save();
     res.json({ shortCode, originalUrl });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
 
-// Controller to get the original URL
+// Controller to get the original URL and redirect (also tracks clicks)
 const getOriginalUrl = async (req, res) => {
   const { shortCode } = req.params;
-  
+
   try {
-    const link = await Link.findOne({ shortCode });
+    const link = await findByShortCode(shortCode);
     if (!link) {
       return res.status(404).json({ error: 'Link not found' });
     }
+
+    // Increment click count on redirect
+    await incrementClickCount(shortCode);
 
     res.redirect(link.originalUrl);
   } catch (err) {
@@ -41,20 +37,21 @@ const getOriginalUrl = async (req, res) => {
   }
 };
 
-// Controller to track clicks
+// Controller to track clicks and return link info
 const trackClicks = async (req, res) => {
   const { shortCode } = req.params;
 
   try {
-    const link = await Link.findOne({ shortCode });
+    const link = await findByShortCode(shortCode);
     if (!link) {
       return res.status(404).json({ error: 'Link not found' });
     }
 
-    link.clickCount++;
-    await link.save();
-
-    res.json({ clickCount: link.clickCount });
+    res.json({
+      originalUrl: link.originalUrl,
+      shortCode: link.shortCode,
+      clicks: link.clickCount,
+    });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
