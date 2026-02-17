@@ -7,6 +7,7 @@ function TrackingPage() {
   const [trackingData, setTrackingData] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
 
   const handleInputChange = (event) => {
     setUrlCode(event.target.value);
@@ -71,7 +72,7 @@ function TrackingPage() {
             <p className="shortened-text">Tracking Information</p>
             <div className="tracking-info">
               <p><strong>Original URL:</strong> {trackingData.originalUrl}</p>
-              <p><strong>Shortened URL:</strong> <a href={trackingData.shortenedUrl} target="_blank" rel="noopener noreferrer">{trackingData.shortenedUrl}</a></p>
+              <p><strong>Shortened URL:</strong> <a href={`${BASE_URL}/${trackingData.shortCode}`} target="_blank" rel="noopener noreferrer">{`${BASE_URL}/${trackingData.shortCode}`}</a></p>
               <p><strong>Clicks:</strong> {trackingData.clicks}</p>
             </div>
           </div>
