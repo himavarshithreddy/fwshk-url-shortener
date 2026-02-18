@@ -10,6 +10,7 @@ function Main() {
   const [useCustomCode, setUseCustomCode] = useState(false);
   const [customCode, setCustomCode] = useState('');
   const [ttl, setTtl] = useState('');
+  const [redirectType, setRedirectType] = useState('308');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
@@ -78,7 +79,8 @@ function Main() {
         body: JSON.stringify({ 
           originalUrl: formattedUrl,
           ...(useCustomCode && { customShortCode: customCode }),
-          ...(ttl && { ttl: parseInt(ttl, 10) })
+          ...(ttl && { ttl: parseInt(ttl, 10) }),
+          redirectType,
         }),
       });
   
@@ -179,6 +181,19 @@ function Main() {
             <option value="86400">1 Day</option>
             <option value="604800">7 Days</option>
             <option value="2592000">30 Days</option>
+          </select>
+        </div>
+
+        <div className="ttl-options">
+          <label className="ttl-label" htmlFor="redirect-type-select">Redirect Mode:</label>
+          <select
+            id="redirect-type-select"
+            className="ttl-select"
+            value={redirectType}
+            onChange={(e) => setRedirectType(e.target.value)}
+          >
+            <option value="308">Fast &amp; Permanent (308) – no click tracking</option>
+            <option value="302">Track Clicks (302) – counts every visit</option>
           </select>
         </div>
 

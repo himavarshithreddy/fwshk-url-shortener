@@ -1,8 +1,9 @@
-const { createLink, findByShortCode, incrementClickCount, checkRedisConnection } = require('../models/Link');
+const { createLink, getRedirectRecord, findByShortCode, incrementClickCount, checkRedisConnection } = require('../models/Link');
 const shortid = require('shortid');
 
 const MIN_TTL_SECONDS = 60;
 const MAX_TTL_SECONDS = 31536000; // 1 year
+const VALID_REDIRECT_TYPES = new Set(['301', '302', '308']);
 
 /**
  * Validate that a string is a well-formed URL.
@@ -18,7 +19,7 @@ function isValidUrl(string) {
 
 // Controller to create a shortened URL
 const createShortUrl = async (req, res) => {
-  const { originalUrl, customShortCode, ttl } = req.body;
+  const { originalUrl, customShortCode, ttl, redirectType } = req.body;
 
   if (!originalUrl || typeof originalUrl !== 'string') {
     return res.status(400).json({ error: 'Original URL is required' });
@@ -41,6 +42,11 @@ const createShortUrl = async (req, res) => {
     }
   }
 
+  // Validate redirect type
+  const resolvedRedirectType = redirectType && VALID_REDIRECT_TYPES.has(String(redirectType))
+    ? String(redirectType)
+    : '308';
+
   const shortCode = customShortCode || shortid.generate();
 
   // Validate TTL if provided
@@ -56,7 +62,7 @@ const createShortUrl = async (req, res) => {
   }
 
   try {
-    const link = await createLink(shortCode, originalUrl, ttlSeconds);
+    const link = await createLink(shortCode, originalUrl, ttlSeconds, resolvedRedirectType);
     if (!link) {
       return res.status(400).json({ error: 'Shortcode already exists' });
     }
@@ -71,22 +77,52 @@ const createShortUrl = async (req, res) => {
   }
 };
 
-// Controller to get the original URL and redirect (also tracks clicks)
+// Controller to redirect to the original URL (optimised fast path)
 const getOriginalUrl = async (req, res) => {
   const { shortCode } = req.params;
 
+  // Validate format locally before any I/O
+  if (!shortCode || !/^[a-zA-Z0-9_-]+$/.test(shortCode)) {
+    return res.status(404).json({ error: 'Link not found' });
+  }
+
   try {
-    const link = await findByShortCode(shortCode);
-    if (!link) {
+    const record = await getRedirectRecord(shortCode);
+
+    if (!record) {
       return res.status(404).json({ error: 'Link not found' });
     }
 
+    // Expired?
+    if (record.t > 0 && Date.now() > record.t) {
+      return res.status(410).json({ error: 'Link has expired' });
+    }
+
+    // Disabled?
+    if (record.e !== 1) {
+      return res.status(404).json({ error: 'Link not found' });
+    }
+
+    const statusCode = parseInt(record.r, 10) || 308;
+
+    // Send redirect immediately with minimal headers
+    res.set('Location', record.u);
+    if (statusCode === 301 || statusCode === 308) {
+      res.set('Cache-Control', 'public, max-age=86400, immutable');
+    } else {
+      res.set('Cache-Control', 'no-store');
+    }
+    res.status(statusCode).end();
     // Increment click count asynchronously (fire-and-forget) to avoid delaying the redirect
     incrementClickCount(shortCode).catch(err =>
       console.error('Failed to increment click count for', shortCode, ':', err.message)
     );
 
-    res.redirect(link.originalUrl);
+    // Fire analytics asynchronously – never blocks the redirect.
+    // Note: in serverless environments a small number of clicks may be
+    // lost if the process is terminated before the timer fires; this is
+    // an acceptable trade-off versus adding async queue infrastructure.
+    setTimeout(() => incrementClickCount(shortCode), 0);
   } catch (err) {
     if (err.message === 'Redis connection is not available') {
       return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
