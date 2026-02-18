@@ -1,41 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 * {
   margin: 0;
   padding: 0;
@@ -194,20 +156,6 @@ body {
   background-color: #009966;
 }
 
-/* Background Animation */
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-/* Add these updated styles to your App.css */
-
 .shortcode-options {
   width: 100%;
   margin: 20px 0;
@@ -301,7 +249,7 @@ body {
     transform: translateY(0);
   }
 }
-/* Add these new styles to your existing CSS */
+/* Navigation Buttons */
 .track-links-btn {
   position: fixed;
   top: 20px;
@@ -419,4 +367,54 @@ body {
   color: #ff9900;
   font-size: 0.95rem;
   margin-top: 10px;
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 24px 16px;
+    margin: 16px;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .track-links-btn {
+    top: 12px;
+    right: 12px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .option-buttons {
+    flex-direction: column;
+  }
+
+  .custom-url-preview {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .base-url {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  .shortened-url-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .shortened-url {
+    max-width: 100%;
+  }
 }

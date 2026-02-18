@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,6 +9,7 @@ function TrackingPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setUrlCode(event.target.value);
@@ -46,7 +48,9 @@ function TrackingPage() {
 
   return (
     <div className="app-container">
-        
+      <button onClick={() => navigate('/')} className="track-links-btn">
+        ← Shorten a URL
+      </button>
       <div className="form-container">
         <h1 className="title">Track Your Fwshk URL</h1>
         <p className="subtitle">Enter your shortened URL code to view details</p>

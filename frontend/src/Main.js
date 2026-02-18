@@ -13,6 +13,7 @@ function Main() {
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -65,6 +66,7 @@ function Main() {
     }
   
     try {
+      setIsLoading(true);
       // Call the backend API with the formatted URL and optional custom code
       const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/shorten`, {
         method: 'POST',
@@ -93,6 +95,8 @@ function Main() {
     } catch (err) {
       setError('An error occurred. Please try again.');
       toast.error('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -174,6 +178,9 @@ function Main() {
         </div>
 
         <button type="submit" className="submit-btn">Shorten</button>
+        <button type="submit" className="submit-btn" disabled={isLoading}>
+          {isLoading ? 'Shortening...' : 'Shorten'}
+        </button>
       </form>
       {error && <p className="error-message">{error}</p>}
       {shortenedUrl && (
