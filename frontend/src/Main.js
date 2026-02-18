@@ -118,9 +118,11 @@ function Main() {
         Track your Link
       </button>
     <div className="form-container">
-      <img src={logo} alt="Fwshk logo" className="app-logo" />
-      <h1 className="title">Fwshk - URLs on Diet</h1>
-      <p className="subtitle">Enter a URL to shorten it</p>
+      <div className="app-header">
+        <img src={logo} alt="Fwshk logo" className="app-logo" />
+        <h1 className="title">Fwshk</h1>
+      </div>
+      <p className="subtitle">URLs on diet.</p>
       <form onSubmit={handleSubmit} className="form">
         <input
           type="text"

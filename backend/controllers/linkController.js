@@ -113,6 +113,10 @@ const getOriginalUrl = async (req, res) => {
       res.set('Cache-Control', 'no-store');
     }
     res.status(statusCode).end();
+    // Increment click count asynchronously (fire-and-forget) to avoid delaying the redirect
+    incrementClickCount(shortCode).catch(err =>
+      console.error('Failed to increment click count for', shortCode, ':', err.message)
+    );
 
     // Fire analytics asynchronously – never blocks the redirect.
     // Note: in serverless environments a small number of clicks may be
