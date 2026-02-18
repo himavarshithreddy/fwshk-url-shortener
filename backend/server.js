@@ -7,11 +7,16 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({
+const corsOptions = {
   origin: process.env.FRONTEND_URL || '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
-}));
+};
+
+// Handle preflight OPTIONS requests explicitly
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
+
 // Middleware
 app.use(express.json());
 
