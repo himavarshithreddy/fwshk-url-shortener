@@ -3,6 +3,7 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from './logo.svg';
 
 function Main() {
   const [url, setUrl] = useState('');
@@ -115,6 +116,7 @@ function Main() {
         Track your Link
       </button>
     <div className="form-container">
+      <img src={logo} alt="Fwshk logo" className="app-logo" />
       <h1 className="title">Fwshk - URLs on Diet</h1>
       <p className="subtitle">Enter a URL to shorten it</p>
       <form onSubmit={handleSubmit} className="form">

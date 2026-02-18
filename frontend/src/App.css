@@ -51,6 +51,14 @@ body {
   z-index: 1;
 }
 
+.app-logo {
+  display: block;
+  margin: 0 auto 16px auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+}
+
 .title {
   text-align: center;
   font-size: 3rem;

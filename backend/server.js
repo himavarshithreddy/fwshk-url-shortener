@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+const rateLimit = require('express-rate-limit');
 const linkRoutes = require('./routes/linkRoutes');
 
 dotenv.config();
@@ -19,6 +21,17 @@ app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
+
+// Serve favicon explicitly
+const faviconLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.get('/favicon.svg', faviconLimiter, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'favicon.svg'));
+});
 
 // Routes (no /api prefix so shortened URLs work at root level)
 app.use('/', linkRoutes);
