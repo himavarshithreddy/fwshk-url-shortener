@@ -74,6 +74,12 @@ function TrackingPage() {
               <p><strong>Original URL:</strong> {trackingData.originalUrl}</p>
               <p><strong>Shortened URL:</strong> <a href={`${BASE_URL}/${trackingData.shortCode}`} target="_blank" rel="noopener noreferrer">{`${BASE_URL}/${trackingData.shortCode}`}</a></p>
               <p><strong>Clicks:</strong> {trackingData.clicks}</p>
+              {trackingData.createdAt && (
+                <p><strong>Created:</strong> {new Date(trackingData.createdAt).toLocaleString()}</p>
+              )}
+              {trackingData.expiresAt && (
+                <p><strong>Expires:</strong> {new Date(trackingData.expiresAt).toLocaleString()}</p>
+              )}
             </div>
           </div>
         )}
