@@ -26,7 +26,8 @@ function TrackingPage() {
     setError('');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/track/${urlCode}`);
+      const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
+      const response = await fetch(`${apiUrl}/track/${urlCode}`);
       const data = await response.json();
 
       if (response.ok) {

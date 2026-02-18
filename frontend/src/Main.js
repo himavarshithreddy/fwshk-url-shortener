@@ -68,7 +68,8 @@ function Main() {
     try {
       setIsLoading(true);
       // Call the backend API with the formatted URL and optional custom code
-      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/shorten`, {
+      const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
+      const response = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
