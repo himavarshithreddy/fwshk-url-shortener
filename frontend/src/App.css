@@ -329,6 +329,44 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.ttl-options {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background-color: rgba(42, 42, 42, 0.8);
+  border-radius: 8px;
+}
+
+.ttl-label {
+  color: #bbbbbb;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.ttl-select {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.ttl-select:focus {
+  outline: none;
+  border-color: #ff9900;
+}
+
+.expiry-info {
+  color: #ff9900;
+  font-size: 0.95rem;
+  margin-top: 10px;
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;

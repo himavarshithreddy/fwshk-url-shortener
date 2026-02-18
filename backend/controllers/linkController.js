@@ -1,6 +1,12 @@
-const { createLink, findByShortCode, incrementClickCount } = require('../models/Link');
+const { createLink, findByShortCode, incrementClickCount, checkRedisConnection } = require('../models/Link');
 const shortid = require('shortid');
 
+const MIN_TTL_SECONDS = 60;
+const MAX_TTL_SECONDS = 31536000; // 1 year
+
+// Controller to create a shortened URL
+const createShortUrl = async (req, res) => {
+  const { originalUrl, customShortCode, ttl } = req.body;
 /**
  * Validate that a string is a well-formed URL.
  */
@@ -40,14 +46,30 @@ const createShortUrl = async (req, res) => {
 
   const shortCode = customShortCode || shortid.generate();
 
+  // Validate TTL if provided
+  let ttlSeconds = null;
+  if (ttl) {
+    ttlSeconds = parseInt(ttl, 10);
+    if (isNaN(ttlSeconds) || ttlSeconds < MIN_TTL_SECONDS) {
+      return res.status(400).json({ error: `TTL must be at least ${MIN_TTL_SECONDS} seconds` });
+    }
+    if (ttlSeconds > MAX_TTL_SECONDS) {
+      return res.status(400).json({ error: `TTL must not exceed 1 year (${MAX_TTL_SECONDS} seconds)` });
+    }
+  }
+
   try {
-    const link = await createLink(shortCode, originalUrl);
+    const link = await createLink(shortCode, originalUrl, ttlSeconds);
     if (!link) {
       return res.status(400).json({ error: 'Shortcode already exists' });
     }
 
-    res.json({ shortCode, originalUrl });
+    res.json({ shortCode, originalUrl, expiresAt: link.expiresAt });
   } catch (err) {
+    if (err.message === 'Redis connection is not available') {
+      return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
+    }
+    console.error('Error creating short URL:', err.message);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -67,6 +89,10 @@ const getOriginalUrl = async (req, res) => {
 
     res.redirect(link.originalUrl);
   } catch (err) {
+    if (err.message === 'Redis connection is not available') {
+      return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
+    }
+    console.error('Error redirecting:', err.message);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -85,14 +111,34 @@ const trackClicks = async (req, res) => {
       originalUrl: link.originalUrl,
       shortCode: link.shortCode,
       clicks: link.clickCount,
+      createdAt: link.createdAt,
+      expiresAt: link.expiresAt,
     });
   } catch (err) {
+    if (err.message === 'Redis connection is not available') {
+      return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
+    }
+    console.error('Error tracking clicks:', err.message);
     res.status(500).json({ error: 'Server error' });
   }
+};
+
+// Health check controller
+const healthCheck = async (req, res) => {
+  const redisOk = await checkRedisConnection();
+  const status = redisOk ? 'healthy' : 'degraded';
+  const statusCode = redisOk ? 200 : 503;
+
+  res.status(statusCode).json({
+    status,
+    redis: redisOk ? 'connected' : 'disconnected',
+    timestamp: new Date().toISOString(),
+  });
 };
 
 module.exports = {
   createShortUrl,
   getOriginalUrl,
   trackClicks,
+  healthCheck,
 };

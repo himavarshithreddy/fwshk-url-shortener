@@ -8,8 +8,10 @@ function Main() {
   const [url, setUrl] = useState('');
   const [useCustomCode, setUseCustomCode] = useState(false);
   const [customCode, setCustomCode] = useState('');
+  const [ttl, setTtl] = useState('');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
   const [shortenedUrl, setShortenedUrl] = useState('');
+  const [expiresAt, setExpiresAt] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -73,7 +75,8 @@ function Main() {
         },
         body: JSON.stringify({ 
           originalUrl: formattedUrl,
-          ...(useCustomCode && { customShortCode: customCode })
+          ...(useCustomCode && { customShortCode: customCode }),
+          ...(ttl && { ttl: parseInt(ttl, 10) })
         }),
       });
   
@@ -82,6 +85,7 @@ function Main() {
       if (response.ok) {
         const fullShortenedUrl = `${BASE_URL}/${data.shortCode}`;
         setShortenedUrl(fullShortenedUrl);
+        setExpiresAt(data.expiresAt || '');
         setError('');
         toast.success('URL shortened successfully!');
       } else {
@@ -157,6 +161,23 @@ function Main() {
           )}
         </div>
 
+        <div className="ttl-options">
+          <label className="ttl-label" htmlFor="ttl-select">Link Expiration:</label>
+          <select
+            id="ttl-select"
+            className="ttl-select"
+            value={ttl}
+            onChange={(e) => setTtl(e.target.value)}
+          >
+            <option value="">Never</option>
+            <option value="3600">1 Hour</option>
+            <option value="86400">1 Day</option>
+            <option value="604800">7 Days</option>
+            <option value="2592000">30 Days</option>
+          </select>
+        </div>
+
+        <button type="submit" className="submit-btn">Shorten</button>
         <button type="submit" className="submit-btn" disabled={isLoading}>
           {isLoading ? 'Shortening...' : 'Shorten'}
         </button>
@@ -171,6 +192,9 @@ function Main() {
             </a>
             <button onClick={copyToClipboard} className="copy-btn">Copy</button>
           </div>
+          {expiresAt && (
+            <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
+          )}
         </div>
       )}
     </div>
