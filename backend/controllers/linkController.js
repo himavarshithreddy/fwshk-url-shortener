@@ -4,9 +4,6 @@ const shortid = require('shortid');
 const MIN_TTL_SECONDS = 60;
 const MAX_TTL_SECONDS = 31536000; // 1 year
 
-// Controller to create a shortened URL
-const createShortUrl = async (req, res) => {
-  const { originalUrl, customShortCode, ttl } = req.body;
 /**
  * Validate that a string is a well-formed URL.
  */
@@ -21,7 +18,7 @@ function isValidUrl(string) {
 
 // Controller to create a shortened URL
 const createShortUrl = async (req, res) => {
-  const { originalUrl, customShortCode } = req.body;
+  const { originalUrl, customShortCode, ttl } = req.body;
 
   if (!originalUrl || typeof originalUrl !== 'string') {
     return res.status(400).json({ error: 'Original URL is required' });
