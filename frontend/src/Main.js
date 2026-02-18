@@ -177,7 +177,6 @@ function Main() {
           </select>
         </div>
 
-        <button type="submit" className="submit-btn">Shorten</button>
         <button type="submit" className="submit-btn" disabled={isLoading}>
           {isLoading ? 'Shortening...' : 'Shorten'}
         </button>
