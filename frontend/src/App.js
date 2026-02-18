@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import TrackingPage from './Track';
 import Main from './Main';
+import RedirectPage from './Redirect';
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Routes>
         <Route exact path="/track" element={<TrackingPage />} />
         <Route path='/' element={<Main/>}/>
+        <Route path='/:shortCode' element={<RedirectPage />}/>
       </Routes>
     </Router>
   );
