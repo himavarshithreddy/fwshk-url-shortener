@@ -13,6 +13,7 @@ function Main() {
   const [redirectType, setRedirectType] = useState('308');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
   const [shortenedUrl, setShortenedUrl] = useState('');
+  const [shortCode, setShortCode] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -89,6 +90,7 @@ function Main() {
       if (response.ok) {
         const fullShortenedUrl = `${BASE_URL}/${data.shortCode}`;
         setShortenedUrl(fullShortenedUrl);
+        setShortCode(data.shortCode);
         setExpiresAt(data.expiresAt || '');
         setError('');
         toast.success('URL shortened successfully!');
@@ -107,6 +109,13 @@ function Main() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shortenedUrl).then(() => {
       toast.success('URL copied to clipboard!');
+    });
+  };
+  const copyShortCode = () => {
+    navigator.clipboard.writeText(shortCode).then(() => {
+      toast.success('Short code copied to clipboard!');
+    }).catch(() => {
+      toast.error('Failed to copy short code.');
     });
   };
   const navigateToTrackLinks = () => {
@@ -210,6 +219,7 @@ function Main() {
               {shortenedUrl}
             </a>
             <button onClick={copyToClipboard} className="copy-btn">Copy</button>
+            <button onClick={copyShortCode} className="copy-btn">Copy Code</button>
           </div>
           {expiresAt && (
             <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
