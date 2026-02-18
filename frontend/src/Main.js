@@ -23,12 +23,6 @@ function Main() {
     setCustomCode(sanitizedValue);
   };
 
-  const handleToggleCustomCode = () => {
-    setUseCustomCode(!useCustomCode);
-    setCustomCode(''); // Reset custom code when toggling
-    setError(''); // Reset any errors
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -70,14 +64,14 @@ function Main() {
   
     try {
       // Call the backend API with the formatted URL and optional custom code
-      const response = await fetch('https://oof.fwshk.ninja/shorten', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/shorten`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
           originalUrl: formattedUrl,
-          ...(useCustomCode && { customAlias: customCode })
+          ...(useCustomCode && { customShortCode: customCode })
         }),
       });
   

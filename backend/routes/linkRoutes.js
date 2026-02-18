@@ -5,10 +5,10 @@ const { createShortUrl, getOriginalUrl, trackClicks } = require('../controllers/
 // Route to create short URL
 router.post('/shorten', createShortUrl);
 
-// Route to get the original URL
-router.get('/:shortCode', getOriginalUrl);
-
-// Route to track clicks (you can track clicks by simply hitting the shortened link)
+// Route to track clicks (must be before the catch-all /:shortCode route)
 router.get('/track/:shortCode', trackClicks);
+
+// Route to get the original URL (catch-all, must be last)
+router.get('/:shortCode', getOriginalUrl);
 
 module.exports = router;
