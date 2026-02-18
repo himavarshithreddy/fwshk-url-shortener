@@ -1,6 +1,9 @@
 const { createLink, findByShortCode, incrementClickCount, checkRedisConnection } = require('../models/Link');
 const shortid = require('shortid');
 
+const MIN_TTL_SECONDS = 60;
+const MAX_TTL_SECONDS = 31536000; // 1 year
+
 // Controller to create a shortened URL
 const createShortUrl = async (req, res) => {
   const { originalUrl, customShortCode, ttl } = req.body;
@@ -10,11 +13,11 @@ const createShortUrl = async (req, res) => {
   let ttlSeconds = null;
   if (ttl) {
     ttlSeconds = parseInt(ttl, 10);
-    if (isNaN(ttlSeconds) || ttlSeconds < 60) {
-      return res.status(400).json({ error: 'TTL must be at least 60 seconds' });
+    if (isNaN(ttlSeconds) || ttlSeconds < MIN_TTL_SECONDS) {
+      return res.status(400).json({ error: `TTL must be at least ${MIN_TTL_SECONDS} seconds` });
     }
-    if (ttlSeconds > 31536000) {
-      return res.status(400).json({ error: 'TTL must not exceed 1 year (31536000 seconds)' });
+    if (ttlSeconds > MAX_TTL_SECONDS) {
+      return res.status(400).json({ error: `TTL must not exceed 1 year (${MAX_TTL_SECONDS} seconds)` });
     }
   }
 

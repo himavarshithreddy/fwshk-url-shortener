@@ -7,7 +7,8 @@ try {
     token: process.env.UPSTASH_REDIS_REST_TOKEN,
   });
 } catch (err) {
-  console.error('Failed to initialize Redis client:', err.message);
+  console.error('Failed to initialize Redis client:', err.message,
+    '- Ensure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables are set.');
 }
 
 const LINK_PREFIX = 'link:';
