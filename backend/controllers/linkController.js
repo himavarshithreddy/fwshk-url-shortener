@@ -1,9 +1,43 @@
 const { createLink, findByShortCode, incrementClickCount } = require('../models/Link');
 const shortid = require('shortid');
 
+/**
+ * Validate that a string is a well-formed URL.
+ */
+function isValidUrl(string) {
+  try {
+    const url = new URL(string);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 // Controller to create a shortened URL
 const createShortUrl = async (req, res) => {
   const { originalUrl, customShortCode } = req.body;
+
+  if (!originalUrl || typeof originalUrl !== 'string') {
+    return res.status(400).json({ error: 'Original URL is required' });
+  }
+
+  if (originalUrl.length > 2048) {
+    return res.status(400).json({ error: 'URL is too long (max 2048 characters)' });
+  }
+
+  if (!isValidUrl(originalUrl)) {
+    return res.status(400).json({ error: 'Invalid URL format. Must start with http:// or https://' });
+  }
+
+  if (customShortCode) {
+    if (!/^[a-zA-Z0-9-]+$/.test(customShortCode)) {
+      return res.status(400).json({ error: 'Short code can only contain letters, numbers, and hyphens' });
+    }
+    if (customShortCode.length > 20) {
+      return res.status(400).json({ error: 'Short code must be 20 characters or fewer' });
+    }
+  }
+
   const shortCode = customShortCode || shortid.generate();
 
   try {
