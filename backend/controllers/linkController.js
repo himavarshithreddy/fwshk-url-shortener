@@ -81,8 +81,10 @@ const getOriginalUrl = async (req, res) => {
       return res.status(404).json({ error: 'Link not found' });
     }
 
-    // Increment click count on redirect
-    await incrementClickCount(shortCode);
+    // Increment click count asynchronously (fire-and-forget) to avoid delaying the redirect
+    incrementClickCount(shortCode).catch(err =>
+      console.error('Failed to increment click count for', shortCode, ':', err.message)
+    );
 
     res.redirect(link.originalUrl);
   } catch (err) {
