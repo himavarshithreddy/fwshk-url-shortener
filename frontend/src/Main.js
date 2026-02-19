@@ -148,31 +148,6 @@ function Main() {
   };
   return (
     <div className="app-container">
-      {isLoading && (
-        <div className="shorten-overlay" role="status" aria-label="Shortening your URL">
-          <div className="overlay-bg-blocks">
-            <div className="overlay-block ob-1"></div>
-            <div className="overlay-block ob-2"></div>
-            <div className="overlay-block ob-3"></div>
-            <div className="overlay-block ob-4"></div>
-          </div>
-          <div className="overlay-content">
-            <div className="overlay-scissors" aria-hidden="true">✂️</div>
-            <div className="overlay-main-text">
-              <span className="glitch-layer glitch-layer-1" aria-hidden="true">{scrambleText}</span>
-              <span className="glitch-layer glitch-layer-2" aria-hidden="true">{scrambleText}</span>
-              {scrambleText}
-            </div>
-            <div className="overlay-tagline">YOUR URL</div>
-            <div className="overlay-bars">
-              <div className="overlay-bar"></div>
-              <div className="overlay-bar"></div>
-              <div className="overlay-bar"></div>
-            </div>
-            <div className="overlay-status">● PROCESSING</div>
-          </div>
-        </div>
-      )}
       <button onClick={navigateToTrackLinks} className="track-links-btn">
         Track your Link
       </button>
@@ -184,6 +159,22 @@ function Main() {
             <h1 className="title">Fwshk</h1>
           </div>
           <p className="subtitle">URLs on diet.</p>
+          {isLoading ? (
+            <div className="shorten-inline-loader" role="status" aria-label="Shortening your URL">
+              <div className="overlay-scissors" aria-hidden="true">✂️</div>
+              <div className="overlay-main-text">
+                <span className="glitch-layer glitch-layer-1" aria-hidden="true">{scrambleText}</span>
+                <span className="glitch-layer glitch-layer-2" aria-hidden="true">{scrambleText}</span>
+                {scrambleText}
+              </div>
+              <div className="overlay-bars">
+                <div className="overlay-bar"></div>
+                <div className="overlay-bar"></div>
+                <div className="overlay-bar"></div>
+              </div>
+              <div className="overlay-status">● PROCESSING</div>
+            </div>
+          ) : (
           <form onSubmit={handleSubmit} className="form">
             <input
               type="text"
@@ -264,6 +255,7 @@ function Main() {
               {isLoading ? 'Shortening...' : 'Shorten'}
             </button>
           </form>
+          )}
           {error && <p className="error-message">{error}</p>}
         </div>
 

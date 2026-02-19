@@ -736,109 +736,26 @@ body {
   }
 }
 
-/* ========== LOADING OVERLAY ========== */
+/* ========== INLINE LOADING ANIMATION ========== */
 
-.shorten-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: #1a1a1a;
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  animation: overlayFadeIn 0.18s ease-out forwards;
-}
-
-@keyframes overlayFadeIn {
-  from { opacity: 0; transform: scale(1.03); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-/* Decorative drifting blocks */
-.overlay-bg-blocks {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.overlay-block {
-  position: absolute;
-  border: 3px solid;
-}
-
-.ob-1 {
-  width: 220px;
-  height: 220px;
-  border-color: #ff6600;
-  top: -60px;
-  left: -60px;
-  opacity: 0.25;
-  animation: blockDrift1 2.4s ease-in-out infinite;
-}
-
-.ob-2 {
-  width: 160px;
-  height: 160px;
-  border-color: #ffe500;
-  bottom: -40px;
-  right: -40px;
-  opacity: 0.25;
-  animation: blockDrift2 2s ease-in-out infinite;
-}
-
-.ob-3 {
-  width: 90px;
-  height: 90px;
-  border-color: #FFFDF7;
-  top: 25%;
-  right: 8%;
-  opacity: 0.12;
-  animation: blockDrift3 2.8s ease-in-out infinite;
-}
-
-.ob-4 {
-  width: 60px;
-  height: 60px;
-  border-color: #ff6600;
-  bottom: 20%;
-  left: 10%;
-  opacity: 0.15;
-  animation: blockDrift1 1.9s ease-in-out infinite reverse;
-}
-
-@keyframes blockDrift1 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33%       { transform: translate(18px, 14px) rotate(6deg); }
-  66%       { transform: translate(-10px, 22px) rotate(-4deg); }
-}
-
-@keyframes blockDrift2 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33%       { transform: translate(-14px, -18px) rotate(-5deg); }
-  66%       { transform: translate(10px, -8px) rotate(7deg); }
-}
-
-@keyframes blockDrift3 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50%       { transform: translate(-18px, 28px) rotate(14deg); }
-}
-
-/* Overlay content */
-.overlay-content {
+.shorten-inline-loader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
+  gap: 18px;
   text-align: center;
-  padding: 40px 24px;
-  position: relative;
-  z-index: 1;
+  padding: 32px 12px;
+  animation: loaderFadeIn 0.18s ease-out forwards;
+}
+
+@keyframes loaderFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Scissors icon */
 .overlay-scissors {
-  font-size: 2.8rem;
+  font-size: 2rem;
   display: inline-block;
   animation: scissorSnip 0.35s ease-in-out infinite alternate;
 }
@@ -851,7 +768,7 @@ body {
 /* Main scramble text */
 .overlay-main-text {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.2rem, 9vw, 5rem);
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
   font-weight: 800;
   color: #ff6600;
   text-transform: uppercase;
@@ -859,8 +776,8 @@ body {
   line-height: 1;
   position: relative;
   border: 3px solid #FFFDF7;
-  padding: 14px 28px;
-  box-shadow: 6px 6px 0 #FFFDF7;
+  padding: 10px 20px;
+  box-shadow: 4px 4px 0 #FFFDF7;
   animation: glitchShake 0.12s steps(1) infinite;
   overflow: hidden;
 }
@@ -868,7 +785,7 @@ body {
 .glitch-layer {
   position: absolute;
   inset: 0;
-  padding: 14px 28px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -916,31 +833,22 @@ body {
   70%      { opacity: 1; clip-path: polygon(0 65%, 100% 65%, 100% 80%, 0 80%); left: 6px; }
 }
 
-/* "YOUR URL" sub label */
-.overlay-tagline {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  margin-top: -14px;
-}
-
 /* Loading bars */
 .overlay-bars {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  width: min(300px, 78vw);
+  gap: 6px;
+  width: 100%;
+  max-width: 280px;
 }
 
 .overlay-bar {
-  height: 14px;
+  height: 10px;
   border: 2px solid #FFFDF7;
   background-color: #2e2e2e;
   position: relative;
   overflow: hidden;
-  box-shadow: 3px 3px 0 #FFFDF7;
+  box-shadow: 2px 2px 0 #FFFDF7;
 }
 
 .overlay-bar::before {
@@ -971,7 +879,7 @@ body {
 
 /* Blinking status */
 .overlay-status {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #FFFDF7;
   text-transform: uppercase;
