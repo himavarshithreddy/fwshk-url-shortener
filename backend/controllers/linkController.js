@@ -1,9 +1,10 @@
 const { createLink, getRedirectRecord, findByShortCode, incrementClickCount, checkRedisConnection } = require('../models/Link');
-const shortid = require('shortid');
+const { nanoid } = require('nanoid');
 
 const MIN_TTL_SECONDS = 60;
 const MAX_TTL_SECONDS = 31536000; // 1 year
 const VALID_REDIRECT_TYPES = new Set(['301', '302', '308']);
+const SHORT_CODE_LENGTH = 8;
 
 /**
  * Validate that a string is a well-formed URL.
@@ -47,7 +48,7 @@ const createShortUrl = async (req, res) => {
     ? String(redirectType)
     : '308';
 
-  const shortCode = customShortCode || shortid.generate();
+  const shortCode = customShortCode || nanoid(SHORT_CODE_LENGTH);
 
   // Validate TTL if provided
   let ttlSeconds = null;

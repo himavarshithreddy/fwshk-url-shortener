@@ -16,6 +16,6 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^8.2.1",
-    "shortid": "^2.2.16"
+    "nanoid": "^3.3.11"
   }
 }
