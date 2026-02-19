@@ -1,4 +1,4 @@
-const { createLink, getRedirectRecord, findByShortCode, incrementClickCount, checkRedisConnection } = require('../models/Link');
+const { createLink, getRedirectRecord, findByShortCode, incrementClickCount, checkRedisConnection, warmupDone } = require('../models/Link');
 const { nanoid } = require('nanoid');
 
 const MIN_TTL_SECONDS = 60;
@@ -63,6 +63,7 @@ const createShortUrl = async (req, res) => {
   }
 
   try {
+    await warmupDone;
     const link = await createLink(shortCode, originalUrl, ttlSeconds, resolvedRedirectType);
     if (!link) {
       return res.status(400).json({ error: 'Shortcode already exists' });
@@ -88,6 +89,7 @@ const getOriginalUrl = async (req, res) => {
   }
 
   try {
+    await warmupDone;
     const record = await getRedirectRecord(shortCode);
 
     if (!record) {

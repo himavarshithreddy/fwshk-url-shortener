@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
@@ -9,7 +9,14 @@ function Main() {
   const [customCode, setCustomCode] = useState('');
   const [ttl, setTtl] = useState('');
   const [redirectType, setRedirectType] = useState('308');
+  const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
+
+  // Warm up the backend serverless function on page load so the first
+  // URL-shortening request doesn't pay the cold-start penalty.
+  useEffect(() => {
+    fetch(`${apiUrl}/health`).catch(() => {});
+  }, [apiUrl]);
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [shortCode, setShortCode] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
@@ -66,7 +73,6 @@ function Main() {
     try {
       setIsLoading(true);
       // Call the backend API with the formatted URL and optional custom code
-      const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
       const response = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
         headers: {
