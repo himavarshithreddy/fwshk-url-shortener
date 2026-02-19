@@ -546,7 +546,9 @@ body {
   background-color: #2e2e2e;
   padding: 16px 18px;
   margin-bottom: 28px;
-  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .redirect-url {
