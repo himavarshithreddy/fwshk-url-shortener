@@ -520,6 +520,63 @@ body {
   text-decoration: underline;
 }
 
+/* ---- Redirect Page ---- */
+
+.redirect-card {
+  background-color: #242424;
+  border: 3px solid #FFFDF7;
+  box-shadow: 8px 8px 0px #FFFDF7;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.redirect-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #9a9a9a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.redirect-url-box {
+  border: 3px solid #FFFDF7;
+  background-color: #2e2e2e;
+  padding: 16px 18px;
+  margin-bottom: 28px;
+  word-break: break-all;
+}
+
+.redirect-url {
+  color: #ff6600;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.redirect-timer {
+  font-family: 'Syne', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ff6600;
+  border: 3px solid #FFFDF7;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 5px 5px 0px #FFFDF7;
+}
+
+.redirect-hint {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #666;
+  letter-spacing: 0.04em;
+}
+
 /* ---- Responsive ---- */
 
 /* Desktop: two-column layout */
@@ -669,5 +726,10 @@ body {
 
   .submit-btn {
     font-size: 0.95rem;
+  }
+
+  .redirect-card {
+    padding: 32px 20px;
+    box-shadow: 5px 5px 0px #FFFDF7;
   }
 }
