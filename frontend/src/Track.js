@@ -1,8 +1,5 @@
 import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 function TrackingPage() {
   const [urlCode, setUrlCode] = useState('');
   const [trackingData, setTrackingData] = useState(null);
@@ -19,7 +16,6 @@ function TrackingPage() {
     event.preventDefault();
     if (!urlCode) {
       setError('Please enter a valid shortened URL code.');
-      toast.error('URL code is required.');
       return;
     }
     setIsLoading(true);
@@ -36,12 +32,10 @@ function TrackingPage() {
       } else {
         setTrackingData(null);
         setError(data.error || 'Failed to track the URL.');
-        toast.error(data.error || 'Failed to track the URL.');
       }
     } catch (err) {
       setTrackingData(null);
       setError('An error occurred. Please try again.');
-      toast.error('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -89,8 +83,6 @@ function TrackingPage() {
           </div>
         )}
       </div>
-
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar newestOnTop />
     </div>
   );
 }

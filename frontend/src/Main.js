@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import logo from './logo.svg';
 
 function Main() {
@@ -34,13 +32,11 @@ function Main() {
   
     if (!url) {
       setError('Please enter a URL.');
-      toast.error('Please enter a URL.');
       return;
     }
 
     if (useCustomCode && !customCode) {
       setError('Please enter a custom shortcode.');
-      toast.error('Custom shortcode is required when custom option is selected.');
       return;
     }
 
@@ -64,7 +60,6 @@ function Main() {
   
     if (!isValidUrl(formattedUrl)) {
       setError('Please enter a valid URL.');
-      toast.error('Invalid URL! Please enter a valid URL.');
       return;
     }
   
@@ -93,30 +88,21 @@ function Main() {
         setShortCode(data.shortCode);
         setExpiresAt(data.expiresAt || '');
         setError('');
-        toast.success('URL shortened successfully!');
       } else {
         setError(data.error || 'Failed to shorten URL.');
-        toast.error(data.error || 'Failed to shorten URL.');
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
-      toast.error('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(shortenedUrl).then(() => {
-      toast.success('URL copied to clipboard!');
-    });
+    navigator.clipboard.writeText(shortenedUrl);
   };
   const copyShortCode = () => {
-    navigator.clipboard.writeText(shortCode).then(() => {
-      toast.success('Short code copied to clipboard!');
-    }).catch(() => {
-      toast.error('Failed to copy short code.');
-    });
+    navigator.clipboard.writeText(shortCode);
   };
   const navigateToTrackLinks = () => {
     navigate('/track'); // Navigate to the /track route
@@ -242,7 +228,6 @@ function Main() {
           )}
         </div>
       </div>
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar newestOnTop />
     </div>
   );
 }
