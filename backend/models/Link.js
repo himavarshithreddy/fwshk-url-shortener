@@ -157,6 +157,15 @@ async function incrementClickCount(shortCode) {
   return redis.incr(`${CLICKS_PREFIX}${shortCode}`);
 }
 
+// Warm up the Redis connection on module load to avoid cold-start latency.
+// Store the promise so handlers can await it before their first Redis operation.
+let warmupReady = Promise.resolve();
+if (redis) {
+  warmupReady = redis.ping().catch(err =>
+    console.warn('Redis warm-up ping failed:', err.message)
+  );
+}
+
 module.exports = {
   createLink,
   getRedirectRecord,
@@ -164,11 +173,5 @@ module.exports = {
   incrementClickCount,
   checkRedisConnection,
   l1Delete,
+  warmupReady,
 };
-
-// Warm up the Redis connection on module load to avoid cold-start latency
-if (redis) {
-  redis.ping().catch(err =>
-    console.warn('Redis warm-up ping failed:', err.message)
-  );
-}
