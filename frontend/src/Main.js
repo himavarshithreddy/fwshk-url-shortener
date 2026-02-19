@@ -3,6 +3,20 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 
+const LOADING_PHRASES = [
+  '✂️ CHOPPING',
+  '🔪 SLICING',
+  '🗜️ SQUEEZING',
+  '💥 CRUNCHING',
+  '⚡ FWSHK-ING',
+  '🧬 SHRINKING',
+  '🔥 MELTING',
+  '🏋️ TRIMMING',
+];
+
+const GLITCH_CHARS = '█▓▒░╔╗╚╝║═┼│─@#$%&*!?<>{}[]~^';
+const SCRAMBLE_LEN = 20;
+
 function Main() {
   const [url, setUrl] = useState('');
   const [useCustomCode, setUseCustomCode] = useState(false);
@@ -22,7 +36,34 @@ function Main() {
   const [expiresAt, setExpiresAt] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingPhrase, setLoadingPhrase] = useState('');
+  const [scrambleChars, setScrambleChars] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingPhrase('');
+      setScrambleChars([]);
+      return;
+    }
+    let idx = 0;
+    setLoadingPhrase(LOADING_PHRASES[0]);
+    const phraseInterval = setInterval(() => {
+      idx = (idx + 1) % LOADING_PHRASES.length;
+      setLoadingPhrase(LOADING_PHRASES[idx]);
+    }, 350);
+    const scrambleInterval = setInterval(() => {
+      setScrambleChars(
+        Array.from({ length: SCRAMBLE_LEN }, () =>
+          GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)]
+        )
+      );
+    }, 70);
+    return () => {
+      clearInterval(phraseInterval);
+      clearInterval(scrambleInterval);
+    };
+  }, [isLoading]);
 
   const handleInputChange = (event) => {
     setUrl(event.target.value);
@@ -202,10 +243,27 @@ function Main() {
               </div>
             </div>
 
-            <button type="submit" className="submit-btn" disabled={isLoading}>
-              {isLoading ? 'Shortening...' : 'Shorten'}
+            <button type="submit" className={`submit-btn${isLoading ? ' submit-btn--loading' : ''}`} disabled={isLoading}>
+              {isLoading ? loadingPhrase || '⚡ FWSHK-ING' : 'Shorten'}
             </button>
           </form>
+
+          {isLoading && (
+            <div className="fwshk-loading">
+              <div className="fwshk-scramble-strip">
+                {scrambleChars.map((char, i) => (
+                  <span key={i} className="fwshk-char" style={{ animationDelay: `${i * 0.04}s` }}>
+                    {char}
+                  </span>
+                ))}
+              </div>
+              <div className="fwshk-blocks-row">
+                {[...Array(7)].map((_, i) => (
+                  <span key={i} className="fwshk-block" style={{ animationDelay: `${i * 0.08}s` }} />
+                ))}
+              </div>
+            </div>
+          )}
           {error && <p className="error-message">{error}</p>}
         </div>
 

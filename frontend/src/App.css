@@ -181,6 +181,129 @@ body {
   box-shadow: 5px 5px 0px #FFFDF7;
 }
 
+/* ---- Fwshk Loading Animation ---- */
+
+.submit-btn--loading {
+  opacity: 1 !important;
+  cursor: wait !important;
+  animation: fwshkBtnPulse 0.5s ease-in-out infinite alternate,
+             fwshkBtnShake 0.12s ease-in-out infinite;
+}
+
+@keyframes fwshkBtnPulse {
+  0% {
+    background-color: #ff6600;
+    box-shadow: 5px 5px 0px #ffe500;
+  }
+  100% {
+    background-color: #ffe500;
+    box-shadow: 5px 5px 0px #ff6600;
+  }
+}
+
+@keyframes fwshkBtnShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.fwshk-loading {
+  margin-top: 16px;
+  animation: fwshkSlideIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes fwshkSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fwshk-scramble-strip {
+  border: 3px solid #FFFDF7;
+  background: #1a1a1a;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  position: relative;
+  animation: fwshkBorderCycle 0.6s ease infinite;
+}
+
+.fwshk-scramble-strip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 102, 0, 0.2), transparent);
+  animation: fwshkScanline 1s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fwshkScanline {
+  from { left: -100%; }
+  to { left: 100%; }
+}
+
+@keyframes fwshkBorderCycle {
+  0%, 100% { border-color: #FFFDF7; box-shadow: 4px 4px 0px #ff6600; }
+  33% { border-color: #ff6600; box-shadow: 4px 4px 0px #ffe500; }
+  66% { border-color: #ffe500; box-shadow: 4px 4px 0px #FFFDF7; }
+}
+
+.fwshk-char {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ff6600;
+  display: inline-block;
+  min-width: 0.65em;
+  text-align: center;
+  animation: fwshkCharFlicker 0.3s step-end infinite alternate;
+}
+
+@keyframes fwshkCharFlicker {
+  0% { color: #ff6600; }
+  33% { color: #ffe500; }
+  66% { color: #FFFDF7; }
+  100% { color: #ff6600; text-shadow: 0 0 8px rgba(255, 102, 0, 0.6); }
+}
+
+.fwshk-blocks-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.fwshk-block {
+  height: 6px;
+  flex: 1;
+  border: 2px solid #FFFDF7;
+  animation: fwshkBlockBounce 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes fwshkBlockBounce {
+  0% {
+    background: #ff6600;
+    transform: scaleY(1);
+  }
+  50% {
+    background: #ffe500;
+    transform: scaleY(3);
+  }
+  100% {
+    background: #FFFDF7;
+    transform: scaleY(1);
+  }
+}
+
 /* ---- Error ---- */
 
 .error-message {
