@@ -7,6 +7,7 @@ function RedirectPage() {
   const { shortCode } = useParams();
   const [error, setError] = useState('');
   const [destinationUrl, setDestinationUrl] = useState('');
+  const [countdown, setCountdown] = useState(3);
   const apiUrl = (process.env.REACT_APP_API_URL || window.location.origin).replace(/\/+$/, '');
 
   const doRedirect = useCallback(() => {
@@ -38,6 +39,14 @@ function RedirectPage() {
     }
   }, [destinationUrl, doRedirect]);
 
+  // Countdown timer — purely cosmetic, does not affect the redirect
+  useEffect(() => {
+    if (!destinationUrl) return;
+    if (countdown <= 0) return;
+    const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [destinationUrl, countdown]);
+
   if (error) {
     return (
       <div className="app-container">
@@ -63,6 +72,7 @@ function RedirectPage() {
         <div className="redirect-url-box">
           <span className="redirect-url">{destinationUrl || '...'}</span>
         </div>
+        <div className="redirect-timer" aria-live="polite" aria-atomic="true">{countdown}</div>
         <p className="redirect-hint">You will be redirected automatically</p>
       </div>
     </div>

@@ -4,7 +4,7 @@ const { customAlphabet } = require('nanoid');
 const MIN_TTL_SECONDS = 60;
 const MAX_TTL_SECONDS = 31536000; // 1 year
 const VALID_REDIRECT_TYPES = new Set(['301', '302', '308']);
-const SHORT_CODE_LENGTH = 6;
+const SHORT_CODE_LENGTH = 4;
 const SHORT_CODE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
 const generateShortCode = customAlphabet(SHORT_CODE_ALPHABET, SHORT_CODE_LENGTH);
 
