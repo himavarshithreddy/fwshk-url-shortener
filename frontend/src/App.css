@@ -58,15 +58,12 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 16px;
   margin-bottom: 16px;
 }
 
 .selects-row .ttl-options {
   margin-bottom: 0;
-}
-
-.selects-row .ttl-options:first-child {
-  border-bottom: none;
 }
 
 /* Track page still uses form-container */
