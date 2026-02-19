@@ -118,12 +118,6 @@ const getOriginalUrl = async (req, res) => {
     incrementClickCount(shortCode).catch(err =>
       console.error('Failed to increment click count for', shortCode, ':', err.message)
     );
-
-    // Fire analytics asynchronously – never blocks the redirect.
-    // Note: in serverless environments a small number of clicks may be
-    // lost if the process is terminated before the timer fires; this is
-    // an acceptable trade-off versus adding async queue infrastructure.
-    setTimeout(() => incrementClickCount(shortCode), 0);
   } catch (err) {
     if (err.message === 'Redis connection is not available') {
       return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
