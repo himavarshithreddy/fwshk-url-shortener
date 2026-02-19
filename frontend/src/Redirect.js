@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import './App.css';
 import logo from './logo.svg';
@@ -15,6 +15,15 @@ function RedirectPage() {
   const doRedirect = useCallback(() => {
     window.location.replace(`${apiUrl}/${encodeURIComponent(shortCode)}`);
   }, [apiUrl, shortCode]);
+
+  const displayUrl = useMemo(() => {
+    if (!destinationUrl) return '...';
+    try {
+      return new URL(destinationUrl).hostname;
+    } catch {
+      return destinationUrl;
+    }
+  }, [destinationUrl]);
 
   useEffect(() => {
     if (!shortCode || !/^[a-zA-Z0-9_-]+$/.test(shortCode)) {
@@ -37,20 +46,20 @@ function RedirectPage() {
   }, [shortCode, apiUrl]);
 
   useEffect(() => {
-    if (countdown <= 0) return;
+    if (!ready || countdown <= 0) return;
 
     const timer = setTimeout(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [countdown]);
+  }, [countdown, ready]);
 
   useEffect(() => {
-    if (ready) {
+    if (ready && countdown <= 0) {
       doRedirect();
     }
-  }, [ready, doRedirect]);
+  }, [ready, countdown, doRedirect]);
 
   if (error) {
     return (
@@ -75,7 +84,7 @@ function RedirectPage() {
         </div>
         <p className="redirect-label">Redirecting you to</p>
         <div className="redirect-url-box">
-          <span className="redirect-url">{destinationUrl || '...'}</span>
+          <span className="redirect-url">{displayUrl}</span>
         </div>
         <div className="redirect-timer">{countdown}</div>
         <p className="redirect-hint">You will be redirected automatically</p>
