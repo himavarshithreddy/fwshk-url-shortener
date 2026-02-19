@@ -605,6 +605,11 @@ body {
   .selects-row .ttl-options {
     flex: 1;
     border-bottom: 3px solid #f0f0f0;
+    align-self: stretch;
+  }
+
+  .selects-row .ttl-options:first-child {
+    border-bottom: 3px solid #f0f0f0;
   }
 }
 
