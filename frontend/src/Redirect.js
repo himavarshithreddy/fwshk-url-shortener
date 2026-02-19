@@ -8,7 +8,6 @@ function RedirectPage() {
   const [error, setError] = useState('');
   const [destinationUrl, setDestinationUrl] = useState('');
   const [countdown, setCountdown] = useState(3);
-  const [ready, setReady] = useState(false);
 
   const apiUrl = (process.env.REACT_APP_API_URL || window.location.origin).replace(/\/+$/, '');
 
@@ -29,28 +28,27 @@ function RedirectPage() {
       })
       .then((data) => {
         setDestinationUrl(data.originalUrl);
-        setReady(true);
       })
       .catch(() => {
-        setReady(true);
+        setError('Link not found');
       });
   }, [shortCode, apiUrl]);
 
   useEffect(() => {
-    if (!ready || countdown <= 0) return;
+    if (!destinationUrl || countdown <= 0) return;
 
     const timer = setTimeout(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [ready, countdown]);
+  }, [destinationUrl, countdown]);
 
   useEffect(() => {
-    if (ready && countdown <= 0) {
+    if (destinationUrl && countdown <= 0) {
       doRedirect();
     }
-  }, [ready, countdown, doRedirect]);
+  }, [destinationUrl, countdown, doRedirect]);
 
   if (error) {
     return (
