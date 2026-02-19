@@ -1,32 +1,4 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "backend/server.js",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "frontend/package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "build"
-        }
-      }
-    ],
-    "routes": [
-      { "src": "/health", "dest": "/backend/server.js" },
-      { "src": "/shorten", "dest": "/backend/server.js" },
-      { "src": "/track/([^/]+)", "dest": "/backend/server.js" },
-      { "src": "/static/(.*)", "dest": "/frontend/build/static/$1" },
-      { "src": "/favicon\\.ico", "dest": "/frontend/build/favicon.ico" },
-      { "src": "/favicon\\.svg", "dest": "/frontend/build/favicon.svg" },
-      { "src": "/manifest\\.json", "dest": "/frontend/build/manifest.json" },
-      { "src": "/robots\\.txt", "dest": "/frontend/build/robots.txt" },
-      { "src": "/asset-manifest\\.json", "dest": "/frontend/build/asset-manifest.json" },
-      { "src": "/logo([0-9]+)\\.png", "dest": "/frontend/build/logo$1.png" },
-      { "src": "^/track$", "dest": "/frontend/build/index.html" },
-      { "src": "^/$", "dest": "/frontend/build/index.html" },
-      { "src": "/([a-zA-Z0-9_-]+)", "dest": "/backend/server.js" }
-    ]
-  }
+  "framework": "nextjs"
+}
   
