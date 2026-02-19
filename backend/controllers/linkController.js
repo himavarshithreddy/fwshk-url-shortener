@@ -141,6 +141,12 @@ const trackClicks = async (req, res) => {
       return res.status(404).json({ error: 'Link not found' });
     }
 
+    // Check if the link has expired
+    const now = new Date();
+    if (link.expiresAt && new Date(link.expiresAt) < now) {
+      return res.status(410).json({ error: 'Link has expired' });
+    }
+
     res.json({
       originalUrl: link.originalUrl,
       shortCode: link.shortCode,

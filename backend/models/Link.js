@@ -83,7 +83,11 @@ async function createLink(shortCode, originalUrl, ttlSeconds = null, redirectTyp
   };
 
   // Use SET NX for atomic creation; clear any stale miss/L1 cache entries fire-and-forget
-  const setOptions = ttlSeconds ? { nx: true, ex: ttlSeconds } : { nx: true };
+  // Do not set Redis TTL (ex) – expiry is tracked via the `t` field so expired records
+  // can still be identified and a meaningful "Link has expired" message shown to users.
+  // Note: expired records remain in Redis and should be periodically purged by a
+  // background cleanup job if storage becomes a concern.
+  const setOptions = { nx: true };
   const setResult = await redis.set(key, record, setOptions);
 
   // SET NX returns null when the key already exists

@@ -21,15 +21,18 @@ function RedirectPage() {
     }
 
     fetch(`${apiUrl}/track/${encodeURIComponent(shortCode)}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Link not found');
+      .then(async (res) => {
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || 'Link not found');
+        }
         return res.json();
       })
       .then((data) => {
         setDestinationUrl(data.originalUrl);
       })
-      .catch(() => {
-        setError('Link not found');
+      .catch((err) => {
+        setError(err.message || 'Link not found');
       });
   }, [shortCode, apiUrl]);
 
