@@ -244,7 +244,7 @@ function Main() {
             </div>
 
             <button type="submit" className={`submit-btn${isLoading ? ' submit-btn--loading' : ''}`} disabled={isLoading}>
-              {isLoading ? loadingPhrase || '⚡ FWSHK-ING' : 'Shorten'}
+              {isLoading ? loadingPhrase : 'Shorten'}
             </button>
           </form>
 
