@@ -37,19 +37,20 @@ function RedirectPage() {
   }, [shortCode, apiUrl]);
 
   useEffect(() => {
-    if (!ready) return;
-
-    if (countdown <= 0) {
-      doRedirect();
-      return;
-    }
+    if (countdown <= 0) return;
 
     const timer = setTimeout(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [ready, countdown, doRedirect]);
+  }, [countdown]);
+
+  useEffect(() => {
+    if (ready) {
+      doRedirect();
+    }
+  }, [ready, doRedirect]);
 
   if (error) {
     return (
