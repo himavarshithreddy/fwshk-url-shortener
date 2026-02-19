@@ -3,26 +3,59 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 
+const SCRAMBLE_CHARS = '!@#$%<>?/|[]{}0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const LOADING_WORDS = ['COMPRESSING', 'SQUASHING', 'OBLITERATING', 'MINIFYING', 'CRUNCHING', 'DECIMATING'];
+const SCRAMBLE_INTERVAL_MS = 55;
+const TICKS_PER_WORD = 22;
+
 function Main() {
   const [url, setUrl] = useState('');
   const [useCustomCode, setUseCustomCode] = useState(false);
   const [customCode, setCustomCode] = useState('');
   const [ttl, setTtl] = useState('');
   const [redirectType, setRedirectType] = useState('308');
+  const [shortenedUrl, setShortenedUrl] = useState('');
+  const [shortCode, setShortCode] = useState('');
+  const [expiresAt, setExpiresAt] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [scrambleText, setScrambleText] = useState(LOADING_WORDS[0]);
   const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
+  const navigate = useNavigate();
 
   // Warm up the backend serverless function on page load so the first
   // URL-shortening request doesn't pay the cold-start penalty.
   useEffect(() => {
     fetch(`${apiUrl}/health`).catch(() => {});
   }, [apiUrl]);
-  const [shortenedUrl, setShortenedUrl] = useState('');
-  const [shortCode, setShortCode] = useState('');
-  const [expiresAt, setExpiresAt] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+
+  // Scramble text animation during loading
+  useEffect(() => {
+    if (!isLoading) {
+      setScrambleText(LOADING_WORDS[0]);
+      return;
+    }
+    let wordIndex = 0;
+    let tick = 0;
+    const interval = setInterval(() => {
+      tick++;
+      const target = LOADING_WORDS[wordIndex % LOADING_WORDS.length];
+      const revealed = Math.min(Math.floor((tick / TICKS_PER_WORD) * target.length), target.length);
+      const text = target
+        .split('')
+        .map((char, i) =>
+          i < revealed ? char : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
+        )
+        .join('');
+      setScrambleText(text);
+      if (tick >= TICKS_PER_WORD + 6) {
+        wordIndex++;
+        tick = 0;
+      }
+    }, SCRAMBLE_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   const handleInputChange = (event) => {
     setUrl(event.target.value);
@@ -115,6 +148,31 @@ function Main() {
   };
   return (
     <div className="app-container">
+      {isLoading && (
+        <div className="shorten-overlay" role="status" aria-label="Shortening your URL">
+          <div className="overlay-bg-blocks">
+            <div className="overlay-block ob-1"></div>
+            <div className="overlay-block ob-2"></div>
+            <div className="overlay-block ob-3"></div>
+            <div className="overlay-block ob-4"></div>
+          </div>
+          <div className="overlay-content">
+            <div className="overlay-scissors" aria-hidden="true">✂️</div>
+            <div className="overlay-main-text">
+              <span className="glitch-layer glitch-layer-1" aria-hidden="true">{scrambleText}</span>
+              <span className="glitch-layer glitch-layer-2" aria-hidden="true">{scrambleText}</span>
+              {scrambleText}
+            </div>
+            <div className="overlay-tagline">YOUR URL</div>
+            <div className="overlay-bars">
+              <div className="overlay-bar"></div>
+              <div className="overlay-bar"></div>
+              <div className="overlay-bar"></div>
+            </div>
+            <div className="overlay-status">● PROCESSING</div>
+          </div>
+        </div>
+      )}
       <button onClick={navigateToTrackLinks} className="track-links-btn">
         Track your Link
       </button>
