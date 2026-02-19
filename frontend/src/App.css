@@ -605,6 +605,10 @@ body {
     flex: 1;
     border-bottom: 3px solid #000;
   }
+
+  .selects-row .ttl-options:first-child {
+    border-bottom: 3px solid #000;
+  }
 }
 
 @media (max-width: 640px) {
