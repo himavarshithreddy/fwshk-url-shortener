@@ -23,12 +23,6 @@
 - Create memorable links for marketing campaigns or print materials
 - Track engagement on links you share via a dedicated tracking page
 
-## Roadmap
-
-- [ ] Link expiration (set links to auto-expire after a date or number of clicks)
-- [ ] QR code generation for every short link
-- [ ] Analytics dashboard (clicks over time, top referrers)
-- [ ] Bulk URL shortening
 
 ## License
 
