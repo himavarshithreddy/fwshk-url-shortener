@@ -13,14 +13,13 @@ try {
 
 // Key prefixes
 const LINK_PREFIX = 'l:';
-const MISS_PREFIX = 'miss:';
 const CLICKS_PREFIX = 'clicks:';
-const MISS_TTL_SECONDS = 60;
 
 // L1 in-process memory cache
 const l1Cache = new Map();
-const L1_TTL_MS = 5000;
+const L1_TTL_MS = 30000;
 const L1_MAX_SIZE = 50000;
+const L1_MISS_TTL_MS = 10000;
 
 function l1Get(code) {
   const entry = l1Cache.get(code);
@@ -35,11 +34,11 @@ function l1Get(code) {
   return entry.val;
 }
 
-function l1Set(code, value) {
+function l1Set(code, value, ttlMs = L1_TTL_MS) {
   if (l1Cache.size >= L1_MAX_SIZE) {
     l1Cache.delete(l1Cache.keys().next().value);
   }
-  l1Cache.set(code, { val: value, exp: Date.now() + L1_TTL_MS });
+  l1Cache.set(code, { val: value, exp: Date.now() + ttlMs });
 }
 
 function l1Delete(code) {
@@ -83,17 +82,14 @@ async function createLink(shortCode, originalUrl, ttlSeconds = null, redirectTyp
     ca: new Date(now).toISOString(),
   };
 
-  // Use a pipeline: SET NX + DEL miss key in a single HTTP round-trip (was 3 sequential trips)
+  // Use SET NX for atomic creation; clear any stale miss/L1 cache entries fire-and-forget
   const setOptions = ttlSeconds ? { nx: true, ex: ttlSeconds } : { nx: true };
-  const pipeline = redis.pipeline();
-  pipeline.set(key, record, setOptions);
-  pipeline.del(`${MISS_PREFIX}${shortCode}`);
-  const [setResult] = await pipeline.exec();
+  const setResult = await redis.set(key, record, setOptions);
 
   // SET NX returns null when the key already exists
   if (setResult === null) return null;
 
-  // Clear any stale L1 cache entry for this code
+  // Clear stale caches fire-and-forget
   l1Delete(shortCode);
 
   return {
@@ -104,29 +100,23 @@ async function createLink(shortCode, originalUrl, ttlSeconds = null, redirectTyp
 }
 
 /**
- * Fast-path: get packed redirect record using L1 cache → negative cache → Redis.
- * Returns the record object, or null if not found (including negative-cached misses).
+ * Fast-path: get packed redirect record using L1 cache → Redis GET.
+ * Returns the record object, or null if not found.
+ * Misses are cached in L1 with a short TTL to avoid repeated Redis lookups.
  */
 async function getRedirectRecord(shortCode) {
   if (!redis) throw new Error('Redis connection is not available');
 
-  // L1 cache hit
+  // L1 cache hit (includes negative-cached misses stored as false)
   const cached = l1Get(shortCode);
-  if (cached !== null) return cached;
+  if (cached !== null) return cached === false ? null : cached;
 
-  // Fetch miss-cache flag and link record in a single HTTP round-trip (was 2 sequential trips)
-  const pipeline = redis.pipeline();
-  pipeline.exists(`${MISS_PREFIX}${shortCode}`);
-  pipeline.get(`${LINK_PREFIX}${shortCode}`);
-  const [isMiss, raw] = await pipeline.exec();
+  // Single GET – avoids the overhead of a pipeline for the common case
+  const raw = await redis.get(`${LINK_PREFIX}${shortCode}`);
 
   if (!raw) {
-    if (!isMiss) {
-      // Store negative cache entry fire-and-forget; don't block the response
-      redis.set(`${MISS_PREFIX}${shortCode}`, 1, { ex: MISS_TTL_SECONDS }).catch(err =>
-        console.error('Failed to cache miss for', shortCode, ':', err.message)
-      );
-    }
+    // Cache the miss in L1 to avoid repeated Redis lookups for the same code
+    l1Set(shortCode, false, L1_MISS_TTL_MS);
     return null;
   }
 
@@ -175,3 +165,10 @@ module.exports = {
   checkRedisConnection,
   l1Delete,
 };
+
+// Warm up the Redis connection on module load to avoid cold-start latency
+if (redis) {
+  redis.ping().catch(err =>
+    console.warn('Redis warm-up ping failed:', err.message)
+  );
+}
