@@ -71,8 +71,6 @@ async function checkRedisConnection() {
 async function createLink(shortCode, originalUrl, ttlSeconds = null, redirectType = '308') {
   if (!redis) throw new Error('Redis connection is not available');
   const key = `${LINK_PREFIX}${shortCode}`;
-  const exists = await redis.exists(key);
-  if (exists) return null;
 
   const now = Date.now();
   const expiresTimestamp = ttlSeconds ? now + ttlSeconds * 1000 : 0;
@@ -85,15 +83,18 @@ async function createLink(shortCode, originalUrl, ttlSeconds = null, redirectTyp
     ca: new Date(now).toISOString(),
   };
 
-  if (ttlSeconds) {
-    await redis.set(key, record, { ex: ttlSeconds });
-  } else {
-    await redis.set(key, record);
-  }
+  // Use a pipeline: SET NX + DEL miss key in a single HTTP round-trip (was 3 sequential trips)
+  const setOptions = ttlSeconds ? { nx: true, ex: ttlSeconds } : { nx: true };
+  const pipeline = redis.pipeline();
+  pipeline.set(key, record, setOptions);
+  pipeline.del(`${MISS_PREFIX}${shortCode}`);
+  const [setResult] = await pipeline.exec();
 
-  // Clear any stale negative cache for this code
+  // SET NX returns null when the key already exists
+  if (setResult === null) return null;
+
+  // Clear any stale L1 cache entry for this code
   l1Delete(shortCode);
-  await redis.del(`${MISS_PREFIX}${shortCode}`);
 
   return {
     shortCode,
@@ -113,16 +114,22 @@ async function getRedirectRecord(shortCode) {
   const cached = l1Get(shortCode);
   if (cached !== null) return cached;
 
-  // Negative cache check (avoid Redis lookup for known missing codes)
-  const isMiss = await redis.exists(`${MISS_PREFIX}${shortCode}`);
-  if (isMiss) return null;
+  // Fetch miss-cache flag and link record in a single HTTP round-trip (was 2 sequential trips)
+  const pipeline = redis.pipeline();
+  pipeline.exists(`${MISS_PREFIX}${shortCode}`);
+  pipeline.get(`${LINK_PREFIX}${shortCode}`);
+  const [isMiss, raw] = await pipeline.exec();
 
-  // Redis lookup
-  const raw = await redis.get(`${LINK_PREFIX}${shortCode}`);
   if (!raw) {
-    await redis.set(`${MISS_PREFIX}${shortCode}`, 1, { ex: MISS_TTL_SECONDS });
+    if (!isMiss) {
+      // Store negative cache entry fire-and-forget; don't block the response
+      redis.set(`${MISS_PREFIX}${shortCode}`, 1, { ex: MISS_TTL_SECONDS }).catch(err =>
+        console.error('Failed to cache miss for', shortCode, ':', err.message)
+      );
+    }
     return null;
   }
+
   // Upstash SDK auto-deserialises JSON; handle legacy string values defensively
   const record = typeof raw === 'string' ? JSON.parse(raw) : raw;
 
