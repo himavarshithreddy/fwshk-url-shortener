@@ -1,10 +1,12 @@
 const { createLink, getRedirectRecord, findByShortCode, incrementClickCount, checkRedisConnection, warmupReady } = require('../models/Link');
-const { nanoid } = require('nanoid');
+const { customAlphabet } = require('nanoid');
 
 const MIN_TTL_SECONDS = 60;
 const MAX_TTL_SECONDS = 31536000; // 1 year
 const VALID_REDIRECT_TYPES = new Set(['301', '302', '308']);
-const SHORT_CODE_LENGTH = 8;
+const SHORT_CODE_LENGTH = 6;
+const SHORT_CODE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
+const generateShortCode = customAlphabet(SHORT_CODE_ALPHABET, SHORT_CODE_LENGTH);
 
 /**
  * Validate that a string is a well-formed URL.
@@ -48,7 +50,7 @@ const createShortUrl = async (req, res) => {
     ? String(redirectType)
     : '308';
 
-  const shortCode = customShortCode || nanoid(SHORT_CODE_LENGTH);
+  const shortCode = customShortCode || generateShortCode();
 
   // Validate TTL if provided
   let ttlSeconds = null;
