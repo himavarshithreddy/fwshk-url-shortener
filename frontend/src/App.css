@@ -139,7 +139,7 @@ body {
 }
 
 .input::placeholder {
-  color: #5a5a5a;
+  color: #a8a8a8;
   font-weight: 400;
 }
 
@@ -350,7 +350,7 @@ body {
 }
 
 .custom-code-input::placeholder {
-  color: #5a5a5a;
+  color: #a8a8a8;
   font-weight: 400;
 }
 
@@ -673,4 +673,3 @@ body {
     font-size: 0.95rem;
   }
 }
-
