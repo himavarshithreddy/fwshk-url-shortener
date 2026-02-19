@@ -13,6 +13,7 @@ function Main() {
   const [redirectType, setRedirectType] = useState('308');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
   const [shortenedUrl, setShortenedUrl] = useState('');
+  const [shortCode, setShortCode] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -89,6 +90,7 @@ function Main() {
       if (response.ok) {
         const fullShortenedUrl = `${BASE_URL}/${data.shortCode}`;
         setShortenedUrl(fullShortenedUrl);
+        setShortCode(data.shortCode);
         setExpiresAt(data.expiresAt || '');
         setError('');
         toast.success('URL shortened successfully!');
@@ -109,116 +111,139 @@ function Main() {
       toast.success('URL copied to clipboard!');
     });
   };
+  const copyShortCode = () => {
+    navigator.clipboard.writeText(shortCode).then(() => {
+      toast.success('Short code copied to clipboard!');
+    }).catch(() => {
+      toast.error('Failed to copy short code.');
+    });
+  };
   const navigateToTrackLinks = () => {
     navigate('/track'); // Navigate to the /track route
   };
   return (
     <div className="app-container">
-  <button onClick={navigateToTrackLinks} className="track-links-btn">
+      <button onClick={navigateToTrackLinks} className="track-links-btn">
         Track your Link
       </button>
-    <div className="form-container">
-      <div className="app-header">
-        <img src={logo} alt="Fwshk logo" className="app-logo" />
-        <h1 className="title">Fwshk</h1>
-      </div>
-      <p className="subtitle">URLs on diet.</p>
-      <form onSubmit={handleSubmit} className="form">
-        <input
-          type="text"
-          className="input"
-          value={url}
-          onChange={handleInputChange}
-          placeholder="Enter URL (e.g., google.com)"
-        />
-        
-        <div className="shortcode-options">
-          <div className="option-buttons">
-            <button 
-              type="button"
-              className={`option-btn ${!useCustomCode ? 'active' : ''}`}
-              onClick={() => setUseCustomCode(false)}
-            >
-              Random Code
-            </button>
-            <button 
-              type="button"
-              className={`option-btn ${useCustomCode ? 'active' : ''}`}
-              onClick={() => setUseCustomCode(true)}
-            >
-              Custom Code
-            </button>
+      <div className="main-layout">
+        {/* Left panel — branding + form */}
+        <div className="left-panel">
+          <div className="app-header">
+            <img src={logo} alt="Fwshk logo" className="app-logo" />
+            <h1 className="title">Fwshk</h1>
           </div>
+          <p className="subtitle">URLs on diet.</p>
+          <form onSubmit={handleSubmit} className="form">
+            <input
+              type="text"
+              className="input"
+              value={url}
+              onChange={handleInputChange}
+              placeholder="Enter URL (e.g., google.com)"
+            />
 
-          {useCustomCode && (
-            <div className="custom-code-container">
-              <div className="custom-url-preview">
-                <span className="base-url">{BASE_URL}/</span>
-                <input
-                  type="text"
-                  className="custom-code-input"
-                  value={customCode}
-                  onChange={handleCustomCodeChange}
-                  placeholder="your-custom-code"
-                  maxLength={20}
-                />
+            <div className="shortcode-options">
+              <div className="option-buttons">
+                <button
+                  type="button"
+                  className={`option-btn ${!useCustomCode ? 'active' : ''}`}
+                  onClick={() => setUseCustomCode(false)}
+                >
+                  Random Code
+                </button>
+                <button
+                  type="button"
+                  className={`option-btn ${useCustomCode ? 'active' : ''}`}
+                  onClick={() => setUseCustomCode(true)}
+                >
+                  Custom Code
+                </button>
               </div>
-              <p className="custom-code-hint">Use letters, numbers, and hyphens only (max 20 characters)</p>
+
+              {useCustomCode && (
+                <div className="custom-code-container">
+                  <div className="custom-url-preview">
+                    <span className="base-url">{BASE_URL}/</span>
+                    <input
+                      type="text"
+                      className="custom-code-input"
+                      value={customCode}
+                      onChange={handleCustomCodeChange}
+                      placeholder="your-custom-code"
+                      maxLength={20}
+                    />
+                  </div>
+                  <p className="custom-code-hint">Use letters, numbers, and hyphens only (max 20 characters)</p>
+                </div>
+              )}
+            </div>
+
+            <div className="selects-row">
+              <div className="ttl-options">
+                <label className="ttl-label" htmlFor="ttl-select">Expiration:</label>
+                <select
+                  id="ttl-select"
+                  className="ttl-select"
+                  value={ttl}
+                  onChange={(e) => setTtl(e.target.value)}
+                >
+                  <option value="">Never</option>
+                  <option value="3600">1 Hour</option>
+                  <option value="86400">1 Day</option>
+                  <option value="604800">7 Days</option>
+                  <option value="2592000">30 Days</option>
+                </select>
+              </div>
+
+              <div className="ttl-options">
+                <label className="ttl-label" htmlFor="redirect-type-select">Redirect:</label>
+                <select
+                  id="redirect-type-select"
+                  className="ttl-select"
+                  value={redirectType}
+                  onChange={(e) => setRedirectType(e.target.value)}
+                >
+                  <option value="308">Permanent (308)</option>
+                  <option value="302">Track Clicks (302)</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" className="submit-btn" disabled={isLoading}>
+              {isLoading ? 'Shortening...' : 'Shorten'}
+            </button>
+          </form>
+          {error && <p className="error-message">{error}</p>}
+        </div>
+
+        {/* Right panel — result */}
+        <div className="right-panel">
+          {shortenedUrl ? (
+            <div className="result">
+              <p className="shortened-text">Shortened URL:</p>
+              <div className="shortened-url-container">
+                <a href={shortenedUrl} target="_blank" rel="noopener noreferrer" className="shortened-url">
+                  {shortenedUrl}
+                </a>
+                <button onClick={copyToClipboard} className="copy-btn">Copy</button>
+                <button onClick={copyShortCode} className="copy-btn">Copy Code</button>
+              </div>
+              {expiresAt && (
+                <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
+              )}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <span className="empty-state-icon">✂️</span>
+              <p className="empty-state-text">Your shortened URL will appear here</p>
+              <p className="empty-state-hint">Paste a long URL on the left and hit Shorten.</p>
             </div>
           )}
         </div>
-
-        <div className="ttl-options">
-          <label className="ttl-label" htmlFor="ttl-select">Link Expiration:</label>
-          <select
-            id="ttl-select"
-            className="ttl-select"
-            value={ttl}
-            onChange={(e) => setTtl(e.target.value)}
-          >
-            <option value="">Never</option>
-            <option value="3600">1 Hour</option>
-            <option value="86400">1 Day</option>
-            <option value="604800">7 Days</option>
-            <option value="2592000">30 Days</option>
-          </select>
-        </div>
-
-        <div className="ttl-options">
-          <label className="ttl-label" htmlFor="redirect-type-select">Redirect Mode:</label>
-          <select
-            id="redirect-type-select"
-            className="ttl-select"
-            value={redirectType}
-            onChange={(e) => setRedirectType(e.target.value)}
-          >
-            <option value="308">Fast &amp; Permanent (308) – no click tracking</option>
-            <option value="302">Track Clicks (302) – counts every visit</option>
-          </select>
-        </div>
-
-        <button type="submit" className="submit-btn" disabled={isLoading}>
-          {isLoading ? 'Shortening...' : 'Shorten'}
-        </button>
-      </form>
-      {error && <p className="error-message">{error}</p>}
-      {shortenedUrl && (
-        <div className="result">
-          <p className="shortened-text">Shortened URL:</p>
-          <div className="shortened-url-container">
-            <a href={shortenedUrl} target="_blank" rel="noopener noreferrer" className="shortened-url">
-              {shortenedUrl}
-            </a>
-            <button onClick={copyToClipboard} className="copy-btn">Copy</button>
-          </div>
-          {expiresAt && (
-            <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
-          )}
-        </div>
-      )}
+      </div>
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar newestOnTop />
     </div>
-    <ToastContainer position="top-center" autoClose={3000} hideProgressBar newestOnTop />
-  </div>
   );
 }
 
