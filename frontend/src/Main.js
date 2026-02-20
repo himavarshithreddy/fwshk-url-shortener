@@ -21,7 +21,7 @@ function FwshkLoader() {
   }, []);
 
   return (
-    <div className="fwshk-loader">
+    <div className="fwshk-loader" role="status" aria-label="Shortening your URL">
       <div className="loader-ticker">
         <div className="loader-ticker-inner">
           <span className="loader-ticker-text">{TICKER}</span>
@@ -164,19 +164,23 @@ function Main() {
   };
   return (
     <div className="app-container">
-      <button onClick={navigateToTrackLinks} className="track-links-btn">
-        Track your Link
-      </button>
-      <div className="main-layout">
+      <nav aria-label="Site navigation">
+        <button onClick={navigateToTrackLinks} className="track-links-btn">
+          Track your Link
+        </button>
+      </nav>
+      <main className="main-layout">
         {/* Left panel — branding + form */}
-        <div className="left-panel">
-          <div className="app-header">
+        <section className="left-panel" aria-label="URL shortener form">
+          <header className="app-header">
             <img src={logo} alt="Fwshk logo" className="app-logo" />
             <h1 className="title">Fwshk</h1>
-          </div>
+          </header>
           <p className="subtitle">URLs on diet.</p>
-          <form onSubmit={handleSubmit} className="form">
+          <form onSubmit={handleSubmit} className="form" aria-label="Shorten a URL">
+            <label htmlFor="url-input" className="sr-only">Enter URL to shorten</label>
             <input
+              id="url-input"
               type="text"
               className="input"
               value={url}
@@ -184,12 +188,14 @@ function Main() {
               placeholder="Enter URL (e.g., google.com)"
             />
 
-            <div className="shortcode-options">
+            <fieldset className="shortcode-options">
+              <legend className="sr-only">Short code options</legend>
               <div className="option-buttons">
                 <button
                   type="button"
                   className={`option-btn ${!useCustomCode ? 'active' : ''}`}
                   onClick={() => setUseCustomCode(false)}
+                  aria-pressed={!useCustomCode}
                 >
                   Random Code
                 </button>
@@ -197,6 +203,7 @@ function Main() {
                   type="button"
                   className={`option-btn ${useCustomCode ? 'active' : ''}`}
                   onClick={() => setUseCustomCode(true)}
+                  aria-pressed={useCustomCode}
                 >
                   Custom Code
                 </button>
@@ -206,7 +213,9 @@ function Main() {
                 <div className="custom-code-container">
                   <div className="custom-url-preview">
                     <span className="base-url">{BASE_URL}/</span>
+                    <label htmlFor="custom-code-input" className="sr-only">Custom short code</label>
                     <input
+                      id="custom-code-input"
                       type="text"
                       className="custom-code-input"
                       value={customCode}
@@ -218,7 +227,7 @@ function Main() {
                   <p className="custom-code-hint">Use letters, numbers, and hyphens only (max 20 characters)</p>
                 </div>
               )}
-            </div>
+            </fieldset>
 
             <div className="selects-row">
               <div className="ttl-options">
@@ -255,22 +264,22 @@ function Main() {
               {isLoading ? 'Shortening...' : 'Shorten'}
             </button>
           </form>
-          {error && <p className="error-message">{error}</p>}
-        </div>
+          {error && <p className="error-message" role="alert">{error}</p>}
+        </section>
 
         {/* Right panel — result / loader */}
-        <div className="right-panel">
+        <section className="right-panel" aria-label="Shortened URL result">
           {isLoading ? (
             <FwshkLoader />
           ) : shortenedUrl ? (
-            <div className="result">
-              <p className="shortened-text">Shortened URL:</p>
+            <div className="result" aria-live="polite">
+              <h2 className="shortened-text">Shortened URL:</h2>
               <div className="shortened-url-container">
                 <a href={shortenedUrl} target="_blank" rel="noopener noreferrer" className="shortened-url">
                   {shortenedUrl}
                 </a>
-                <button onClick={copyToClipboard} className="copy-btn">Copy</button>
-                <button onClick={copyShortCode} className="copy-btn">Copy Code</button>
+                <button onClick={copyToClipboard} className="copy-btn" aria-label="Copy shortened URL to clipboard">Copy</button>
+                <button onClick={copyShortCode} className="copy-btn" aria-label="Copy short code to clipboard">Copy Code</button>
               </div>
               {expiresAt && (
                 <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
@@ -278,13 +287,16 @@ function Main() {
             </div>
           ) : (
             <div className="empty-state">
-              <span className="empty-state-icon">✂️</span>
+              <span className="empty-state-icon" aria-hidden="true">✂️</span>
               <p className="empty-state-text">Your shortened URL will appear here</p>
               <p className="empty-state-hint">Paste a long URL on the left and hit Shorten.</p>
             </div>
           )}
-        </div>
-      </div>
+        </section>
+      </main>
+      <footer className="sr-only">
+        <p>Fwshk — A fast, free URL shortener with custom short codes, link expiration, and click tracking.</p>
+      </footer>
     </div>
   );
 }

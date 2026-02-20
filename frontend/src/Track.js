@@ -43,15 +43,21 @@ function TrackingPage() {
 
   return (
     <div className="app-container">
-      <button onClick={() => navigate('/')} className="track-links-btn">
-        ← Shorten a URL
-      </button>
-      <div className="form-container">
-        <h1 className="title">Track Your Fwshk URL</h1>
-        <p className="subtitle">Enter your shortened URL code to view details</p>
+      <nav aria-label="Site navigation">
+        <button onClick={() => navigate('/')} className="track-links-btn">
+          ← Shorten a URL
+        </button>
+      </nav>
+      <main className="form-container">
+        <header>
+          <h1 className="title">Track Your Fwshk URL</h1>
+          <p className="subtitle">Enter your shortened URL code to view click analytics and link details</p>
+        </header>
 
-        <form onSubmit={handleSubmit} className="form">
+        <form onSubmit={handleSubmit} className="form" aria-label="Track a shortened URL">
+          <label htmlFor="track-code-input" className="sr-only">Shortened URL code</label>
           <input
+            id="track-code-input"
             type="text"
             className="input"
             value={urlCode}
@@ -64,11 +70,11 @@ function TrackingPage() {
           </button>
         </form>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message" role="alert">{error}</p>}
 
         {trackingData && (
-          <div className="result">
-            <p className="shortened-text">Tracking Information</p>
+          <section className="result" aria-label="Tracking results">
+            <h2 className="shortened-text">Tracking Information</h2>
             <div className="tracking-info">
               <p><strong>Original URL:</strong> {trackingData.originalUrl}</p>
               <p><strong>Shortened URL:</strong> <a href={`${BASE_URL}/${trackingData.shortCode}`} target="_blank" rel="noopener noreferrer">{`${BASE_URL}/${trackingData.shortCode}`}</a></p>
@@ -80,9 +86,9 @@ function TrackingPage() {
                 <p><strong>Expires:</strong> {new Date(trackingData.expiresAt).toLocaleString()}</p>
               )}
             </div>
-          </div>
+          </section>
         )}
-      </div>
+      </main>
     </div>
   );
 }

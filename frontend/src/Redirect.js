@@ -50,31 +50,31 @@ function RedirectPage() {
   if (error) {
     return (
       <div className="app-container">
-        <div className="redirect-card">
-          <div className="app-header">
+        <main className="redirect-card" role="alert">
+          <header className="app-header">
             <img src={logo} alt="Fwshk logo" className="app-logo" />
             <h1 className="title">Fwshk</h1>
-          </div>
+          </header>
           <p className="error-message">{error}</p>
-        </div>
+        </main>
       </div>
     );
   }
 
   return (
     <div className="app-container">
-      <div className="redirect-card">
-        <div className="app-header">
+      <main className="redirect-card">
+        <header className="app-header">
           <img src={logo} alt="Fwshk logo" className="app-logo" />
           <h1 className="title">Fwshk</h1>
-        </div>
+        </header>
         <p className="redirect-label">Redirecting you to</p>
         <div className="redirect-url-box">
           <span className="redirect-url">{destinationUrl || '...'}</span>
         </div>
         <div className="redirect-timer" aria-live="polite" aria-atomic="true">{countdown}</div>
         <p className="redirect-hint">You will be redirected automatically</p>
-      </div>
+      </main>
     </div>
   );
 }

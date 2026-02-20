@@ -22,6 +22,7 @@
       { "src": "/favicon\\.svg", "dest": "/frontend/build/favicon.svg" },
       { "src": "/manifest\\.json", "dest": "/frontend/build/manifest.json" },
       { "src": "/robots\\.txt", "dest": "/frontend/build/robots.txt" },
+      { "src": "/sitemap\\.xml", "dest": "/frontend/build/sitemap.xml" },
       { "src": "/asset-manifest\\.json", "dest": "/frontend/build/asset-manifest.json" },
       { "src": "/logo([0-9]+)\\.png", "dest": "/frontend/build/logo$1.png" },
       { "src": "^/track$", "dest": "/frontend/build/index.html" },
