@@ -211,7 +211,9 @@ function Main() {
     const link = document.createElement('a');
     link.download = `fwshk-qr-${shortCode}.png`;
     link.href = url;
+    document.body.appendChild(link);
     link.click();
+    link.remove();
   };
   return (
     <div className="app-container">
@@ -423,7 +425,7 @@ function Main() {
             )
           ) : (
             <div className="empty-state">
-              <span className="empty-state-icon" aria-hidden="true">{mode === 'qrcode' ? '📱' : '✂️'}</span>
+              <span className="empty-state-icon" aria-hidden="true">{mode === 'qrcode' ? '🔳' : '✂️'}</span>
               <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
               <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL on the left and hit Generate QR.' : 'Paste a long URL on the left and hit Shorten.'}</p>
             </div>
