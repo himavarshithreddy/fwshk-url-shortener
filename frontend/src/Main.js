@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import logo from './logo.svg';
 
 const TICKER = 'FWSHK — PUTTING YOUR URL ON A DIET — HOLD TIGHT — TRIMMING THE FAT — ALMOST SKINNY — ';
-const EMPTY_TICKER_SHORTEN = 'PASTE — SHORTEN — SHARE — REPEAT — TRIM THE FAT — MAKE IT TINY — ';
-const EMPTY_TICKER_QR = 'PASTE — GENERATE — SCAN — SHARE — QR MAGIC — MAKE IT SCANNABLE — ';
+
 const QR_TICKER = 'FWSHK — GENERATING YOUR QR CODE — HOLD TIGHT — ENCODING PIXELS — ALMOST READY — ';
 const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
@@ -518,42 +517,33 @@ function Main() {
             )
           ) : (
             <div className="empty-state">
-              {/* CRT scanline overlay */}
-              <div className="empty-scanlines" aria-hidden="true" />
-
-              {/* Scrolling ticker strip */}
-              <div className="empty-ticker">
-                <div className="empty-ticker-inner">
-                  <span className="empty-ticker-text">{mode === 'qrcode' ? EMPTY_TICKER_QR : EMPTY_TICKER_SHORTEN}</span>
-                  <span className="empty-ticker-text" aria-hidden="true">{mode === 'qrcode' ? EMPTY_TICKER_QR : EMPTY_TICKER_SHORTEN}</span>
-                </div>
-              </div>
-
-              {/* Main content area */}
               <div className="empty-body">
                 <div className="empty-icon-display">
-                  <span className="empty-icon-char">{mode === 'qrcode' ? '🔳' : '✂️'}</span>
+                  {mode === 'qrcode' ? (
+                    <svg className="empty-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <rect x="4" y="4" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="2.5" />
+                      <rect x="8" y="8" width="8" height="8" fill="currentColor" />
+                      <rect x="28" y="4" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="2.5" />
+                      <rect x="32" y="8" width="8" height="8" fill="currentColor" />
+                      <rect x="4" y="28" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="2.5" />
+                      <rect x="8" y="32" width="8" height="8" fill="currentColor" />
+                      <rect x="28" y="28" width="4" height="4" fill="currentColor" />
+                      <rect x="36" y="28" width="4" height="4" fill="currentColor" />
+                      <rect x="28" y="36" width="4" height="4" fill="currentColor" />
+                      <rect x="36" y="36" width="8" height="8" fill="currentColor" />
+                      <rect x="40" y="28" width="4" height="4" fill="currentColor" />
+                      <rect x="28" y="40" width="4" height="4" fill="currentColor" />
+                    </svg>
+                  ) : (
+                    <svg className="empty-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M27 17l4.6-4.6a5.5 5.5 0 0 1 7.8 7.8L34.8 25" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                      <path d="M21 31l-4.6 4.6a5.5 5.5 0 0 1-7.8-7.8L13.2 23" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                      <line x1="18" y1="30" x2="30" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                    </svg>
+                  )}
                 </div>
                 <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
                 <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL and hit Generate QR.' : 'Paste a long URL and hit Shorten.'}</p>
-              </div>
-
-              {/* Floating word bits */}
-              <div className="empty-bits" aria-hidden="true">
-                <span className="ebit ebit-1">PASTE</span>
-                <span className="ebit ebit-2">URL</span>
-                <span className="ebit ebit-3">TRIM</span>
-                <span className="ebit ebit-4">LINK</span>
-                <span className="ebit ebit-5">GO!</span>
-                <span className="ebit ebit-6">SNIP</span>
-              </div>
-
-              {/* Bouncing status bar */}
-              <div className="empty-status-bar" aria-hidden="true">
-                <span className="empty-status-word ew1">PASTE</span>
-                <span className="empty-status-word ew2">TRIM</span>
-                <span className="empty-status-word ew3">SHARE</span>
-                <span className="empty-status-word ew4">GO!</span>
               </div>
             </div>
           )}
