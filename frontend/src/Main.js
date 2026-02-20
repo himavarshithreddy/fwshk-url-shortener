@@ -24,7 +24,7 @@ function FwshkLoader() {
 
   useEffect(() => {
     const id = setInterval(() => {
-      setPercent(p => (p >= 97 ? 14 : p + Math.floor(Math.random() * 9) + 1));
+      setPercent(p => (p + Math.floor(Math.random() * 9) + 1) % 100);
     }, 220);
     return () => clearInterval(id);
   }, []);
