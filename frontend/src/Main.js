@@ -181,7 +181,7 @@ function Main() {
             <label htmlFor="url-input" className="sr-only">Enter URL to shorten</label>
             <input
               id="url-input"
-              type="url"
+              type="text"
               className="input"
               value={url}
               onChange={handleInputChange}
