@@ -1,7 +1,16 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+Allow: /track
 Disallow: /static/
 Disallow: /asset-manifest.json
+Disallow: /manifest.json
+
+# Search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://fwshk.vercel.app/sitemap.xml
