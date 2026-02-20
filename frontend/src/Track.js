@@ -1,8 +1,9 @@
 import React, { useState} from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 function TrackingPage() {
-  const [urlCode, setUrlCode] = useState('');
+  const [searchParams] = useSearchParams();
+  const [urlCode, setUrlCode] = useState(searchParams.get('q') || '');
   const [trackingData, setTrackingData] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
