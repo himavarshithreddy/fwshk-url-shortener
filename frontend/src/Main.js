@@ -174,9 +174,14 @@ function Main() {
         <meta property="og:url" content="https://fwshk.vercel.app/" />
         <meta property="og:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
         <meta property="og:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
+        <meta property="og:site_name" content="Fwshk" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="https://fwshk.vercel.app/logo512.png" />
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://fwshk.vercel.app/" />
         <meta name="twitter:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
         <meta name="twitter:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
+        <meta name="twitter:image" content="https://fwshk.vercel.app/logo512.png" />
         <script type="application/ld+json">{`
           {
             "@context": "https://schema.org",

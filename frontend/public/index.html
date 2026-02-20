@@ -27,7 +27,7 @@
     <meta data-rh="true" property="og:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
     <meta property="og:site_name" content="Fwshk" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+    <meta property="og:image" content="https://fwshk.vercel.app/logo512.png" />
     <meta property="og:image:width" content="512" />
     <meta property="og:image:height" content="512" />
     <meta property="og:image:alt" content="Fwshk URL Shortener logo" />
@@ -37,7 +37,7 @@
     <meta data-rh="true" name="twitter:url" content="https://fwshk.vercel.app/" />
     <meta data-rh="true" name="twitter:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
     <meta data-rh="true" name="twitter:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
-    <meta name="twitter:image" content="%PUBLIC_URL%/logo512.png" />
+    <meta name="twitter:image" content="https://fwshk.vercel.app/logo512.png" />
     <meta name="twitter:image:alt" content="Fwshk URL Shortener logo" />
 
     <!-- Additional SEO -->
@@ -134,9 +134,25 @@
       "@type": "Organization",
       "name": "Fwshk",
       "url": "https://fwshk.vercel.app/",
-      "logo": "%PUBLIC_URL%/logo512.png",
+      "logo": "https://fwshk.vercel.app/logo512.png",
       "description": "A fast, free URL shortener with custom short codes, link expiration, and click tracking.",
       "sameAs": []
+    }
+    </script>
+
+    <!-- Structured Data — WebSite (enables sitelinks search box) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Fwshk",
+      "url": "https://fwshk.vercel.app/",
+      "description": "A fast, free URL shortener with custom short codes, link expiration, and click tracking.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://fwshk.vercel.app/track?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
 
@@ -156,6 +172,13 @@
         <li>Track clicks with built-in analytics</li>
         <li>Choose permanent (308) or temporary (302) redirects</li>
       </ul>
+      <nav>
+        <h2>Pages</h2>
+        <ul>
+          <li><a href="/">Home — Shorten a URL</a></li>
+          <li><a href="/track">Track Your Short Link</a></li>
+        </ul>
+      </nav>
       <p>Please enable JavaScript in your browser to use Fwshk.</p>
     </noscript>
     <div id="root"></div>
