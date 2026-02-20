@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import logo from './logo.svg';
 
 const TICKER = 'FWSHK — PUTTING YOUR URL ON A DIET — HOLD TIGHT — TRIMMING THE FAT — ALMOST SKINNY — ';
+const EMPTY_TICKER_SHORTEN = 'PASTE — SHORTEN — SHARE — REPEAT — TRIM THE FAT — MAKE IT TINY — ';
+const EMPTY_TICKER_QR = 'PASTE — GENERATE — SCAN — SHARE — QR MAGIC — MAKE IT SCANNABLE — ';
 const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
 function FwshkLoader() {
@@ -425,9 +427,43 @@ function Main() {
             )
           ) : (
             <div className="empty-state">
-              <span className="empty-state-icon" aria-hidden="true">{mode === 'qrcode' ? '🔳' : '✂️'}</span>
-              <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
-              <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL on the left and hit Generate QR.' : 'Paste a long URL on the left and hit Shorten.'}</p>
+              {/* CRT scanline overlay */}
+              <div className="empty-scanlines" aria-hidden="true" />
+
+              {/* Scrolling ticker strip */}
+              <div className="empty-ticker">
+                <div className="empty-ticker-inner">
+                  <span className="empty-ticker-text">{mode === 'qrcode' ? EMPTY_TICKER_QR : EMPTY_TICKER_SHORTEN}</span>
+                  <span className="empty-ticker-text" aria-hidden="true">{mode === 'qrcode' ? EMPTY_TICKER_QR : EMPTY_TICKER_SHORTEN}</span>
+                </div>
+              </div>
+
+              {/* Main content area */}
+              <div className="empty-body">
+                <div className="empty-icon-display">
+                  <span className="empty-icon-char">{mode === 'qrcode' ? '🔳' : '✂️'}</span>
+                </div>
+                <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
+                <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL and hit Generate QR.' : 'Paste a long URL and hit Shorten.'}</p>
+              </div>
+
+              {/* Floating word bits */}
+              <div className="empty-bits" aria-hidden="true">
+                <span className="ebit ebit-1">PASTE</span>
+                <span className="ebit ebit-2">URL</span>
+                <span className="ebit ebit-3">TRIM</span>
+                <span className="ebit ebit-4">LINK</span>
+                <span className="ebit ebit-5">GO!</span>
+                <span className="ebit ebit-6">SNIP</span>
+              </div>
+
+              {/* Bouncing status bar */}
+              <div className="empty-status-bar" aria-hidden="true">
+                <span className="empty-status-word ew1">PASTE</span>
+                <span className="empty-status-word ew2">TRIM</span>
+                <span className="empty-status-word ew3">SHARE</span>
+                <span className="empty-status-word ew4">GO!</span>
+              </div>
             </div>
           )}
         </section>
