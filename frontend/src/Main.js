@@ -464,7 +464,7 @@ function Main() {
           </div>
           <div className="seo-feature">
             <h3>
-              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/><line x1="21" y1="14" x2="21" y2="14"/><line x1="21" y1="21" x2="21" y2="21"/></svg>
+              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/><line x1="21" y1="14" x2="21" y2="16"/><line x1="21" y1="19" x2="21" y2="21"/></svg>
               QR Code Generator
             </h3>
             <p>Generate styled QR codes for your shortened links. Download and share them anywhere — perfect for print and mobile.</p>
