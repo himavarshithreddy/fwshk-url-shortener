@@ -1,6 +1,6 @@
 {
   "short_name": "Fwshk",
-  "name": "Fwshk - URL Shortener",
+  "name": "Fwshk - URL Shortener & QR Code Generator",
   "icons": [
     {
       "src": "favicon.svg",
