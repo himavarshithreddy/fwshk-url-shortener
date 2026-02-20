@@ -1,7 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
+
+const TICKER = 'FWSHK — PUTTING YOUR URL ON A DIET — HOLD TIGHT — TRIMMING THE FAT — ALMOST SKINNY — ';
+const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+
+function FwshkLoader() {
+  const scrambleRef = useRef(null);
+
+  useEffect(() => {
+    const el = scrambleRef.current;
+    if (!el) return;
+    const id = setInterval(() => {
+      el.textContent = Array.from({ length: 6 }, () =>
+        CHARS[Math.floor(Math.random() * CHARS.length)]
+      ).join('');
+    }, 55);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="fwshk-loader">
+      <div className="loader-ticker">
+        <div className="loader-ticker-inner">
+          <span className="loader-ticker-text">{TICKER}</span>
+          <span className="loader-ticker-text" aria-hidden="true">{TICKER}</span>
+        </div>
+      </div>
+      <div className="loader-machine-box">
+        <div className="loader-url-in">
+          <span className="loader-url-text">
+            https://your-very-long-url.com/with/a/really/long/path?query=stuff&ref=somewhere
+          </span>
+        </div>
+        <div className="loader-arrow-zone">→→→</div>
+        <div className="loader-code-display">
+          <span className="loader-slash">/</span>
+          <span ref={scrambleRef} className="loader-scramble">??????</span>
+        </div>
+      </div>
+      <div className="loader-bits-container" aria-hidden="true">
+        <span className="lbit lbit-1">https://</span>
+        <span className="lbit lbit-2">.com</span>
+        <span className="lbit lbit-3">/path</span>
+        <span className="lbit lbit-4">?q=</span>
+        <span className="lbit lbit-5">www.</span>
+        <span className="lbit lbit-6">#!</span>
+      </div>
+    </div>
+  );
+}
 
 function Main() {
   const [url, setUrl] = useState('');
@@ -209,9 +258,11 @@ function Main() {
           {error && <p className="error-message">{error}</p>}
         </div>
 
-        {/* Right panel — result */}
+        {/* Right panel — result / loader */}
         <div className="right-panel">
-          {shortenedUrl ? (
+          {isLoading ? (
+            <FwshkLoader />
+          ) : shortenedUrl ? (
             <div className="result">
               <p className="shortened-text">Shortened URL:</p>
               <div className="shortened-url-container">

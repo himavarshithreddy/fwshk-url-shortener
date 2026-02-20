@@ -670,6 +670,229 @@ body {
   }
 }
 
+/* ======================================================
+   FWSHK LOADING ANIMATION
+   Shown in the right panel while the API request is in flight.
+   Not a full-screen overlay; lives entirely outside the form.
+   ====================================================== */
+
+.fwshk-loader {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  margin-top: 28px;
+  border: 3px solid #FFFDF7;
+  box-shadow: 5px 5px 0px #FFFDF7;
+  min-height: 280px;
+}
+
+/* ---- Scrolling ticker strip ---- */
+
+.loader-ticker {
+  background-color: #ff6600;
+  border-bottom: 3px solid #FFFDF7;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.loader-ticker-inner {
+  display: flex;
+  white-space: nowrap;
+  animation: loader-ticker-scroll 5s linear infinite;
+}
+
+.loader-ticker-text {
+  display: inline-block;
+  flex-shrink: 0;
+  color: #000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  padding: 9px 24px 9px 0;
+}
+
+@keyframes loader-ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ---- Shaking machine box ---- */
+
+.loader-machine-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px 24px;
+  background-color: #242424;
+  animation: loader-shake 0.11s steps(3) infinite;
+}
+
+@keyframes loader-shake {
+  0%   { transform: translate(0px,  0px); }
+  33%  { transform: translate(-1px, 1px); }
+  66%  { transform: translate( 1px,-1px); }
+  100% { transform: translate(0px,  0px); }
+}
+
+/* ---- Scrolling URL input strip ---- */
+
+.loader-url-in {
+  overflow: hidden;
+  white-space: nowrap;
+  border: 2px solid #444;
+  padding: 7px 10px;
+  background-color: #1a1a1a;
+}
+
+.loader-url-text {
+  display: inline-block;
+  color: #666;
+  font-size: 0.78rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  animation: loader-url-scroll 1.6s linear infinite;
+}
+
+@keyframes loader-url-scroll {
+  0%   { transform: translateX(55%);  opacity: 0.9; }
+  60%  { opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
+}
+
+/* ---- Arrow zone ---- */
+
+.loader-arrow-zone {
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 5px;
+  animation: loader-arrow-flash 0.32s steps(1) infinite;
+}
+
+@keyframes loader-arrow-flash {
+  0%,  50% { color: #ff6600; }
+  51%, 100% { color: #ffe500; }
+}
+
+/* ---- Short-code display ---- */
+
+.loader-code-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  border: 3px solid #FFFDF7;
+  animation: loader-code-bg-flash 0.55s steps(1) infinite;
+}
+
+@keyframes loader-code-bg-flash {
+  0%,  69% { background-color: #ff6600; }
+  70%, 100% { background-color: #ffe500; }
+}
+
+.loader-slash {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000;
+  line-height: 1;
+  margin-right: 2px;
+}
+
+.loader-scramble {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  min-width: 6ch;
+  text-align: left;
+}
+
+/* ---- Floating URL fragment bits ---- */
+
+.loader-bits-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lbit {
+  position: absolute;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 2px solid;
+  padding: 3px 7px;
+  opacity: 0;
+}
+
+.lbit-1 { top: 14%; left:  4%; border-color: #ff6600; color: #ff6600; animation: lbit-fly-1 2.0s ease-out infinite 0.1s; }
+.lbit-2 { top: 22%; right: 5%; border-color: #ffe500; color: #ffe500; animation: lbit-fly-2 1.7s ease-out infinite 0.5s; }
+.lbit-3 { bottom: 28%; left:  9%; border-color: #FFFDF7; color: #FFFDF7; animation: lbit-fly-3 2.3s ease-out infinite 0.9s; }
+.lbit-4 { bottom: 16%; right: 9%; border-color: #ff6600; color: #ff6600; animation: lbit-fly-4 1.5s ease-out infinite 1.2s; }
+.lbit-5 { top: 58%; left:  3%; border-color: #ffe500; color: #ffe500; animation: lbit-fly-5 2.1s ease-out infinite 0.3s; }
+.lbit-6 { top: 43%; right: 4%; border-color: #FFFDF7; color: #FFFDF7; animation: lbit-fly-6 1.9s ease-out infinite 0.7s; }
+
+@keyframes lbit-fly-1 {
+  0%   { opacity: 0; transform: translate(  0px,   0px) rotate(  0deg) scale(0.8); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate( 36px, -46px) rotate(-18deg) scale(1.15); }
+}
+@keyframes lbit-fly-2 {
+  0%   { opacity: 0; transform: translate(  0px,  0px) rotate(  0deg) scale(0.8); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-32px, 42px) rotate( 22deg) scale(1.15); }
+}
+@keyframes lbit-fly-3 {
+  0%   { opacity: 0; transform: translate( 0px,   0px) rotate( 0deg) scale(0.8); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(46px, -32px) rotate(12deg) scale(1.15); }
+}
+@keyframes lbit-fly-4 {
+  0%   { opacity: 0; transform: translate(  0px,   0px) rotate(  0deg) scale(0.8); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-42px, -32px) rotate(-25deg) scale(1.15); }
+}
+@keyframes lbit-fly-5 {
+  0%   { opacity: 0; transform: translate( 0px, 0px) rotate(  0deg) scale(0.8); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(26px, 46px) rotate( 15deg) scale(1.15); }
+}
+@keyframes lbit-fly-6 {
+  0%   { opacity: 0; transform: translate(  0px,   0px) rotate(  0deg) scale(0.8); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(-26px, -42px) rotate(-12deg) scale(1.15); }
+}
+
+/* ---- Desktop: loader fills the right panel ---- */
+@media (min-width: 900px) {
+  .fwshk-loader {
+    margin-top: 0;
+    height: 100%;
+    box-shadow: none;
+    border: none;
+    border-left: 3px solid #FFFDF7;
+    min-height: unset;
+  }
+}
+
 @media (max-width: 640px) {
   .app-container {
     padding: 82px 14px 48px;
