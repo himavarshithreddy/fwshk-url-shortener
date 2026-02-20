@@ -639,6 +639,16 @@ nav[aria-label="Site navigation"] {
   font-weight: 700;
   color: #FFFDF7;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.seo-feature-icon {
+  width: 22px;
+  height: 22px;
+  color: #ff6600;
+  flex-shrink: 0;
 }
 
 .seo-feature p {

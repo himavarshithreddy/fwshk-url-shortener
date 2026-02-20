@@ -372,19 +372,31 @@ function Main() {
         <h2 className="seo-content-heading">Why Choose Fwshk?</h2>
         <div className="seo-features">
           <div className="seo-feature">
-            <h3>⚡ Instant Shortening</h3>
+            <h3>
+              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Instant Shortening
+            </h3>
             <p>Paste any long URL and get a short, shareable link in seconds. No sign-up or account required.</p>
           </div>
           <div className="seo-feature">
-            <h3>🎯 Custom Short Codes</h3>
+            <h3>
+              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22l0-6"/><path d="M21 3l-9 9"/><path d="M3 3l9 9"/><path d="M12 12l0 4"/></svg>
+              Custom Short Codes
+            </h3>
             <p>Create branded short links with your own custom codes using letters, numbers, and hyphens.</p>
           </div>
           <div className="seo-feature">
-            <h3>📊 Click Tracking</h3>
+            <h3>
+              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 5-6"/></svg>
+              Click Tracking
+            </h3>
             <p>Monitor link performance with built-in click analytics. See exactly how many times your link was visited.</p>
           </div>
           <div className="seo-feature">
-            <h3>⏳ Link Expiration</h3>
+            <h3>
+              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Link Expiration
+            </h3>
             <p>Set your links to expire after 1 hour, 1 day, 7 days, or 30 days — or keep them forever.</p>
           </div>
         </div>
