@@ -297,7 +297,9 @@ function Main() {
     const canvas = qrRef.current?.querySelector('canvas');
     if (!canvas) return;
     try {
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('Failed to create blob')), 'image/png');
+      });
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     } catch {
       // Fallback: silently fail if clipboard API is unavailable
