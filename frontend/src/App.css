@@ -44,7 +44,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 90px 20px 0;
+  padding: 20px 20px 0;
 }
 
 /* Two-column layout for the main page */
@@ -397,10 +397,14 @@ body {
 
 /* ---- Navigation Buttons ---- */
 
+nav[aria-label="Site navigation"] {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
 .track-links-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
   padding: 12px 18px;
   border: 3px solid #FFFDF7;
   border-radius: 0;
@@ -414,7 +418,6 @@ body {
   cursor: pointer;
   box-shadow: 4px 4px 0px #FFFDF7;
   transition: box-shadow 0.1s ease, transform 0.1s ease;
-  z-index: 1000;
   text-decoration: none;
 }
 
@@ -426,13 +429,6 @@ body {
 .track-links-btn:active {
   box-shadow: 2px 2px 0px #FFFDF7;
   transform: translate(2px, 2px);
-}
-
-.top-left-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
 }
 
 .go-to-shortener-btn {
@@ -737,7 +733,7 @@ body {
 /* Desktop: two-column layout */
 @media (min-width: 900px) {
   .app-container {
-    padding: 80px 40px 0;
+    padding: 20px 40px 0;
     align-items: center;
   }
 
@@ -1254,7 +1250,7 @@ body {
 
 @media (max-width: 640px) {
   .app-container {
-    padding: 82px 14px 48px;
+    padding: 14px 14px 48px;
   }
 
   .left-panel,
@@ -1269,16 +1265,9 @@ body {
 
   .track-links-btn,
   .go-to-shortener-btn {
-    top: 12px;
-    right: 12px;
     padding: 10px 14px;
     font-size: 0.75rem;
     box-shadow: 3px 3px 0px #FFFDF7;
-  }
-
-  .top-left-btn {
-    top: 12px;
-    left: 12px;
   }
 
   .option-buttons {
