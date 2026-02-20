@@ -784,14 +784,11 @@ nav[aria-label="Site navigation"] {
   }
 
   .empty-state {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
     text-align: center;
-    gap: 0;
-    overflow: hidden;
     opacity: 0.55;
   }
 
@@ -1275,40 +1272,6 @@ nav[aria-label="Site navigation"] {
    Shown in the right panel before any URL is shortened.
    ====================================================== */
 
-/* ---- Scrolling ticker strip ---- */
-
-.empty-ticker {
-  background-color: #ffe500;
-  border-bottom: 3px solid #FFFDF7;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.empty-ticker-inner {
-  display: flex;
-  white-space: nowrap;
-  animation: empty-ticker-scroll 8s linear infinite;
-}
-
-.empty-ticker-text {
-  display: inline-block;
-  flex-shrink: 0;
-  color: #000;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 800;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
-  padding: 9px 24px 9px 0;
-}
-
-@keyframes empty-ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* ---- Main body content ---- */
-
 .empty-body {
   flex: 1;
   display: flex;
@@ -1321,35 +1284,21 @@ nav[aria-label="Site navigation"] {
   text-align: center;
 }
 
-/* ---- Icon display with pulsing border ---- */
-
 .empty-icon-display {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   border: 3px solid #FFFDF7;
-  animation: empty-icon-pulse 2.5s ease-in-out infinite;
+  box-shadow: 4px 4px 0px #FFFDF7;
 }
 
-.empty-icon-char {
-  font-size: 2.2rem;
-  line-height: 1;
-  animation: empty-icon-float 3s ease-in-out infinite;
+.empty-icon-svg {
+  width: 36px;
+  height: 36px;
+  color: #ff6600;
 }
-
-@keyframes empty-icon-pulse {
-  0%, 100% { box-shadow: 0 0 0px #ff6600, 5px 5px 0px #FFFDF7; }
-  50%      { box-shadow: 0 0 12px #ff6600, 5px 5px 0px #ff6600; }
-}
-
-@keyframes empty-icon-float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50%      { transform: translateY(-6px) scale(1.1); }
-}
-
-/* ---- Text styles ---- */
 
 .empty-state .empty-state-text {
   font-size: 1rem;
@@ -1365,124 +1314,6 @@ nav[aria-label="Site navigation"] {
   font-weight: 500;
   color: #9a9a9a;
   letter-spacing: 0.02em;
-}
-
-/* ---- Floating word bits ---- */
-
-.empty-bits {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.ebit {
-  position: absolute;
-  font-size: 0.65rem;
-  font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border: 2px solid;
-  padding: 3px 7px;
-  opacity: 0;
-}
-
-.ebit-1 { top: 18%; left: 6%;  border-color: #ff6600; color: #ff6600; animation: ebit-drift-1 4.0s ease-in-out infinite 0.2s; }
-.ebit-2 { top: 25%; right: 8%; border-color: #ffe500; color: #ffe500; animation: ebit-drift-2 3.5s ease-in-out infinite 0.8s; }
-.ebit-3 { bottom: 30%; left: 10%; border-color: #FFFDF7; color: #FFFDF7; animation: ebit-drift-3 4.5s ease-in-out infinite 1.4s; }
-.ebit-4 { bottom: 20%; right: 10%; border-color: #ff6600; color: #ff6600; animation: ebit-drift-4 3.8s ease-in-out infinite 0.5s; }
-.ebit-5 { top: 55%; left: 5%;  border-color: #ffe500; color: #ffe500; animation: ebit-drift-5 4.2s ease-in-out infinite 1.0s; }
-.ebit-6 { top: 40%; right: 6%; border-color: #FFFDF7; color: #FFFDF7; animation: ebit-drift-6 3.6s ease-in-out infinite 1.8s; }
-
-@keyframes ebit-drift-1 {
-  0%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  20%      { opacity: 0.6; }
-  50%      { opacity: 0.6; transform: translate(8px, -12px) rotate(-5deg); }
-  80%      { opacity: 0.6; }
-}
-@keyframes ebit-drift-2 {
-  0%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  20%      { opacity: 0.6; }
-  50%      { opacity: 0.6; transform: translate(-10px, 8px) rotate(4deg); }
-  80%      { opacity: 0.6; }
-}
-@keyframes ebit-drift-3 {
-  0%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  20%      { opacity: 0.6; }
-  50%      { opacity: 0.6; transform: translate(12px, -6px) rotate(3deg); }
-  80%      { opacity: 0.6; }
-}
-@keyframes ebit-drift-4 {
-  0%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  20%      { opacity: 0.6; }
-  50%      { opacity: 0.6; transform: translate(-8px, -10px) rotate(-6deg); }
-  80%      { opacity: 0.6; }
-}
-@keyframes ebit-drift-5 {
-  0%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  20%      { opacity: 0.6; }
-  50%      { opacity: 0.6; transform: translate(6px, 10px) rotate(5deg); }
-  80%      { opacity: 0.6; }
-}
-@keyframes ebit-drift-6 {
-  0%, 100% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  20%      { opacity: 0.6; }
-  50%      { opacity: 0.6; transform: translate(-12px, -8px) rotate(-4deg); }
-  80%      { opacity: 0.6; }
-}
-
-/* ---- CRT scanline overlay ---- */
-
-.empty-scanlines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 4;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 2px,
-    rgba(0, 0, 0, 0.08) 4px
-  );
-  animation: empty-scanline-flicker 4s steps(2) infinite;
-}
-
-@keyframes empty-scanline-flicker {
-  0%   { opacity: 0.4; }
-  50%  { opacity: 0.25; }
-  100% { opacity: 0.4; }
-}
-
-/* ---- Bouncing status bar ---- */
-
-.empty-status-bar {
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 10px;
-  background-color: #1a1a1a;
-  border-top: 2px solid #FFFDF7;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.empty-status-word {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.ew1 { color: #ff6600; animation: empty-word-bounce 2.4s ease-in-out infinite 0.0s; }
-.ew2 { color: #ffe500; animation: empty-word-bounce 2.4s ease-in-out infinite 0.6s; }
-.ew3 { color: #FFFDF7; animation: empty-word-bounce 2.4s ease-in-out infinite 1.2s; }
-.ew4 { color: #ff6600; animation: empty-word-bounce 2.4s ease-in-out infinite 1.8s; }
-
-@keyframes empty-word-bounce {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50%      { transform: translateY(-5px) scale(1.1); }
 }
 
 /* ---- Mode Toggle ---- */
