@@ -565,9 +565,9 @@ function Main() {
           <div className="seo-feature">
             <h3>
               <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              Instant Shortening
+              Instant Shortening &amp; QR Codes
             </h3>
-            <p>Paste any long URL and get a short, shareable link in seconds. No sign-up or account required.</p>
+            <p>Paste any long URL and get a short, shareable link in seconds — plus generate a scannable QR code instantly. No sign-up or account required.</p>
           </div>
           <div className="seo-feature">
             <h3>
