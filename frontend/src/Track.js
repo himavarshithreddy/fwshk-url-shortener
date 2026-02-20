@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 function TrackingPage() {
   const [urlCode, setUrlCode] = useState('');
@@ -43,6 +44,39 @@ function TrackingPage() {
 
   return (
     <div className="app-container">
+      <Helmet>
+        <title>Track Your Short Link | Fwshk URL Analytics &amp; Click Stats</title>
+        <meta name="description" content="Track clicks and view analytics for your Fwshk shortened URLs. Enter your short code to see click counts, creation date, and expiration details — completely free." />
+        <meta name="keywords" content="link tracking, URL analytics, click tracking, short link stats, URL click counter, link performance, Fwshk tracking, shortened URL analytics" />
+        <link rel="canonical" href="https://fwshk.vercel.app/track" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://fwshk.vercel.app/track" />
+        <meta property="og:title" content="Track Your Short Link | Fwshk URL Analytics & Click Stats" />
+        <meta property="og:description" content="Track clicks and view analytics for your Fwshk shortened URLs. Enter your short code to see click counts, creation date, and expiration details." />
+        <meta name="twitter:url" content="https://fwshk.vercel.app/track" />
+        <meta name="twitter:title" content="Track Your Short Link | Fwshk URL Analytics & Click Stats" />
+        <meta name="twitter:description" content="Track clicks and view analytics for your Fwshk shortened URLs. Enter your short code to see click counts, creation date, and expiration details." />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://fwshk.vercel.app/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Track Link",
+                "item": "https://fwshk.vercel.app/track"
+              }
+            ]
+          }
+        `}</script>
+      </Helmet>
       <nav aria-label="Site navigation">
         <button onClick={() => navigate('/')} className="track-links-btn">
           ← Shorten a URL

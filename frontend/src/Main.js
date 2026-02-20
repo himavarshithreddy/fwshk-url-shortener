@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
@@ -164,6 +165,33 @@ function Main() {
   };
   return (
     <div className="app-container">
+      <Helmet>
+        <title>Fwshk — Free URL Shortener | Custom Short Links &amp; Click Tracking</title>
+        <meta name="description" content="Fwshk is a fast, free URL shortener. Create custom short links, set expiration dates, choose redirect types, and track clicks — all with zero sign-up required." />
+        <meta name="keywords" content="URL shortener, link shortener, short URL, custom short link, shorten URL, free URL shortener, click tracking, link analytics, short link generator, URL redirect, tiny URL, branded links, link management, URL tracking" />
+        <link rel="canonical" href="https://fwshk.vercel.app/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://fwshk.vercel.app/" />
+        <meta property="og:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
+        <meta property="og:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
+        <meta name="twitter:url" content="https://fwshk.vercel.app/" />
+        <meta name="twitter:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
+        <meta name="twitter:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://fwshk.vercel.app/"
+              }
+            ]
+          }
+        `}</script>
+      </Helmet>
       <nav aria-label="Site navigation">
         <button onClick={navigateToTrackLinks} className="track-links-btn">
           Track your Link
