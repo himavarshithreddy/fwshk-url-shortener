@@ -42,9 +42,9 @@ body {
 .app-container {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 90px 20px 60px;
+  flex-direction: column;
+  align-items: center;
+  padding: 90px 20px 0;
 }
 
 /* Two-column layout for the main page */
@@ -415,6 +415,7 @@ body {
   box-shadow: 4px 4px 0px #FFFDF7;
   transition: box-shadow 0.1s ease, transform 0.1s ease;
   z-index: 1000;
+  text-decoration: none;
 }
 
 .track-links-btn:hover {
@@ -599,12 +600,144 @@ body {
   letter-spacing: 0.04em;
 }
 
+/* ---- SEO Content Section ---- */
+
+.seo-content {
+  max-width: 800px;
+  width: 100%;
+  margin: 48px auto 0;
+  padding: 0 20px;
+}
+
+.seo-content-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ff6600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+  margin-top: 36px;
+}
+
+.seo-content-heading:first-of-type {
+  margin-top: 0;
+}
+
+.seo-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.seo-feature {
+  border: 2px solid #333;
+  padding: 20px;
+  background-color: #222;
+}
+
+.seo-feature h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFDF7;
+  margin-bottom: 8px;
+}
+
+.seo-feature p {
+  font-size: 0.9rem;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+.seo-steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+}
+
+.seo-steps li {
+  counter-increment: step;
+  padding: 12px 0 12px 0;
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.5;
+  border-bottom: 1px solid #333;
+}
+
+.seo-steps li::before {
+  content: counter(step) ". ";
+  font-weight: 700;
+  color: #ff6600;
+}
+
+.seo-steps li:last-child {
+  border-bottom: none;
+}
+
+.seo-steps a {
+  color: #ff6600;
+  text-decoration: underline;
+}
+
+.seo-steps a:hover {
+  color: #ff8833;
+}
+
+/* ---- Site Footer ---- */
+
+.site-footer {
+  width: 100%;
+  margin-top: 48px;
+  border-top: 2px solid #333;
+  padding: 32px 20px;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFFDF7;
+  margin-bottom: 12px;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.footer-nav a {
+  color: #ff6600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.footer-nav a:hover {
+  text-decoration: underline;
+}
+
+.footer-description {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.5;
+}
+
 /* ---- Responsive ---- */
 
 /* Desktop: two-column layout */
 @media (min-width: 900px) {
   .app-container {
-    padding: 80px 40px 40px;
+    padding: 80px 40px 0;
     align-items: center;
   }
 
@@ -976,5 +1109,13 @@ body {
   .redirect-card {
     padding: 32px 20px;
     box-shadow: 5px 5px 0px #FFFDF7;
+  }
+
+  .seo-features {
+    grid-template-columns: 1fr;
+  }
+
+  .seo-content-heading {
+    font-size: 1.3rem;
   }
 }
