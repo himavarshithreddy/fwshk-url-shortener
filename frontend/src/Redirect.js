@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import './App.css';
 import logo from './logo.svg';
 
@@ -50,6 +51,10 @@ function RedirectPage() {
   if (error) {
     return (
       <div className="app-container">
+        <Helmet>
+          <title>Link Not Found | Fwshk URL Shortener</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
         <main className="redirect-card" role="alert">
           <header className="app-header">
             <img src={logo} alt="Fwshk logo" className="app-logo" />
@@ -63,6 +68,11 @@ function RedirectPage() {
 
   return (
     <div className="app-container">
+      <Helmet>
+        <title>Redirecting… | Fwshk URL Shortener</title>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="description" content="You are being redirected to your destination via Fwshk URL Shortener." />
+      </Helmet>
       <main className="redirect-card">
         <header className="app-header">
           <img src={logo} alt="Fwshk logo" className="app-logo" />
