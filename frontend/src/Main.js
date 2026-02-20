@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { QRCodeCanvas } from 'qrcode.react';
 import './App.css';
 import { Link } from 'react-router-dom';
 import logo from './logo.svg';
@@ -101,6 +102,8 @@ function Main() {
   const [customCode, setCustomCode] = useState('');
   const [ttl, setTtl] = useState('');
   const [redirectType, setRedirectType] = useState('308');
+  const [mode, setMode] = useState('shorten');
+  const qrRef = useRef(null);
   const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
 
@@ -201,17 +204,28 @@ function Main() {
   const copyShortCode = () => {
     navigator.clipboard.writeText(shortCode);
   };
+  const downloadQR = () => {
+    const canvas = qrRef.current?.querySelector('canvas');
+    if (!canvas) return;
+    const url = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.download = `fwshk-qr-${shortCode}.png`;
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
   return (
     <div className="app-container">
       <Helmet>
-        <title>Fwshk — Free URL Shortener | Custom Short Links &amp; Click Tracking</title>
-        <meta name="description" content="Fwshk is a fast, free URL shortener. Create custom short links, set expiration dates, choose redirect types, and track clicks — all with zero sign-up required." />
-        <meta name="keywords" content="URL shortener, link shortener, short URL, custom short link, shorten URL, free URL shortener, click tracking, link analytics, short link generator, URL redirect, tiny URL, branded links, link management, URL tracking" />
+        <title>Fwshk — Free URL Shortener &amp; QR Code Generator | Custom Short Links &amp; Click Tracking</title>
+        <meta name="description" content="Fwshk is a fast, free URL shortener and QR code generator. Create custom short links, generate QR codes, set expiration dates, choose redirect types, and track clicks — all with zero sign-up required." />
+        <meta name="keywords" content="URL shortener, link shortener, short URL, custom short link, shorten URL, free URL shortener, click tracking, link analytics, short link generator, URL redirect, tiny URL, branded links, QR code generator, QR code maker, URL to QR code, link QR code" />
         <link rel="canonical" href="https://fwshk.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://fwshk.vercel.app/" />
-        <meta property="og:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
-        <meta property="og:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
+        <meta property="og:title" content="Fwshk — Free URL Shortener & QR Code Generator | Custom Short Links & Click Tracking" />
+        <meta property="og:description" content="Shorten any URL in seconds. Create custom short links, generate QR codes, set expiration dates, and track clicks — fast, free, and no sign-up required." />
         <meta property="og:site_name" content="Fwshk" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:image" content="https://fwshk.vercel.app/logo512.png" />
@@ -219,8 +233,8 @@ function Main() {
         <meta property="og:image:height" content="512" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://fwshk.vercel.app/" />
-        <meta name="twitter:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
-        <meta name="twitter:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
+        <meta name="twitter:title" content="Fwshk — Free URL Shortener & QR Code Generator | Custom Short Links & Click Tracking" />
+        <meta name="twitter:description" content="Shorten any URL in seconds. Create custom short links, generate QR codes, set expiration dates, and track clicks — fast, free, and no sign-up required." />
         <meta name="twitter:image" content="https://fwshk.vercel.app/logo512.png" />
         <script type="application/ld+json">{`
           {
@@ -251,6 +265,26 @@ function Main() {
           </header>
           <p className="subtitle">URLs on diet.</p>
           <form onSubmit={handleSubmit} className="form" aria-label="Shorten a URL">
+            <div className="mode-toggle">
+              <div className="mode-buttons">
+                <button
+                  type="button"
+                  className={`mode-btn ${mode === 'shorten' ? 'active' : ''}`}
+                  onClick={() => setMode('shorten')}
+                  aria-pressed={mode === 'shorten'}
+                >
+                  Shorten URL
+                </button>
+                <button
+                  type="button"
+                  className={`mode-btn ${mode === 'qrcode' ? 'active' : ''}`}
+                  onClick={() => setMode('qrcode')}
+                  aria-pressed={mode === 'qrcode'}
+                >
+                  QR Code
+                </button>
+              </div>
+            </div>
             <label htmlFor="url-input" className="sr-only">Enter URL to shorten</label>
             <input
               id="url-input"
@@ -334,7 +368,7 @@ function Main() {
             </div>
 
             <button type="submit" className="submit-btn" disabled={isLoading}>
-              {isLoading ? 'Shortening...' : 'Shorten'}
+              {isLoading ? (mode === 'qrcode' ? 'Generating...' : 'Shortening...') : (mode === 'qrcode' ? 'Generate QR' : 'Shorten')}
             </button>
           </form>
           {error && <p className="error-message" role="alert">{error}</p>}
@@ -345,24 +379,55 @@ function Main() {
           {isLoading ? (
             <FwshkLoader />
           ) : shortenedUrl ? (
-            <div className="result" aria-live="polite">
-              <h2 className="shortened-text">Shortened URL:</h2>
-              <div className="shortened-url-container">
-                <a href={shortenedUrl} target="_blank" rel="noopener noreferrer" className="shortened-url">
-                  {shortenedUrl}
-                </a>
-                <button onClick={copyToClipboard} className="copy-btn" aria-label="Copy shortened URL to clipboard">Copy</button>
-                <button onClick={copyShortCode} className="copy-btn" aria-label="Copy short code to clipboard">Copy Code</button>
+            mode === 'qrcode' ? (
+              <div className="qr-result" aria-live="polite">
+                <h2 className="qr-result-label">Your QR Code:</h2>
+                <div className="qr-code-frame" ref={qrRef}>
+                  <QRCodeCanvas
+                    value={shortenedUrl}
+                    size={200}
+                    bgColor="#ff6600"
+                    fgColor="#1a1a1a"
+                    level="H"
+                    includeMargin={false}
+                  />
+                </div>
+                <div className="qr-shortened-url">
+                  <a href={shortenedUrl} target="_blank" rel="noopener noreferrer">
+                    {shortenedUrl}
+                  </a>
+                  <button onClick={copyToClipboard} className="qr-copy-btn" aria-label="Copy shortened URL to clipboard">Copy</button>
+                </div>
+                <div className="qr-actions">
+                  <button onClick={downloadQR} className="qr-download-btn" aria-label="Download QR code as PNG">
+                    Download QR Code
+                  </button>
+                  <button onClick={copyShortCode} className="qr-copy-btn" aria-label="Copy short code to clipboard">Copy Code</button>
+                </div>
+                {expiresAt && (
+                  <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
+                )}
               </div>
-              {expiresAt && (
-                <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
-              )}
-            </div>
+            ) : (
+              <div className="result" aria-live="polite">
+                <h2 className="shortened-text">Shortened URL:</h2>
+                <div className="shortened-url-container">
+                  <a href={shortenedUrl} target="_blank" rel="noopener noreferrer" className="shortened-url">
+                    {shortenedUrl}
+                  </a>
+                  <button onClick={copyToClipboard} className="copy-btn" aria-label="Copy shortened URL to clipboard">Copy</button>
+                  <button onClick={copyShortCode} className="copy-btn" aria-label="Copy short code to clipboard">Copy Code</button>
+                </div>
+                {expiresAt && (
+                  <p className="expiry-info">Expires: {new Date(expiresAt).toLocaleString()}</p>
+                )}
+              </div>
+            )
           ) : (
             <div className="empty-state">
-              <span className="empty-state-icon" aria-hidden="true">✂️</span>
-              <p className="empty-state-text">Your shortened URL will appear here</p>
-              <p className="empty-state-hint">Paste a long URL on the left and hit Shorten.</p>
+              <span className="empty-state-icon" aria-hidden="true">{mode === 'qrcode' ? '🔳' : '✂️'}</span>
+              <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
+              <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL on the left and hit Generate QR.' : 'Paste a long URL on the left and hit Shorten.'}</p>
             </div>
           )}
         </section>
@@ -399,25 +464,32 @@ function Main() {
             </h3>
             <p>Set your links to expire after 1 hour, 1 day, 7 days, or 30 days — or keep them forever.</p>
           </div>
+          <div className="seo-feature">
+            <h3>
+              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/><line x1="21" y1="14" x2="21" y2="16"/><line x1="21" y1="19" x2="21" y2="21"/></svg>
+              QR Code Generator
+            </h3>
+            <p>Generate styled QR codes for your shortened links. Download and share them anywhere — perfect for print and mobile.</p>
+          </div>
         </div>
 
         <h2 className="seo-content-heading">How It Works</h2>
         <ol className="seo-steps">
           <li><strong>Paste your URL</strong> — Enter any long URL into the input field above.</li>
           <li><strong>Customize</strong> — Choose a random or custom short code, set expiration, and pick a redirect type.</li>
-          <li><strong>Share</strong> — Copy your shortened link and share it anywhere.</li>
+          <li><strong>Share</strong> — Copy your shortened link or generate a QR code to share it anywhere.</li>
           <li><strong>Track</strong> — Visit the <Link to="/track">tracking page</Link> to view click analytics for your links.</li>
         </ol>
       </section>
 
       <footer className="site-footer">
         <div className="footer-content">
-          <p className="footer-brand">Fwshk — Free URL Shortener</p>
+          <p className="footer-brand">Fwshk — Free URL Shortener &amp; QR Code Generator</p>
           <nav className="footer-nav" aria-label="Footer navigation">
             <Link to="/">Shorten a URL</Link>
             <Link to="/track">Track Your Link</Link>
           </nav>
-          <p className="footer-description">A fast, free URL shortener with custom short codes, link expiration, and click tracking. No sign-up required.</p>
+          <p className="footer-description">A fast, free URL shortener and QR code generator with custom short codes, link expiration, and click tracking. No sign-up required.</p>
         </div>
       </footer>
     </div>

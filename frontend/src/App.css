@@ -1256,6 +1256,173 @@ nav[aria-label="Site navigation"] {
     border-left: 3px solid #FFFDF7;
     min-height: unset;
   }
+
+  .right-panel .qr-result {
+    margin-top: 0;
+    box-shadow: none;
+    border-color: #FFFDF7;
+  }
+}
+
+/* ---- Mode Toggle ---- */
+.mode-toggle {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mode-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 3px solid #FFFDF7;
+}
+
+.mode-btn {
+  padding: 14px;
+  border: none;
+  background-color: #2e2e2e;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  color: #9a9a9a;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.mode-btn:first-child {
+  border-right: 2px solid #FFFDF7;
+}
+
+.mode-btn:hover {
+  background-color: #333;
+  color: #FFFDF7;
+}
+
+.mode-btn.active {
+  background-color: #ff6600;
+  color: #000;
+  font-weight: 700;
+}
+
+/* ---- QR Code Result ---- */
+.qr-result {
+  margin-top: 28px;
+  padding: 28px 22px;
+  background-color: #242424;
+  border: 3px solid #FFFDF7;
+  box-shadow: 5px 5px 0px #FFFDF7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.qr-result-label {
+  color: #FFFDF7;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  width: 100%;
+}
+
+.qr-code-frame {
+  border: 3px solid #FFFDF7;
+  box-shadow: 5px 5px 0px #ff6600;
+  padding: 20px;
+  background-color: #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-code-frame canvas {
+  display: block;
+}
+
+.qr-shortened-url {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 3px solid #FFFDF7;
+}
+
+.qr-shortened-url a {
+  color: #FFFDF7;
+  font-size: 0.9rem;
+  font-weight: 600;
+  word-break: break-all;
+  text-decoration: none;
+  flex: 1;
+  padding: 12px 14px;
+  background-color: #2e2e2e;
+  display: flex;
+  align-items: center;
+}
+
+.qr-shortened-url a:hover {
+  background-color: #ffe500;
+  color: #000;
+}
+
+.qr-actions {
+  width: 100%;
+  display: flex;
+  gap: 0;
+  border: 3px solid #FFFDF7;
+}
+
+.qr-download-btn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 0;
+  background-color: #ff6600;
+  color: #000;
+  font-size: 0.85rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.qr-download-btn:hover {
+  background-color: #ffe500;
+}
+
+.qr-download-btn:active {
+  background-color: #cc5200;
+}
+
+.qr-copy-btn {
+  padding: 14px 20px;
+  border: none;
+  border-left: 3px solid #FFFDF7;
+  border-radius: 0;
+  background-color: #FFFDF7;
+  color: #000;
+  font-size: 0.85rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.1s ease;
+}
+
+.qr-copy-btn:hover {
+  background-color: #ff6600;
+}
+
+.qr-copy-btn:active {
+  background-color: #cc5200;
 }
 
 @media (max-width: 640px) {
@@ -1322,5 +1489,22 @@ nav[aria-label="Site navigation"] {
 
   .seo-content-heading {
     font-size: 1.3rem;
+  }
+
+  .qr-result {
+    padding: 20px 16px;
+  }
+
+  .qr-code-frame {
+    padding: 16px;
+  }
+
+  .qr-actions {
+    flex-direction: column;
+  }
+
+  .qr-copy-btn {
+    border-left: none;
+    border-top: 3px solid #FFFDF7;
   }
 }
