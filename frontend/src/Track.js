@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 function TrackingPage() {
   const [searchParams] = useSearchParams();
   const [urlCode, setUrlCode] = useState(searchParams.get('q') || '');
@@ -8,7 +8,6 @@ function TrackingPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
-  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setUrlCode(event.target.value);
@@ -57,7 +56,9 @@ function TrackingPage() {
         <meta property="og:site_name" content="Fwshk" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:image" content="https://fwshk.vercel.app/logo512.png" />
-        <meta name="twitter:card" content="summary" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://fwshk.vercel.app/track" />
         <meta name="twitter:title" content="Track Your Short Link | Fwshk URL Analytics & Click Stats" />
         <meta name="twitter:description" content="Track clicks and view analytics for your Fwshk shortened URLs. Enter your short code to see click counts, creation date, and expiration details." />
@@ -84,9 +85,9 @@ function TrackingPage() {
         `}</script>
       </Helmet>
       <nav aria-label="Site navigation">
-        <button onClick={() => navigate('/')} className="track-links-btn">
+        <Link to="/" className="track-links-btn">
           ← Shorten a URL
-        </button>
+        </Link>
       </nav>
       <main className="form-container">
         <header>
@@ -129,6 +130,17 @@ function TrackingPage() {
           </section>
         )}
       </main>
+
+      <footer className="site-footer">
+        <div className="footer-content">
+          <p className="footer-brand">Fwshk — Free URL Shortener</p>
+          <nav className="footer-nav" aria-label="Footer navigation">
+            <Link to="/">Shorten a URL</Link>
+            <Link to="/track">Track Your Link</Link>
+          </nav>
+          <p className="footer-description">A fast, free URL shortener with custom short codes, link expiration, and click tracking. No sign-up required.</p>
+        </div>
+      </footer>
     </div>
   );
 }

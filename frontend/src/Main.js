@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import './App.css';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from './logo.svg';
 
 const TICKER = 'FWSHK — PUTTING YOUR URL ON A DIET — HOLD TIGHT — TRIMMING THE FAT — ALMOST SKINNY — ';
@@ -72,7 +72,6 @@ function Main() {
   const [expiresAt, setExpiresAt] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setUrl(event.target.value);
@@ -160,9 +159,6 @@ function Main() {
   const copyShortCode = () => {
     navigator.clipboard.writeText(shortCode);
   };
-  const navigateToTrackLinks = () => {
-    navigate('/track'); // Navigate to the /track route
-  };
   return (
     <div className="app-container">
       <Helmet>
@@ -177,7 +173,9 @@ function Main() {
         <meta property="og:site_name" content="Fwshk" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:image" content="https://fwshk.vercel.app/logo512.png" />
-        <meta name="twitter:card" content="summary" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://fwshk.vercel.app/" />
         <meta name="twitter:title" content="Fwshk — Free URL Shortener | Custom Short Links & Click Tracking" />
         <meta name="twitter:description" content="Shorten any URL in seconds. Create custom short links, set expiration dates, and track clicks — fast, free, and no sign-up required." />
@@ -198,9 +196,9 @@ function Main() {
         `}</script>
       </Helmet>
       <nav aria-label="Site navigation">
-        <button onClick={navigateToTrackLinks} className="track-links-btn">
+        <Link to="/track" className="track-links-btn">
           Track your Link
-        </button>
+        </Link>
       </nav>
       <main className="main-layout">
         {/* Left panel — branding + form */}
@@ -327,8 +325,46 @@ function Main() {
           )}
         </section>
       </main>
-      <footer className="sr-only">
-        <p>Fwshk — A fast, free URL shortener with custom short codes, link expiration, and click tracking.</p>
+
+      <section className="seo-content" aria-label="About Fwshk URL Shortener">
+        <h2 className="seo-content-heading">Why Choose Fwshk?</h2>
+        <div className="seo-features">
+          <div className="seo-feature">
+            <h3>⚡ Instant Shortening</h3>
+            <p>Paste any long URL and get a short, shareable link in seconds. No sign-up or account required.</p>
+          </div>
+          <div className="seo-feature">
+            <h3>🎯 Custom Short Codes</h3>
+            <p>Create branded short links with your own custom codes using letters, numbers, and hyphens.</p>
+          </div>
+          <div className="seo-feature">
+            <h3>📊 Click Tracking</h3>
+            <p>Monitor link performance with built-in click analytics. See exactly how many times your link was visited.</p>
+          </div>
+          <div className="seo-feature">
+            <h3>⏳ Link Expiration</h3>
+            <p>Set your links to expire after 1 hour, 1 day, 7 days, or 30 days — or keep them forever.</p>
+          </div>
+        </div>
+
+        <h2 className="seo-content-heading">How It Works</h2>
+        <ol className="seo-steps">
+          <li><strong>Paste your URL</strong> — Enter any long URL into the input field above.</li>
+          <li><strong>Customize</strong> — Choose a random or custom short code, set expiration, and pick a redirect type.</li>
+          <li><strong>Share</strong> — Copy your shortened link and share it anywhere.</li>
+          <li><strong>Track</strong> — Visit the <Link to="/track">tracking page</Link> to view click analytics for your links.</li>
+        </ol>
+      </section>
+
+      <footer className="site-footer">
+        <div className="footer-content">
+          <p className="footer-brand">Fwshk — Free URL Shortener</p>
+          <nav className="footer-nav" aria-label="Footer navigation">
+            <Link to="/">Shorten a URL</Link>
+            <Link to="/track">Track Your Link</Link>
+          </nav>
+          <p className="footer-description">A fast, free URL shortener with custom short codes, link expiration, and click tracking. No sign-up required.</p>
+        </div>
       </footer>
     </div>
   );
