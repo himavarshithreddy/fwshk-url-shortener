@@ -9,6 +9,7 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
 function FwshkLoader() {
   const scrambleRef = useRef(null);
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     const el = scrambleRef.current;
@@ -21,14 +22,31 @@ function FwshkLoader() {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const id = setInterval(() => {
+      setPercent(p => (p + Math.floor(Math.random() * 9) + 1) % 100);
+    }, 220);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <div className="fwshk-loader" role="status" aria-label="Shortening your URL">
+      {/* CRT scanline overlay */}
+      <div className="loader-scanlines" aria-hidden="true" />
+
       <div className="loader-ticker">
         <div className="loader-ticker-inner">
           <span className="loader-ticker-text">{TICKER}</span>
           <span className="loader-ticker-text" aria-hidden="true">{TICKER}</span>
         </div>
       </div>
+
+      {/* Compression progress bar */}
+      <div className="loader-progress-track" aria-hidden="true">
+        <div className="loader-progress-fill" style={{ width: `${percent}%` }} />
+        <span className="loader-progress-label">COMPRESSING {percent}%</span>
+      </div>
+
       <div className="loader-machine-box">
         <div className="loader-url-in">
           <span className="loader-url-text">
@@ -36,11 +54,32 @@ function FwshkLoader() {
           </span>
         </div>
         <div className="loader-arrow-zone">→→→</div>
-        <div className="loader-code-display">
+        <div className="loader-code-display loader-glitch-border">
           <span className="loader-slash">/</span>
-          <span ref={scrambleRef} className="loader-scramble">??????</span>
+          <span ref={scrambleRef} className="loader-scramble loader-glitch-text">??????</span>
         </div>
       </div>
+
+      {/* Spark / particle effects */}
+      <div className="loader-sparks" aria-hidden="true">
+        <span className="spark spark-1" />
+        <span className="spark spark-2" />
+        <span className="spark spark-3" />
+        <span className="spark spark-4" />
+        <span className="spark spark-5" />
+        <span className="spark spark-6" />
+        <span className="spark spark-7" />
+        <span className="spark spark-8" />
+      </div>
+
+      {/* Bouncing status text */}
+      <div className="loader-status-bar" aria-hidden="true">
+        <span className="loader-status-word w1">CHOMP</span>
+        <span className="loader-status-word w2">SNIP</span>
+        <span className="loader-status-word w3">CRUNCH</span>
+        <span className="loader-status-word w4">TRIM</span>
+      </div>
+
       <div className="loader-bits-container" aria-hidden="true">
         <span className="lbit lbit-1">https://</span>
         <span className="lbit lbit-2">.com</span>
@@ -48,6 +87,9 @@ function FwshkLoader() {
         <span className="lbit lbit-4">?q=</span>
         <span className="lbit lbit-5">www.</span>
         <span className="lbit lbit-6">#!</span>
+        <span className="lbit lbit-7">&amp;ref</span>
+        <span className="lbit lbit-8">.html</span>
+        <span className="lbit lbit-9">://</span>
       </div>
     </div>
   );
