@@ -794,7 +794,12 @@ nav[aria-label="Site navigation"] {
   }
 
   .empty-state-icon {
-    font-size: 2.5rem;
+    color: #ff6600;
+  }
+
+  .empty-state-icon svg {
+    width: 48px;
+    height: 48px;
   }
 
   .empty-state-text {
@@ -973,6 +978,28 @@ nav[aria-label="Site navigation"] {
   line-height: 1;
   min-width: 6ch;
   text-align: left;
+}
+
+/* ---- QR Code Loader Grid ---- */
+
+.qr-loader-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.qr-loader-cell {
+  background-color: #333;
+  border: 1px solid #444;
+  transition: background-color 0.1s ease;
+}
+
+.qr-loader-cell.filled {
+  background-color: #ff6600;
+  border-color: #ff6600;
 }
 
 /* ---- Floating URL fragment bits ---- */

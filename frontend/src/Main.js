@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import logo from './logo.svg';
 
 const TICKER = 'FWSHK — PUTTING YOUR URL ON A DIET — HOLD TIGHT — TRIMMING THE FAT — ALMOST SKINNY — ';
+const QR_TICKER = 'FWSHK — GENERATING YOUR QR CODE — ENCODING DATA — PIXEL BY PIXEL — ALMOST READY — ';
 const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
 function FwshkLoader() {
@@ -91,6 +92,83 @@ function FwshkLoader() {
         <span className="lbit lbit-7">&amp;ref</span>
         <span className="lbit lbit-8">.html</span>
         <span className="lbit lbit-9">://</span>
+      </div>
+    </div>
+  );
+}
+
+function QRCodeLoader() {
+  const [percent, setPercent] = useState(0);
+  const [grid, setGrid] = useState([]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setPercent(p => (p + Math.floor(Math.random() * 9) + 1) % 100);
+    }, 220);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setGrid(
+        Array.from({ length: 25 }, () => Math.random() > 0.5)
+      );
+    }, 150);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="fwshk-loader" role="status" aria-label="Generating your QR code">
+      <div className="loader-scanlines" aria-hidden="true" />
+
+      <div className="loader-ticker">
+        <div className="loader-ticker-inner">
+          <span className="loader-ticker-text">{QR_TICKER}</span>
+          <span className="loader-ticker-text" aria-hidden="true">{QR_TICKER}</span>
+        </div>
+      </div>
+
+      <div className="loader-progress-track" aria-hidden="true">
+        <div className="loader-progress-fill" style={{ width: `${percent}%` }} />
+        <span className="loader-progress-label">ENCODING {percent}%</span>
+      </div>
+
+      <div className="loader-machine-box">
+        <div className="qr-loader-grid" aria-hidden="true">
+          {grid.map((filled, i) => (
+            <span key={i} className={`qr-loader-cell ${filled ? 'filled' : ''}`} />
+          ))}
+        </div>
+      </div>
+
+      <div className="loader-sparks" aria-hidden="true">
+        <span className="spark spark-1" />
+        <span className="spark spark-2" />
+        <span className="spark spark-3" />
+        <span className="spark spark-4" />
+        <span className="spark spark-5" />
+        <span className="spark spark-6" />
+        <span className="spark spark-7" />
+        <span className="spark spark-8" />
+      </div>
+
+      <div className="loader-status-bar" aria-hidden="true">
+        <span className="loader-status-word w1">SCAN</span>
+        <span className="loader-status-word w2">ENCODE</span>
+        <span className="loader-status-word w3">PIXEL</span>
+        <span className="loader-status-word w4">RENDER</span>
+      </div>
+
+      <div className="loader-bits-container" aria-hidden="true">
+        <span className="lbit lbit-1">▪▪▪</span>
+        <span className="lbit lbit-2">▫▪▫</span>
+        <span className="lbit lbit-3">▪▫▪</span>
+        <span className="lbit lbit-4">▫▫▪</span>
+        <span className="lbit lbit-5">▪▪▫</span>
+        <span className="lbit lbit-6">▫▪▪</span>
+        <span className="lbit lbit-7">▪▫▫</span>
+        <span className="lbit lbit-8">▫▫▫</span>
+        <span className="lbit lbit-9">▪▫▪</span>
       </div>
     </div>
   );
@@ -214,6 +292,18 @@ function Main() {
     document.body.appendChild(link);
     link.click();
     link.remove();
+  };
+  const copyQRImage = async () => {
+    const canvas = qrRef.current?.querySelector('canvas');
+    if (!canvas) return;
+    try {
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('Failed to create blob')), 'image/png');
+      });
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    } catch {
+      // Fallback: silently fail if clipboard API is unavailable
+    }
   };
   return (
     <div className="app-container">
@@ -377,7 +467,7 @@ function Main() {
         {/* Right panel — result / loader */}
         <section className="right-panel" aria-label="Shortened URL result">
           {isLoading ? (
-            <FwshkLoader />
+            mode === 'qrcode' ? <QRCodeLoader /> : <FwshkLoader />
           ) : shortenedUrl ? (
             mode === 'qrcode' ? (
               <div className="qr-result" aria-live="polite">
@@ -402,6 +492,7 @@ function Main() {
                   <button onClick={downloadQR} className="qr-download-btn" aria-label="Download QR code as PNG">
                     Download QR Code
                   </button>
+                  <button onClick={copyQRImage} className="qr-copy-btn" aria-label="Copy QR code image to clipboard">Copy Image</button>
                   <button onClick={copyShortCode} className="qr-copy-btn" aria-label="Copy short code to clipboard">Copy Code</button>
                 </div>
                 {expiresAt && (
@@ -425,7 +516,13 @@ function Main() {
             )
           ) : (
             <div className="empty-state">
-              <span className="empty-state-icon" aria-hidden="true">{mode === 'qrcode' ? '🔳' : '✂️'}</span>
+              <span className="empty-state-icon" aria-hidden="true">
+                {mode === 'qrcode' ? (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="48" height="48"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/><line x1="21" y1="14" x2="21" y2="16"/><line x1="21" y1="19" x2="21" y2="21"/></svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="48" height="48"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                )}
+              </span>
               <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
               <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL on the left and hit Generate QR.' : 'Paste a long URL on the left and hit Shorten.'}</p>
             </div>
@@ -463,13 +560,6 @@ function Main() {
               Link Expiration
             </h3>
             <p>Set your links to expire after 1 hour, 1 day, 7 days, or 30 days — or keep them forever.</p>
-          </div>
-          <div className="seo-feature">
-            <h3>
-              <svg className="seo-feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/><line x1="21" y1="14" x2="21" y2="16"/><line x1="21" y1="19" x2="21" y2="21"/></svg>
-              QR Code Generator
-            </h3>
-            <p>Generate styled QR codes for your shortened links. Download and share them anywhere — perfect for print and mobile.</p>
           </div>
         </div>
 
