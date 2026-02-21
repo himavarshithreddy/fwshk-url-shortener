@@ -20,40 +20,78 @@ const QR_THEME = {
   backgroundOptions: { color: '#00000000' },
 };
 
-function drawNeoBrutalismMask(ctx, w, h) {
-  ctx.fillStyle = '#1a1a1a';
+function drawGlitchMask(ctx, w, h) {
+  ctx.fillStyle = '#0d0d0d';
   ctx.fillRect(0, 0, w, h);
 
-  ctx.save();
-  ctx.translate(w / 2, h / 2);
-  ctx.rotate(Math.PI / 5);
-  ctx.fillStyle = '#ff6600';
-  ctx.fillRect(-w * 0.9, -h * 0.09, w * 1.8, h * 0.18);
-  ctx.fillStyle = '#e65100';
-  ctx.fillRect(-w * 0.9, h * 0.12, w * 1.8, h * 0.09);
-  ctx.restore();
+  const glitchColors = ['#00FFFF', '#FF00FF', '#00FF41', '#FF3366', '#FFFF00', '#7B00FF'];
 
-  ctx.beginPath();
-  ctx.arc(w * 0.38, h * 0.48, w * 0.13, 0, Math.PI * 2);
-  ctx.fillStyle = '#ff9100';
-  ctx.fill();
+  // Horizontal glitch bars — displaced data-corruption stripes
+  const barCount = 14;
+  for (let i = 0; i < barCount; i++) {
+    // Knuth multiplicative hash for deterministic pseudo-random positioning
+    const y = (((i * 7 + 3) * 2654435761) >>> 0) % h;
+    const barH = 2 + ((i * 13 + 5) % 7) * (h * 0.012);
+    const xOff = ((i % 3) - 1) * w * 0.12;
+    ctx.fillStyle = glitchColors[i % glitchColors.length];
+    ctx.globalAlpha = 0.6 + (i % 4) * 0.1;
+    ctx.fillRect(xOff, y, w + Math.abs(xOff), barH);
+  }
+  ctx.globalAlpha = 1;
 
-  ctx.fillStyle = '#ff3d00';
-  ctx.fillRect(w * 0.62, h * 0.68, w * 0.32, h * 0.26);
+  // RGB channel-split blocks — chromatic aberration effect
+  const splits = [
+    [0.05, 0.15, 0.35, 0.10],
+    [0.50, 0.55, 0.25, 0.08],
+    [0.20, 0.70, 0.30, 0.12],
+    [0.60, 0.30, 0.20, 0.06],
+    [0.10, 0.45, 0.28, 0.09],
+  ];
+  for (const [bx, by, bw, bh] of splits) {
+    ctx.fillStyle = 'rgba(255, 0, 60, 0.45)';
+    ctx.fillRect(bx * w + 3, by * h, bw * w, bh * h);
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.45)';
+    ctx.fillRect(bx * w - 3, by * h, bw * w, bh * h);
+  }
 
-  ctx.fillStyle = '#ffab00';
-  ctx.fillRect(w * 0.58, h * 0.35, w * 0.13, h * 0.13);
+  // Static noise scatter (LCG pseudo-random generator)
+  const step = 4;
+  let seed = 42;
+  for (let x = 0; x < w; x += step) {
+    for (let y = 0; y < h; y += step) {
+      seed = ((seed * 1103515245 + 12345) & 0x7fffffff) >>> 0;
+      if ((seed % 100) > 82) {
+        const b = (seed >> 8) & 0xff;
+        ctx.fillStyle = `rgb(${b},${b},${b})`;
+        ctx.globalAlpha = 0.25 + ((seed >> 16) & 0x0f) * 0.03;
+        ctx.fillRect(x, y, step, step);
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
 
-  ctx.beginPath();
-  ctx.moveTo(w * 0.3, h * 0.95);
-  ctx.lineTo(w * 0.5, h * 0.7);
-  ctx.lineTo(w * 0.5, h * 0.95);
-  ctx.closePath();
-  ctx.fillStyle = '#ff6600';
-  ctx.fill();
+  // Scanline overlay
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+  for (let y = 0; y < h; y += 4) {
+    ctx.fillRect(0, y, w, 2);
+  }
 
+  // Large displaced glitch blocks
+  const blocks = [
+    [0.02, 0.38, 0.22, 0.10, '#FF00FF'],
+    [0.55, 0.10, 0.18, 0.14, '#00FFFF'],
+    [0.35, 0.78, 0.28, 0.09, '#00FF41'],
+  ];
+  for (const [bx, by, bw, bh, color] of blocks) {
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.65;
+    ctx.fillRect(bx * w, by * h, bw * w, bh * h);
+  }
+  ctx.globalAlpha = 1;
+
+  // Preserve QR finder pattern corners (keep them scannable)
   const fp = w * 0.28;
-  ctx.fillStyle = '#1a1a1a';
+  ctx.fillStyle = '#0d0d0d';
   ctx.fillRect(0, 0, fp, fp);
   ctx.fillRect(w - fp, 0, fp, fp);
   ctx.fillRect(0, h - fp, fp, fp);
@@ -273,7 +311,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       patternCanvas.width = w;
       patternCanvas.height = h;
       const patternCtx = patternCanvas.getContext('2d');
-      drawNeoBrutalismMask(patternCtx, w, h);
+      drawGlitchMask(patternCtx, w, h);
 
       patternCtx.globalCompositeOperation = 'destination-in';
       patternCtx.drawImage(qrCanvas, 0, 0);
