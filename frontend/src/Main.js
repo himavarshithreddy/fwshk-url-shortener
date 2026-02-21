@@ -11,9 +11,19 @@ const QR_TICKER = 'FWSHK — GENERATING YOUR QR CODE — HOLD TIGHT — ENCODING
 const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
 const QR_THEME = {
-  dotsOptions: { color: '#1a1a1a', type: 'square' },
-  cornersSquareOptions: { color: '#1a1a1a', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#ff6600', type: 'square' },
+  dotsOptions: {
+    type: 'classy-rounded',
+    gradient: {
+      type: 'linear',
+      rotation: Math.PI / 4,
+      colorStops: [
+        { offset: 0, color: '#1a1a1a' },
+        { offset: 1, color: '#ff6600' },
+      ],
+    },
+  },
+  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
+  cornersDotOptions: { color: '#1a1a1a', type: 'dot' },
   backgroundOptions: { color: '#FFFDF7' },
 };
 
