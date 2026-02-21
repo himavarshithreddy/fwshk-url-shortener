@@ -472,51 +472,53 @@ function Main() {
     // QR code
     ctx.drawImage(qrCanvas, fx + border + padding, fy + border + padding, qrW, qrH);
 
+    // Label layout constants
+    const px = 8;             // horizontal padding
+    const py = 4;             // vertical padding
+    const lb = 2;             // label border width
+    const ls = 2;             // label shadow offset
+    const fontSize = 10;
+    const smallFontSize = 8;
+    const labelFont = (size) => `800 ${size}px "Syne", sans-serif`;
+
     // Corner label helper
-    const drawLabel = (text, lx, ly, bg, fontSize) => {
-      const px = 8, py = 4, lb = 2, ls = 2;
-      ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
+    const drawLabel = (text, lx, ly, bg, size) => {
+      ctx.font = labelFont(size);
       const tw = ctx.measureText(text).width;
       const bw = lb + px + tw + px + lb;
-      const bh = lb + py + fontSize + py + lb;
+      const bh = lb + py + size + py + lb;
 
       ctx.fillStyle = '#1a1a1a';
       ctx.fillRect(lx + ls, ly + ls, bw, bh);
-      ctx.fillStyle = '#1a1a1a';
       ctx.fillRect(lx, ly, bw, bh);
       ctx.fillStyle = bg;
       ctx.fillRect(lx + lb, ly + lb, bw - 2 * lb, bh - 2 * lb);
 
       ctx.fillStyle = '#1a1a1a';
-      ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
+      ctx.font = labelFont(size);
       ctx.textBaseline = 'top';
       ctx.fillText(text, lx + lb + px, ly + lb + py);
       return bw;
     };
 
-    const fontSize = 10;
-    const smallFontSize = 8;
-    const lb = 2, px = 8, py = 4;
+    const measureLabel = (text, size) => {
+      ctx.font = labelFont(size);
+      return lb + px + ctx.measureText(text).width + px + lb;
+    };
 
     // Top-left: FWSHK (orange)
     drawLabel('FWSHK', fx - 4, fy - 12, '#ff6600', fontSize);
 
     // Top-right: SCAN (cream)
-    ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
-    const scanTw = ctx.measureText('SCAN').width;
-    const scanBw = lb + px + scanTw + px + lb;
-    drawLabel('SCAN', fx + frameW + 4 - scanBw, fy - 12, '#FFFDF7', fontSize);
+    drawLabel('SCAN', fx + frameW + 4 - measureLabel('SCAN', fontSize), fy - 12, '#FFFDF7', fontSize);
 
     // Bottom-left: ■■■ (cream)
     const blLabelH = lb + py + smallFontSize + py + lb;
     drawLabel('\u25A0\u25A0\u25A0', fx - 4, fy + frameH + 12 - blLabelH, '#FFFDF7', smallFontSize);
 
     // Bottom-right: QR (orange)
-    ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
-    const qrLabelTw = ctx.measureText('QR').width;
-    const qrLabelBw = lb + px + qrLabelTw + px + lb;
     const brLabelH = lb + py + fontSize + py + lb;
-    drawLabel('QR', fx + frameW + 4 - qrLabelBw, fy + frameH + 12 - brLabelH, '#ff6600', fontSize);
+    drawLabel('QR', fx + frameW + 4 - measureLabel('QR', fontSize), fy + frameH + 12 - brLabelH, '#ff6600', fontSize);
 
     return c;
   };
