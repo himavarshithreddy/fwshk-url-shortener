@@ -10,6 +10,63 @@ const TICKER = 'FWSHK — PUTTING YOUR URL ON A DIET — HOLD TIGHT — TRIMMING
 const QR_TICKER = 'FWSHK — GENERATING YOUR QR CODE — HOLD TIGHT — ENCODING PIXELS — ALMOST READY — ';
 const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
+const QR_THEMES = [
+  {
+    id: 'classic',
+    label: 'Classic',
+    preview: { bg: '#FFFDF7', dot: '#1a1a1a', accent: '#ff6600' },
+    dotsOptions: { color: '#1a1a1a', type: 'square' },
+    cornersSquareOptions: { color: '#1a1a1a', type: 'extra-rounded' },
+    cornersDotOptions: { color: '#ff6600', type: 'dot' },
+    backgroundOptions: { color: '#FFFDF7' },
+  },
+  {
+    id: 'neon',
+    label: 'Neon',
+    preview: { bg: '#0d0d0d', dot: '#39ff14', accent: '#ff00ff' },
+    dotsOptions: { color: '#39ff14', type: 'rounded' },
+    cornersSquareOptions: { color: '#ff00ff', type: 'extra-rounded' },
+    cornersDotOptions: { color: '#39ff14', type: 'dot' },
+    backgroundOptions: { color: '#0d0d0d' },
+  },
+  {
+    id: 'sunset',
+    label: 'Sunset',
+    preview: { bg: '#1a1a1a', dot: '#ff6600', accent: '#ffe500' },
+    dotsOptions: { color: '#ff6600', type: 'classy-rounded' },
+    cornersSquareOptions: { color: '#ffe500', type: 'extra-rounded' },
+    cornersDotOptions: { color: '#ff6600', type: 'dot' },
+    backgroundOptions: { color: '#1a1a1a' },
+  },
+  {
+    id: 'mono',
+    label: 'Mono',
+    preview: { bg: '#ffffff', dot: '#000000', accent: '#000000' },
+    dotsOptions: { color: '#000000', type: 'square' },
+    cornersSquareOptions: { color: '#000000', type: 'square' },
+    cornersDotOptions: { color: '#000000', type: 'square' },
+    backgroundOptions: { color: '#ffffff' },
+  },
+  {
+    id: 'electric',
+    label: 'Electric',
+    preview: { bg: '#0a0a0a', dot: '#ffe500', accent: '#ff6600' },
+    dotsOptions: { color: '#ffe500', type: 'dots' },
+    cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
+    cornersDotOptions: { color: '#ffe500', type: 'dot' },
+    backgroundOptions: { color: '#0a0a0a' },
+  },
+  {
+    id: 'brutalist',
+    label: 'Brutalist',
+    preview: { bg: '#ff6600', dot: '#000000', accent: '#FFFDF7' },
+    dotsOptions: { color: '#000000', type: 'square' },
+    cornersSquareOptions: { color: '#FFFDF7', type: 'square' },
+    cornersDotOptions: { color: '#000000', type: 'square' },
+    backgroundOptions: { color: '#ff6600' },
+  },
+];
+
 function FwshkLoader() {
   const scrambleRef = useRef(null);
   const [percent, setPercent] = useState(0);
@@ -175,50 +232,42 @@ function QRCodeLoader() {
   );
 }
 
-function NeoQRCode({ value, size = 220, onReady }) {
+function NeoQRCode({ value, size = 220, theme, onReady }) {
   const containerRef = useRef(null);
   const qrRef = useRef(null);
+  const themeConfig = theme || QR_THEMES[0];
 
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const config = {
+      width: size,
+      height: size,
+      type: 'canvas',
+      data: value,
+      qrOptions: {
+        errorCorrectionLevel: 'H',
+      },
+      dotsOptions: themeConfig.dotsOptions,
+      cornersSquareOptions: themeConfig.cornersSquareOptions,
+      cornersDotOptions: themeConfig.cornersDotOptions,
+      backgroundOptions: themeConfig.backgroundOptions,
+      image: logo,
+      imageOptions: {
+        crossOrigin: 'anonymous',
+        margin: 6,
+        imageSize: 0.4,
+      },
+    };
+
     if (!qrRef.current) {
-      qrRef.current = new QRCodeStyling({
-        width: size,
-        height: size,
-        type: 'canvas',
-        data: value,
-        qrOptions: {
-          errorCorrectionLevel: 'H',
-        },
-        dotsOptions: {
-          color: '#1a1a1a',
-          type: 'square',
-        },
-        cornersSquareOptions: {
-          color: '#1a1a1a',
-          type: 'extra-rounded',
-        },
-        cornersDotOptions: {
-          color: '#ff6600',
-          type: 'dot',
-        },
-        backgroundOptions: {
-          color: '#FFFDF7',
-        },
-        image: logo,
-        imageOptions: {
-          crossOrigin: 'anonymous',
-          margin: 6,
-          imageSize: 0.4,
-        },
-      });
+      qrRef.current = new QRCodeStyling(config);
       while (containerRef.current.firstChild) {
         containerRef.current.removeChild(containerRef.current.firstChild);
       }
       qrRef.current.append(containerRef.current);
     } else {
-      qrRef.current.update({ data: value });
+      qrRef.current.update(config);
     }
 
     if (onReady) {
@@ -226,7 +275,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       const t = setTimeout(() => onReady(containerRef.current), 100);
       return () => clearTimeout(t);
     }
-  }, [value, size, onReady]);
+  }, [value, size, themeConfig, onReady]);
 
   return <div ref={containerRef} className="neo-qr-canvas" />;
 }
@@ -238,6 +287,7 @@ function Main() {
   const [ttl, setTtl] = useState('');
   const [redirectType, setRedirectType] = useState('308');
   const [mode, setMode] = useState('shorten');
+  const [qrTheme, setQrTheme] = useState(QR_THEMES[0]);
   const qrRef = useRef(null);
   const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
@@ -442,6 +492,30 @@ function Main() {
               placeholder="Enter URL (e.g., google.com)"
             />
 
+            {mode === 'qrcode' && (
+              <fieldset className="qr-theme-options">
+                <legend className="qr-theme-legend">QR Style</legend>
+                <div className="qr-theme-buttons">
+                  {QR_THEMES.map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      className={`qr-theme-btn ${qrTheme.id === t.id ? 'active' : ''}`}
+                      onClick={() => setQrTheme(t)}
+                      aria-pressed={qrTheme.id === t.id}
+                      title={t.label}
+                    >
+                      <span className="qr-theme-preview" style={{
+                        backgroundColor: t.preview.bg,
+                        boxShadow: `inset 0 0 0 2px ${t.preview.dot}, inset 4px 4px 0 0 ${t.preview.accent}`,
+                      }} />
+                      <span className="qr-theme-name">{t.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+            )}
+
             <fieldset className="shortcode-options">
               <legend className="sr-only">Short code options</legend>
               <div className="option-buttons">
@@ -532,7 +606,7 @@ function Main() {
                 <div className="qr-code-frame" ref={qrRef}>
                   <span className="qr-corner-label qr-corner-tl">FWSHK</span>
                   <span className="qr-corner-label qr-corner-tr">SCAN</span>
-                  <NeoQRCode value={shortenedUrl} size={220} />
+                  <NeoQRCode value={shortenedUrl} size={220} theme={qrTheme} />
                   <span className="qr-corner-label qr-corner-bl">&#9632;&#9632;&#9632;</span>
                   <span className="qr-corner-label qr-corner-br">QR</span>
                 </div>
