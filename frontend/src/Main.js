@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { QRCodeCanvas } from 'qrcode.react';
+import QRCodeStyling from 'qr-code-styling';
 import './App.css';
 import { Link } from 'react-router-dom';
 import logo from './logo.svg';
@@ -173,6 +173,60 @@ function QRCodeLoader() {
       </div>
     </div>
   );
+}
+
+function NeoQRCode({ value, size = 220, onReady }) {
+  const containerRef = useRef(null);
+  const qrRef = useRef(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    if (!qrRef.current) {
+      qrRef.current = new QRCodeStyling({
+        width: size,
+        height: size,
+        type: 'canvas',
+        data: value,
+        qrOptions: {
+          errorCorrectionLevel: 'H',
+        },
+        dotsOptions: {
+          color: '#1a1a1a',
+          type: 'square',
+        },
+        cornersSquareOptions: {
+          color: '#1a1a1a',
+          type: 'extra-rounded',
+        },
+        cornersDotOptions: {
+          color: '#ff6600',
+          type: 'dot',
+        },
+        backgroundOptions: {
+          color: '#FFFDF7',
+        },
+        image: logo,
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 6,
+          imageSize: 0.4,
+        },
+      });
+      containerRef.current.innerHTML = '';
+      qrRef.current.append(containerRef.current);
+    } else {
+      qrRef.current.update({ data: value });
+    }
+
+    if (onReady) {
+      // Small delay to let canvas render
+      const t = setTimeout(() => onReady(containerRef.current), 100);
+      return () => clearTimeout(t);
+    }
+  }, [value, size, onReady]);
+
+  return <div ref={containerRef} className="neo-qr-canvas" />;
 }
 
 function Main() {
@@ -474,14 +528,11 @@ function Main() {
               <div className="qr-result" aria-live="polite">
                 <h2 className="qr-result-label">Your QR Code:</h2>
                 <div className="qr-code-frame" ref={qrRef}>
-                  <QRCodeCanvas
-                    value={shortenedUrl}
-                    size={200}
-                    bgColor="#ff6600"
-                    fgColor="#1a1a1a"
-                    level="H"
-                    includeMargin={false}
-                  />
+                  <span className="qr-corner-label qr-corner-tl">FWSHK</span>
+                  <span className="qr-corner-label qr-corner-tr">SCAN</span>
+                  <NeoQRCode value={shortenedUrl} size={220} />
+                  <span className="qr-corner-label qr-corner-bl">&#9632;&#9632;&#9632;</span>
+                  <span className="qr-corner-label qr-corner-br">QR</span>
                 </div>
                 <div className="qr-shortened-url">
                   <a href={shortenedUrl} target="_blank" rel="noopener noreferrer">
