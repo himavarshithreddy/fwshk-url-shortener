@@ -111,7 +111,7 @@ Add a CSS animation to the `.qr-code-frame` container and a pseudo-element scan-
 
 ### What It Does
 
-Places the Fwshk logo (or any SVG/image) right in the center of the QR code. Because `qr-code-styling` is configured with error correction level **H** (30 % redundancy), up to ~30 % of the QR area can be obscured and the code still scans perfectly.
+Places the Fwshk logo (or any SVG/image) right in the center of the QR code. Because `qr-code-styling` is configured with error correction level **H** (30% redundancy), up to ~30 % of the QR area can be obscured and the code still scans perfectly.
 
 ### Why It's Unique
 
@@ -348,7 +348,7 @@ Apply a CSS `clip-path` on the `.neo-qr-canvas` element:
 }
 ```
 
-**Important:** At error correction **H**, the QR code tolerates up to 30 % data loss, so moderate clipping won't break scanning. Always test with a phone camera after clipping.
+**Important:** At error correction **H**, the QR code tolerates up to 30% data loss, so moderate clipping won't break scanning. Always test with a phone camera after clipping.
 
 ### Making It User-Selectable
 
@@ -592,7 +592,7 @@ function AnimatedDotsQR({ value, size = 220 }) {
             height: 4,
             backgroundColor: d.color,
             borderRadius: '50%',
-            animation: `dot-pop 0.4s ease-out ${i * 0.3}ms both`,
+            animation: `dot-pop 0.4s ease-out ${Math.min(i * 0.3, 800)}ms both`,
           }}
         />
       ))}
@@ -751,7 +751,7 @@ Before shipping any visual modification, always verify:
 - [ ] The three finder patterns (large squares in corners) are unobstructed
 - [ ] Error correction is set to **H** (`qrOptions.errorCorrectionLevel: 'H'`)
 - [ ] Test scanning on iOS (Camera app), Android (Google Lens), and at least one dedicated QR reader
-- [ ] If using shape masking, ensure no more than ~25 % of data modules are clipped
+- [ ] If using shape masking, ensure no more than ~25% of data modules are clipped
 - [ ] The quiet zone (white border) around the QR code is at least 4 modules wide
 - [ ] Contrast ratio between dots and background is at least 3:1
 
