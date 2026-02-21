@@ -13,19 +13,51 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 const QR_THEME = {
   dotsOptions: {
     type: 'classy-rounded',
-    gradient: {
-      type: 'linear',
-      rotation: Math.PI / 4,
-      colorStops: [
-        { offset: 0, color: '#1a1a1a' },
-        { offset: 1, color: '#ff6600' },
-      ],
-    },
+    color: '#000000',
   },
-  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#1a1a1a', type: 'dot' },
-  backgroundOptions: { color: '#FFFDF7' },
+  cornersSquareOptions: { color: '#000000', type: 'extra-rounded' },
+  cornersDotOptions: { color: '#000000', type: 'dot' },
+  backgroundOptions: { color: '#00000000' },
 };
+
+function drawNeoBrutalismMask(ctx, w, h) {
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.save();
+  ctx.translate(w / 2, h / 2);
+  ctx.rotate(Math.PI / 5);
+  ctx.fillStyle = '#ff6600';
+  ctx.fillRect(-w * 0.9, -h * 0.09, w * 1.8, h * 0.18);
+  ctx.fillStyle = '#e65100';
+  ctx.fillRect(-w * 0.9, h * 0.12, w * 1.8, h * 0.09);
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.arc(w * 0.38, h * 0.48, w * 0.13, 0, Math.PI * 2);
+  ctx.fillStyle = '#ff9100';
+  ctx.fill();
+
+  ctx.fillStyle = '#ff3d00';
+  ctx.fillRect(w * 0.62, h * 0.68, w * 0.32, h * 0.26);
+
+  ctx.fillStyle = '#ffab00';
+  ctx.fillRect(w * 0.58, h * 0.35, w * 0.13, h * 0.13);
+
+  ctx.beginPath();
+  ctx.moveTo(w * 0.3, h * 0.95);
+  ctx.lineTo(w * 0.5, h * 0.7);
+  ctx.lineTo(w * 0.5, h * 0.95);
+  ctx.closePath();
+  ctx.fillStyle = '#ff6600';
+  ctx.fill();
+
+  var fp = w * 0.28;
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(0, 0, fp, fp);
+  ctx.fillRect(w - fp, 0, fp, fp);
+  ctx.fillRect(0, h - fp, fp, fp);
+}
 
 function FwshkLoader() {
   const scrambleRef = useRef(null);
@@ -229,11 +261,47 @@ function NeoQRCode({ value, size = 220, onReady }) {
       qrRef.current.update(config);
     }
 
-    if (onReady) {
-      // Small delay to let canvas render
-      const t = setTimeout(() => onReady(containerRef.current), 100);
-      return () => clearTimeout(t);
-    }
+    const t = setTimeout(() => {
+      var qrCanvas = containerRef.current?.querySelector('canvas');
+      if (!qrCanvas) return;
+
+      var w = qrCanvas.width;
+      var h = qrCanvas.height;
+      var qrCtx = qrCanvas.getContext('2d');
+
+      var patternCanvas = document.createElement('canvas');
+      patternCanvas.width = w;
+      patternCanvas.height = h;
+      var patternCtx = patternCanvas.getContext('2d');
+      drawNeoBrutalismMask(patternCtx, w, h);
+
+      patternCtx.globalCompositeOperation = 'destination-in';
+      patternCtx.drawImage(qrCanvas, 0, 0);
+
+      qrCtx.clearRect(0, 0, w, h);
+      qrCtx.fillStyle = '#FFFDF7';
+      qrCtx.fillRect(0, 0, w, h);
+      qrCtx.drawImage(patternCanvas, 0, 0);
+
+      var logoImg = new Image();
+      logoImg.crossOrigin = 'anonymous';
+      logoImg.src = logo;
+      logoImg.onload = function () {
+        var logoSize = w * 0.22;
+        var x = (w - logoSize) / 2;
+        var y = (h - logoSize) / 2;
+        qrCtx.beginPath();
+        qrCtx.arc(w / 2, h / 2, logoSize * 0.7, 0, Math.PI * 2);
+        qrCtx.fillStyle = '#FFFDF7';
+        qrCtx.fill();
+        qrCtx.drawImage(logoImg, x, y, logoSize, logoSize);
+        if (onReady) onReady(containerRef.current);
+      };
+      logoImg.onerror = function () {
+        if (onReady) onReady(containerRef.current);
+      };
+    }, 300);
+    return () => clearTimeout(t);
   }, [value, size, onReady]);
 
   return <div ref={containerRef} className="neo-qr-canvas" />;
