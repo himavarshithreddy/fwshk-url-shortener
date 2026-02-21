@@ -1,6 +1,6 @@
 # QR Code Customization Guide — Adding the "Woww" Factor
 
-Fwshk already ships a branded, glitch-styled QR code that stands out from the crowd. This guide walks you through every layer of the system so you can push it further — add your own logo, swap colour palettes, create gradient fills, reshape the dots, tweak the retro glitch overlay, redesign the branded download frame, and more.
+Fwshk already ships a branded, glitch-styled QR code that stands out from the crowd. This guide walks you through every layer of the system so you can push it further — add your own logo, swap color palettes, create gradient fills, reshape the dots, tweak the retro glitch overlay, redesign the branded download frame, and more.
 
 > **File map** — all QR-related code lives in two files:
 >
@@ -16,11 +16,11 @@ Fwshk already ships a branded, glitch-styled QR code that stands out from the cr
 1. [Architecture Overview](#1-architecture-overview)
 2. [Change the Dot & Corner Style](#2-change-the-dot--corner-style)
 3. [Apply Gradient Fills to Dots](#3-apply-gradient-fills-to-dots)
-4. [Embed a Centre Logo / Image](#4-embed-a-centre-logo--image)
-5. [Customise the Glitch Mask Overlay](#5-customise-the-glitch-mask-overlay)
+4. [Embed a Center Logo / Image](#4-embed-a-center-logo--image)
+5. [Customize the Glitch Mask Overlay](#5-customize-the-glitch-mask-overlay)
 6. [Create an Entirely New Visual Mask](#6-create-an-entirely-new-visual-mask)
 7. [Modify the Branded Download Frame](#7-modify-the-branded-download-frame)
-8. [Add Colour Theme Presets](#8-add-colour-theme-presets)
+8. [Add Color Theme Presets](#8-add-color-theme-presets)
 9. [Animate the QR Code on Screen](#9-animate-the-qr-code-on-screen)
 10. [Tips for Keeping QR Codes Scannable](#10-tips-for-keeping-qr-codes-scannable)
 
@@ -38,8 +38,8 @@ The QR image goes through three stages:
 └──────────────┘      └─────────────────┘      └──────────────────────┘
 ```
 
-1. **`qr-code-styling`** renders the raw QR canvas using `QR_THEME` options (dot shape, corner shape, colours, error correction).
-2. **`drawGlitchMask()`** paints a glitch pattern on a temporary canvas, then composites it *through* the QR dot shapes — giving each dot the glitch texture instead of a flat colour.
+1. **`qr-code-styling`** renders the raw QR canvas using `QR_THEME` options (dot shape, corner shape, colors, error correction).
+2. **`drawGlitchMask()`** paints a glitch pattern on a temporary canvas, then composites it *through* the QR dot shapes — giving each dot the glitch texture instead of a flat color.
 3. **`createBrandedQRCanvas()`** wraps the final QR in a branded frame with corner labels (FWSHK, SCAN, QR, ■■■) for the downloaded/copied PNG.
 
 Every technique below targets one (or more) of these stages.
@@ -131,9 +131,9 @@ const QR_THEME = {
 
 ---
 
-## 4. Embed a Centre Logo / Image
+## 4. Embed a Center Logo / Image
 
-`qr-code-styling` natively supports a centre image. Add an `image` and `imageOptions` field to the config inside `NeoQRCode`:
+`qr-code-styling` natively supports a center image. Add an `image` and `imageOptions` field to the config inside `NeoQRCode`:
 
 ```js
 // frontend/src/Main.js  —  inside the NeoQRCode useEffect
@@ -165,7 +165,7 @@ const config = {
 
 ---
 
-## 5. Customise the Glitch Mask Overlay
+## 5. Customize the Glitch Mask Overlay
 
 The `drawGlitchMask(ctx, w, h)` function in `Main.js` builds a retro-glitch texture that gets composited *into* the QR dot shapes. Here is how each layer works and how to tweak it:
 
@@ -173,12 +173,12 @@ The `drawGlitchMask(ctx, w, h)` function in `Main.js` builds a retro-glitch text
 
 | Layer | Lines | What it does | How to tweak |
 |---|---|---|---|
-| **Base fill** | `ctx.fillStyle = '#1a1a1a'` | Dark background | Change colour for a different base tone |
-| **Glitch bars** | `barCount = 14` loop | Horizontal displaced colour stripes | Adjust `barCount`, `barH` multiplier, or `glitchColors` array |
-| **Channel-split blocks** | `splits` array | Chromatic-aberration rectangles | Edit the fractional `[x, y, w, h]` positions or change RGBA colours |
+| **Base fill** | `ctx.fillStyle = '#1a1a1a'` | Dark background | Change color for a different base tone |
+| **Glitch bars** | `barCount = 14` loop | Horizontal displaced color stripes | Adjust `barCount`, `barH` multiplier, or `glitchColors` array |
+| **Channel-split blocks** | `splits` array | Chromatic-aberration rectangles | Edit the fractional `[x, y, w, h]` positions or change RGBA colors |
 | **Static noise** | LCG loop (`step = 4`) | Pixel noise scatter | Change `step` (larger = coarser), threshold `82` (lower = more noise) |
 | **Scanlines** | `y += 4` loop | CRT scanline overlay | Change gap (`4`) or opacity (`0.18`) |
-| **Displaced blocks** | `blocks` array | Large colour patches | Add/remove entries or change colours |
+| **Displaced blocks** | `blocks` array | Large color patches | Add/remove entries or change colors |
 | **Finder-pattern cutouts** | `fp = w * 0.28` | Keeps the three QR corners solid for scanning | Always keep this — it ensures scannability |
 
 ### Example — Softer, pastel glitch
@@ -314,7 +314,7 @@ ctx.textAlign = 'center';
 ctx.fillText('SCAN ME — FWSHK.VERCEL.APP', fx + frameW / 2, bannerY + bannerH / 2);
 ```
 
-### Change the background colour
+### Change the background color
 
 Replace `ctx.fillStyle = '#ffffff'` at the top of the function:
 
@@ -342,7 +342,7 @@ ctx.setLineDash([]);
 
 ---
 
-## 8. Add Colour Theme Presets
+## 8. Add Color Theme Presets
 
 Let users pick a QR theme. Define multiple presets and wire them to a selector:
 
@@ -447,9 +447,9 @@ No matter how creative you get, the QR code must still scan. Follow these rules:
 | **Keep error correction at `'H'`** | Allows ~30 % of modules to be obscured — essential when adding logos or heavy styling |
 | **Never paint over finder patterns** | The three large squares in the corners are how scanners orient the code. The `fp = w * 0.28` cutout in every mask preserves them |
 | **Maintain contrast ratio ≥ 3:1** | Dots must be clearly distinguishable from the background. Test with a phone camera after every change |
-| **Centre logos ≤ 40 % of QR area** | `imageSize: 0.35` is safe; going above 0.4 risks scan failures |
+| **Center logos ≤ 40 % of QR area** | `imageSize: 0.35` is safe; going above 0.4 risks scan failures |
 | **Test on multiple scanners** | iOS Camera, Google Lens, and dedicated QR apps all use different algorithms. Test on at least two |
-| **Avoid inverting colours** | Dark-on-light is the universal standard. Light-on-dark works on some scanners but not all |
+| **Avoid inverting colors** | Dark-on-light is the universal standard. Light-on-dark works on some scanners but not all |
 
 ### Quick scan test
 
@@ -467,6 +467,6 @@ After any change, open the app locally (`npm start`), generate a QR code, and im
 - [ ] Try a gradient fill from Section 3
 - [ ] Drop your brand logo in `public/` and enable it per Section 4
 - [ ] Tweak `glitchColors` in `drawGlitchMask` (Section 5) or build a new mask (Section 6)
-- [ ] Customise the download frame (Section 7)
+- [ ] Customize the download frame (Section 7)
 - [ ] Scan-test on your phone
 - [ ] Ship it 🚀
