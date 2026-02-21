@@ -15,6 +15,11 @@
 - ✏️ **Custom short codes** – Pick a memorable alias for your link (e.g. `fwshk.app/my-link`)
 - 📊 **Click tracking** – Monitor how many times your link has been visited
 - ⚡ **Lightning fast** – Built on a serverless, globally distributed infrastructure for sub-millisecond redirects
+- 🎨 **Branded QR codes** – Generate unique, glitch-styled QR codes with customisable dots, colours, gradients, and centre logos
+
+## Guides
+
+- **[QR Code Customization Guide](docs/QR_CUSTOMIZATION_GUIDE.md)** – Learn how to add a unique "Woww" factor to your QR codes: custom dot shapes, gradient fills, centre logos, glitch masks, animated effects, branded download frames, and more.
 
 ## Use Cases
 
