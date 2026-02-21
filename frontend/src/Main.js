@@ -52,7 +52,7 @@ function drawNeoBrutalismMask(ctx, w, h) {
   ctx.fillStyle = '#ff6600';
   ctx.fill();
 
-  var fp = w * 0.28;
+  const fp = w * 0.28;
   ctx.fillStyle = '#1a1a1a';
   ctx.fillRect(0, 0, fp, fp);
   ctx.fillRect(w - fp, 0, fp, fp);
@@ -262,17 +262,17 @@ function NeoQRCode({ value, size = 220, onReady }) {
     }
 
     const t = setTimeout(() => {
-      var qrCanvas = containerRef.current?.querySelector('canvas');
+      const qrCanvas = containerRef.current?.querySelector('canvas');
       if (!qrCanvas) return;
 
-      var w = qrCanvas.width;
-      var h = qrCanvas.height;
-      var qrCtx = qrCanvas.getContext('2d');
+      const w = qrCanvas.width;
+      const h = qrCanvas.height;
+      const qrCtx = qrCanvas.getContext('2d');
 
-      var patternCanvas = document.createElement('canvas');
+      const patternCanvas = document.createElement('canvas');
       patternCanvas.width = w;
       patternCanvas.height = h;
-      var patternCtx = patternCanvas.getContext('2d');
+      const patternCtx = patternCanvas.getContext('2d');
       drawNeoBrutalismMask(patternCtx, w, h);
 
       patternCtx.globalCompositeOperation = 'destination-in';
@@ -283,13 +283,13 @@ function NeoQRCode({ value, size = 220, onReady }) {
       qrCtx.fillRect(0, 0, w, h);
       qrCtx.drawImage(patternCanvas, 0, 0);
 
-      var logoImg = new Image();
+      const logoImg = new Image();
       logoImg.crossOrigin = 'anonymous';
       logoImg.src = logo;
       logoImg.onload = function () {
-        var logoSize = w * 0.22;
-        var x = (w - logoSize) / 2;
-        var y = (h - logoSize) / 2;
+        const logoSize = w * 0.22;
+        const x = (w - logoSize) / 2;
+        const y = (h - logoSize) / 2;
         qrCtx.beginPath();
         qrCtx.arc(w / 2, h / 2, logoSize * 0.7, 0, Math.PI * 2);
         qrCtx.fillStyle = '#FFFDF7';
