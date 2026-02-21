@@ -716,6 +716,7 @@ function Main() {
               <div className="qr-result" aria-live="polite">
                 <h2 className="qr-result-label">Your QR Code:</h2>
                 <div className="qr-code-frame" ref={qrRef}>
+                  <div className="qr-scan-overlay" aria-hidden="true" />
                   <span className="qr-corner-label qr-corner-tl">FWSHK</span>
                   <span className="qr-corner-label qr-corner-tr">SCAN</span>
                   <NeoQRCode value={shortenedUrl} size={220} />
