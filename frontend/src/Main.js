@@ -432,10 +432,100 @@ function Main() {
   const copyShortCode = () => {
     navigator.clipboard.writeText(shortCode);
   };
+  const createBrandedQRCanvas = (qrCanvas) => {
+    const padding = 22;
+    const border = 4;
+    const shadowOff = 8;
+    const outerMargin = 18;
+
+    const qrW = qrCanvas.width;
+    const qrH = qrCanvas.height;
+    const frameW = border * 2 + padding * 2 + qrW;
+    const frameH = border * 2 + padding * 2 + qrH;
+
+    const canvasW = outerMargin + frameW + shadowOff + outerMargin;
+    const canvasH = outerMargin + frameH + shadowOff + outerMargin;
+
+    const c = document.createElement('canvas');
+    c.width = canvasW;
+    c.height = canvasH;
+    const ctx = c.getContext('2d');
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasW, canvasH);
+
+    const fx = outerMargin;
+    const fy = outerMargin;
+
+    // Box shadow
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(fx + shadowOff, fy + shadowOff, frameW, frameH);
+
+    // Frame border
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(fx, fy, frameW, frameH);
+
+    // Frame background
+    ctx.fillStyle = '#FFFDF7';
+    ctx.fillRect(fx + border, fy + border, frameW - border * 2, frameH - border * 2);
+
+    // QR code
+    ctx.drawImage(qrCanvas, fx + border + padding, fy + border + padding, qrW, qrH);
+
+    // Corner label helper
+    const drawLabel = (text, lx, ly, bg, fontSize) => {
+      const px = 8, py = 4, lb = 2, ls = 2;
+      ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
+      const tw = ctx.measureText(text).width;
+      const bw = lb + px + tw + px + lb;
+      const bh = lb + py + fontSize + py + lb;
+
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(lx + ls, ly + ls, bw, bh);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(lx, ly, bw, bh);
+      ctx.fillStyle = bg;
+      ctx.fillRect(lx + lb, ly + lb, bw - 2 * lb, bh - 2 * lb);
+
+      ctx.fillStyle = '#1a1a1a';
+      ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
+      ctx.textBaseline = 'top';
+      ctx.fillText(text, lx + lb + px, ly + lb + py);
+      return bw;
+    };
+
+    const fontSize = 10;
+    const smallFontSize = 8;
+    const lb = 2, px = 8, py = 4;
+
+    // Top-left: FWSHK (orange)
+    drawLabel('FWSHK', fx - 4, fy - 12, '#ff6600', fontSize);
+
+    // Top-right: SCAN (cream)
+    ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
+    const scanTw = ctx.measureText('SCAN').width;
+    const scanBw = lb + px + scanTw + px + lb;
+    drawLabel('SCAN', fx + frameW + 4 - scanBw, fy - 12, '#FFFDF7', fontSize);
+
+    // Bottom-left: ■■■ (cream)
+    const blLabelH = lb + py + smallFontSize + py + lb;
+    drawLabel('\u25A0\u25A0\u25A0', fx - 4, fy + frameH + 12 - blLabelH, '#FFFDF7', smallFontSize);
+
+    // Bottom-right: QR (orange)
+    ctx.font = `800 ${fontSize}px "Syne", sans-serif`;
+    const qrLabelTw = ctx.measureText('QR').width;
+    const qrLabelBw = lb + px + qrLabelTw + px + lb;
+    const brLabelH = lb + py + fontSize + py + lb;
+    drawLabel('QR', fx + frameW + 4 - qrLabelBw, fy + frameH + 12 - brLabelH, '#ff6600', fontSize);
+
+    return c;
+  };
+
   const downloadQR = () => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (!canvas) return;
-    const url = canvas.toDataURL('image/png');
+    const branded = createBrandedQRCanvas(canvas);
+    const url = branded.toDataURL('image/png');
     const link = document.createElement('a');
     link.download = `fwshk-qr-${shortCode}.png`;
     link.href = url;
@@ -447,8 +537,9 @@ function Main() {
     const canvas = qrRef.current?.querySelector('canvas');
     if (!canvas) return;
     try {
+      const branded = createBrandedQRCanvas(canvas);
       const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(b => b ? resolve(b) : reject(new Error('Failed to create blob')), 'image/png');
+        branded.toBlob(b => b ? resolve(b) : reject(new Error('Failed to create blob')), 'image/png');
       });
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     } catch {
