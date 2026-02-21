@@ -13,18 +13,19 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 const QR_THEME = {
   dotsOptions: {
     type: 'classy-rounded',
-    color: '#000000',
+    color: '#1a1a1a',
   },
-  cornersSquareOptions: { color: '#000000', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#000000', type: 'dot' },
+  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
+  cornersDotOptions: { color: '#1a1a1a', type: 'dot' },
   backgroundOptions: { color: '#00000000' },
 };
 
 function drawGlitchMask(ctx, w, h) {
-  ctx.fillStyle = '#0d0d0d';
+  ctx.fillStyle = '#1a1a1a';
   ctx.fillRect(0, 0, w, h);
 
-  const glitchColors = ['#00FFFF', '#FF00FF', '#00FF41', '#FF3366', '#FFFF00', '#7B00FF'];
+  // Brand palette: orange, yellow, and their shades
+  const glitchColors = ['#ff6600', '#ffe500', '#cc5200', '#ffb347', '#e65c00', '#ffd633'];
 
   // Horizontal glitch bars — displaced data-corruption stripes
   const barCount = 14;
@@ -39,7 +40,7 @@ function drawGlitchMask(ctx, w, h) {
   }
   ctx.globalAlpha = 1;
 
-  // RGB channel-split blocks — chromatic aberration effect
+  // Channel-split blocks — chromatic aberration in brand tones
   const splits = [
     [0.05, 0.15, 0.35, 0.10],
     [0.50, 0.55, 0.25, 0.08],
@@ -48,9 +49,9 @@ function drawGlitchMask(ctx, w, h) {
     [0.10, 0.45, 0.28, 0.09],
   ];
   for (const [bx, by, bw, bh] of splits) {
-    ctx.fillStyle = 'rgba(255, 0, 60, 0.45)';
+    ctx.fillStyle = 'rgba(255, 102, 0, 0.45)';
     ctx.fillRect(bx * w + 3, by * h, bw * w, bh * h);
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.45)';
+    ctx.fillStyle = 'rgba(255, 229, 0, 0.45)';
     ctx.fillRect(bx * w - 3, by * h, bw * w, bh * h);
   }
 
@@ -76,11 +77,11 @@ function drawGlitchMask(ctx, w, h) {
     ctx.fillRect(0, y, w, 2);
   }
 
-  // Large displaced glitch blocks
+  // Large displaced glitch blocks in brand colors
   const blocks = [
-    [0.02, 0.38, 0.22, 0.10, '#FF00FF'],
-    [0.55, 0.10, 0.18, 0.14, '#00FFFF'],
-    [0.35, 0.78, 0.28, 0.09, '#00FF41'],
+    [0.02, 0.38, 0.22, 0.10, '#ff6600'],
+    [0.55, 0.10, 0.18, 0.14, '#ffe500'],
+    [0.35, 0.78, 0.28, 0.09, '#cc5200'],
   ];
   for (const [bx, by, bw, bh, color] of blocks) {
     ctx.fillStyle = color;
@@ -91,7 +92,7 @@ function drawGlitchMask(ctx, w, h) {
 
   // Preserve QR finder pattern corners (keep them scannable)
   const fp = w * 0.28;
-  ctx.fillStyle = '#0d0d0d';
+  ctx.fillStyle = '#1a1a1a';
   ctx.fillRect(0, 0, fp, fp);
   ctx.fillRect(w - fp, 0, fp, fp);
   ctx.fillRect(0, h - fp, fp, fp);
@@ -281,12 +282,6 @@ function NeoQRCode({ value, size = 220, onReady }) {
       cornersSquareOptions: QR_THEME.cornersSquareOptions,
       cornersDotOptions: QR_THEME.cornersDotOptions,
       backgroundOptions: QR_THEME.backgroundOptions,
-      image: logo,
-      imageOptions: {
-        crossOrigin: 'anonymous',
-        margin: 6,
-        imageSize: 0.4,
-      },
     };
 
     if (!qrRef.current) {
@@ -321,23 +316,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       qrCtx.fillRect(0, 0, w, h);
       qrCtx.drawImage(patternCanvas, 0, 0);
 
-      const logoImg = new Image();
-      logoImg.crossOrigin = 'anonymous';
-      logoImg.src = logo;
-      logoImg.onload = function () {
-        const logoSize = w * 0.22;
-        const x = (w - logoSize) / 2;
-        const y = (h - logoSize) / 2;
-        qrCtx.beginPath();
-        qrCtx.arc(w / 2, h / 2, logoSize * 0.7, 0, Math.PI * 2);
-        qrCtx.fillStyle = '#FFFDF7';
-        qrCtx.fill();
-        qrCtx.drawImage(logoImg, x, y, logoSize, logoSize);
-        if (onReady) onReady(containerRef.current);
-      };
-      logoImg.onerror = function () {
-        if (onReady) onReady(containerRef.current);
-      };
+      if (onReady) onReady(containerRef.current);
     }, 300);
     return () => clearTimeout(t);
   }, [value, size, onReady]);
