@@ -1565,6 +1565,31 @@ nav[aria-label="Site navigation"] {
   }
 }
 
+/* Respect reduced-motion preferences — disable infinite/decorative animations */
+@media (prefers-reduced-motion: reduce) {
+  .qr-scan-overlay::after,
+  .qr-code-frame::before {
+    animation: none;
+  }
+  .qr-corner-tl,
+  .qr-corner-tr,
+  .qr-corner-bl,
+  .qr-corner-br {
+    animation: none;
+  }
+  .qr-code-frame {
+    animation: none;
+    opacity: 1;
+  }
+  .qr-result {
+    animation: none;
+    opacity: 1;
+  }
+  .qr-result-label {
+    animation: none;
+  }
+}
+
 .qr-shortened-url {
   width: 100%;
   display: flex;
