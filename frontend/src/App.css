@@ -1693,10 +1693,6 @@ nav[aria-label="Site navigation"] {
     border-top: 3px solid #FFFDF7;
   }
 
-  .qr-theme-buttons {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .qr-theme-btn {
     padding: 10px 6px;
   }
