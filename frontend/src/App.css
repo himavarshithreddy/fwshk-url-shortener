@@ -1382,16 +1382,65 @@ nav[aria-label="Site navigation"] {
 
 .qr-code-frame {
   border: 3px solid #FFFDF7;
-  box-shadow: 5px 5px 0px #ff6600;
-  padding: 20px;
-  background-color: #ff6600;
+  box-shadow: 6px 6px 0px #ff6600;
+  padding: 24px;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.qr-code-frame canvas {
+  display: block;
+}
+
+.neo-qr-canvas {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.qr-code-frame canvas {
-  display: block;
+.qr-corner-label {
+  position: absolute;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.qr-corner-tl {
+  top: -1px;
+  left: -1px;
+  background-color: #ff6600;
+  color: #1a1a1a;
+}
+
+.qr-corner-tr {
+  top: -1px;
+  right: -1px;
+  background-color: #FFFDF7;
+  color: #1a1a1a;
+}
+
+.qr-corner-bl {
+  bottom: -1px;
+  left: -1px;
+  background-color: #FFFDF7;
+  color: #1a1a1a;
+  font-size: 0.45rem;
+  letter-spacing: 0.05em;
+}
+
+.qr-corner-br {
+  bottom: -1px;
+  right: -1px;
+  background-color: #ff6600;
+  color: #1a1a1a;
 }
 
 .qr-shortened-url {
