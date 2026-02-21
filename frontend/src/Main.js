@@ -213,7 +213,9 @@ function NeoQRCode({ value, size = 220, onReady }) {
           imageSize: 0.4,
         },
       });
-      containerRef.current.innerHTML = '';
+      while (containerRef.current.firstChild) {
+        containerRef.current.removeChild(containerRef.current.firstChild);
+      }
       qrRef.current.append(containerRef.current);
     } else {
       qrRef.current.update({ data: value });
