@@ -169,6 +169,7 @@ body {
 /* ---- Submit Button ---- */
 
 .submit-btn {
+  width: 100%;
   padding: 16px 24px;
   border: 3px solid #FFFDF7;
   border-radius: 0;
@@ -816,8 +817,10 @@ nav[aria-label="Site navigation"] {
 
   .selects-row .ttl-options {
     flex: 1;
+    width: auto;
+    min-width: 0;
     border-bottom: 3px solid #FFFDF7;
-      align-self: stretch;
+    align-self: stretch;
   }
 
   .selects-row .ttl-options:first-child {
