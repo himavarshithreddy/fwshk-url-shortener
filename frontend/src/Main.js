@@ -15,7 +15,7 @@ const QR_THEME = {
     type: 'classy-rounded',
     color: '#1a1a1a',
   },
-  cornersSquareOptions: { color: '#F2994A', type: 'extra-rounded' },
+  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
   cornersDotOptions: { color: '#1a1a1a', type: 'dot' },
   backgroundOptions: { color: '#00000000' },
 };
@@ -25,7 +25,7 @@ function drawGlitchMask(ctx, w, h) {
   ctx.fillRect(0, 0, w, h);
 
   // Brand palette: orange, yellow, and their shades
-  const glitchColors = ['#F2994A', '#ffe500', '#D4803A', '#ffb347', '#E0864A', '#ffd633'];
+  const glitchColors = ['#ff6600', '#ffe500', '#cc5200', '#ffb347', '#e65c00', '#ffd633'];
 
   // Horizontal glitch bars — displaced data-corruption stripes
   const barCount = 14;
@@ -79,9 +79,9 @@ function drawGlitchMask(ctx, w, h) {
 
   // Large displaced glitch blocks in brand colors
   const blocks = [
-    [0.02, 0.38, 0.22, 0.10, '#F2994A'],
+    [0.02, 0.38, 0.22, 0.10, '#ff6600'],
     [0.55, 0.10, 0.18, 0.14, '#ffe500'],
-    [0.35, 0.78, 0.28, 0.09, '#D4803A'],
+    [0.35, 0.78, 0.28, 0.09, '#cc5200'],
   ];
   for (const [bx, by, bw, bh, color] of blocks) {
     ctx.fillStyle = color;
@@ -507,7 +507,7 @@ function Main() {
     };
 
     // Top-left: FWSHK (orange)
-    drawLabel('FWSHK', fx - 4, fy - 12, '#F2994A', fontSize);
+    drawLabel('FWSHK', fx - 4, fy - 12, '#ff6600', fontSize);
 
     // Top-right: SCAN (cream)
     drawLabel('SCAN', fx + frameW + 4 - measureLabel('SCAN', fontSize), fy - 12, '#E8E4DC', fontSize);
@@ -518,7 +518,7 @@ function Main() {
 
     // Bottom-right: QR (orange)
     const brLabelH = lb + py + fontSize + py + lb;
-    drawLabel('QR', fx + frameW + 4 - measureLabel('QR', fontSize), fy + frameH + 12 - brLabelH, '#F2994A', fontSize);
+    drawLabel('QR', fx + frameW + 4 - measureLabel('QR', fontSize), fy + frameH + 12 - brLabelH, '#ff6600', fontSize);
 
     return c;
   };
