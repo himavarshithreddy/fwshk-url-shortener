@@ -797,21 +797,16 @@ nav[aria-label="Site navigation"] {
   }
 
   .option-buttons {
-    gap: 16px;
-    border: none;
-  }
-
-  .option-btn {
-    border: 3px solid #FFFDF7;
+    gap: 0;
   }
 
   .option-btn:first-child {
-    border-right: 3px solid #FFFDF7;
+    border-right: 2px solid #FFFDF7;
   }
 
   .selects-row {
     flex-direction: row;
-    gap: 16px;
+    gap: 0;
     margin-bottom: 16px;
   }
 
@@ -819,13 +814,11 @@ nav[aria-label="Site navigation"] {
     flex: 1;
     width: auto;
     min-width: 0;
-    border-bottom: 3px solid #FFFDF7;
     align-self: stretch;
   }
 
-  .selects-row .ttl-options:first-child {
-    border-bottom: 3px solid #FFFDF7;
-  
+  .selects-row .ttl-options:last-child {
+    border-left: none;
   }
 }
 
