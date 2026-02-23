@@ -762,7 +762,13 @@ function Main() {
               </div>
               <div className="empty-body">
                 <div className="empty-corner empty-corner-tl" aria-hidden="true"></div>
+                <div className="empty-corner empty-corner-tr" aria-hidden="true"></div>
+                <div className="empty-corner empty-corner-bl" aria-hidden="true"></div>
                 <div className="empty-corner empty-corner-br" aria-hidden="true"></div>
+                <div className="empty-status-badge" aria-hidden="true">
+                  <span className="empty-status-dot"></span>
+                  <span className="empty-status-label">STANDBY</span>
+                </div>
                 <div className="empty-icon-display">
                   {mode === 'qrcode' ? (
                     <svg className="empty-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -792,7 +798,14 @@ function Main() {
                   <span className="empty-tag empty-tag-1">URL</span>
                   <span className="empty-tag empty-tag-2">FWSHK</span>
                   <span className="empty-tag empty-tag-3">{'://'}</span>
+                  <span className="empty-tag empty-tag-4">FAST</span>
+                  <span className="empty-tag empty-tag-5">{'GO→'}</span>
                 </div>
+                <div className="empty-scanline" aria-hidden="true"></div>
+              </div>
+              <div className="empty-bottom-bar" aria-hidden="true">
+                <span className="empty-bottom-text">FWSHK ▸ SHORTEN ▸ SHARE ▸ TRACK ▸ FWSHK ▸ SHORTEN ▸ SHARE ▸ TRACK ▸&nbsp;</span>
+                <span className="empty-bottom-text">FWSHK ▸ SHORTEN ▸ SHARE ▸ TRACK ▸ FWSHK ▸ SHORTEN ▸ SHARE ▸ TRACK ▸&nbsp;</span>
               </div>
             </div>
           )}
