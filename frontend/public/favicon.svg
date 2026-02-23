@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <!-- Neo Brutalism: sharp corners, flat orange background, thick black border -->
-  <rect width="100" height="100" fill="#F2994A"/>
+  <rect width="100" height="100" fill="#ff6600"/>
   <rect width="100" height="100" fill="none" stroke="#000" stroke-width="6"/>
   <!-- Bold link chain icon in black -->
   <g transform="translate(8 8) scale(3.5)">
