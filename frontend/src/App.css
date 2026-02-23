@@ -1294,8 +1294,8 @@ nav[aria-label="Site navigation"] {
   display: flex;
   white-space: nowrap;
   overflow: hidden;
-  background-color: #ffe500;
-  border-bottom: 3px solid #ff6600;
+  background-color: #ff6600;
+  border-bottom: 3px solid #FFFDF7;
   flex-shrink: 0;
 }
 
@@ -1332,7 +1332,7 @@ nav[aria-label="Site navigation"] {
   overflow: hidden;
   border: 3px solid #ff6600;
   border-top: none;
-  box-shadow: 6px 6px 0px #ffe500;
+  box-shadow: 6px 6px 0px #FFFDF7;
 }
 
 /* ---- Corner bracket accents ---- */
@@ -1341,7 +1341,7 @@ nav[aria-label="Site navigation"] {
   position: absolute;
   width: 22px;
   height: 22px;
-  border-color: #ffe500;
+  border-color: #ff6600;
   border-style: solid;
   opacity: 0.85;
 }
@@ -1365,7 +1365,7 @@ nav[aria-label="Site navigation"] {
   width: 88px;
   height: 88px;
   background-color: #1a1a1a;
-  border: 3px solid #ffe500;
+  border: 3px solid #FFFDF7;
   box-shadow: 5px 5px 0px #ff6600;
   animation: empty-icon-float 3s ease-in-out infinite;
 }
@@ -1429,8 +1429,8 @@ nav[aria-label="Site navigation"] {
 .empty-tag-2 {
   bottom: 22%;
   right: 6%;
-  border-color: #ffe500;
-  color: #ffe500;
+  border-color: #ff6600;
+  color: #ff6600;
   animation: empty-tag-drift-2 6s ease-in-out infinite 1s;
 }
 
