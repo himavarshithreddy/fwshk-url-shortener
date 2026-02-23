@@ -671,7 +671,7 @@ function Main() {
 
             <div className="selects-row">
               <div className="ttl-options">
-                <label className="ttl-label" htmlFor="ttl-select">Expiration:</label>
+                <label className="ttl-label" htmlFor="ttl-select">Expiration</label>
                 <select
                   id="ttl-select"
                   className="ttl-select"
@@ -687,7 +687,7 @@ function Main() {
               </div>
 
               <div className="ttl-options">
-                <label className="ttl-label" htmlFor="redirect-type-select">Redirect:</label>
+                <label className="ttl-label" htmlFor="redirect-type-select">Redirect</label>
                 <select
                   id="redirect-type-select"
                   className="ttl-select"
