@@ -13,10 +13,10 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 const QR_THEME = {
   dotsOptions: {
     type: 'rounded',
-    color: '#0d0d14',
+    color: '#ff6600',
   },
-  cornersSquareOptions: { color: '#0d0d14', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#0d0d14', type: 'dot' },
+  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
+  cornersDotOptions: { color: '#ff6600', type: 'dot' },
   backgroundOptions: { color: '#00000000' },
 };
 
