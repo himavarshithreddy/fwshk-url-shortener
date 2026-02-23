@@ -756,7 +756,13 @@ function Main() {
             )
           ) : (
             <div className="empty-state">
+              <div className="empty-accent-bar" aria-hidden="true">
+                <span className="empty-accent-text">READY ■ WAITING ■ PASTE URL ■ READY ■ WAITING ■ PASTE URL ■&nbsp;</span>
+                <span className="empty-accent-text">READY ■ WAITING ■ PASTE URL ■ READY ■ WAITING ■ PASTE URL ■&nbsp;</span>
+              </div>
               <div className="empty-body">
+                <div className="empty-corner empty-corner-tl" aria-hidden="true"></div>
+                <div className="empty-corner empty-corner-br" aria-hidden="true"></div>
                 <div className="empty-icon-display">
                   {mode === 'qrcode' ? (
                     <svg className="empty-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -782,6 +788,11 @@ function Main() {
                 </div>
                 <p className="empty-state-text">{mode === 'qrcode' ? 'Your QR code will appear here' : 'Your shortened URL will appear here'}</p>
                 <p className="empty-state-hint">{mode === 'qrcode' ? 'Paste a URL and hit Generate QR.' : 'Paste a long URL and hit Shorten.'}</p>
+                <div className="empty-deco-tags" aria-hidden="true">
+                  <span className="empty-tag empty-tag-1">URL</span>
+                  <span className="empty-tag empty-tag-2">FWSHK</span>
+                  <span className="empty-tag empty-tag-3">{'://'}</span>
+                </div>
               </div>
             </div>
           )}

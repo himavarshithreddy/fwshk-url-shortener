@@ -1295,7 +1295,39 @@ nav[aria-label="Site navigation"] {
    Shown in the right panel before any URL is shortened.
    ====================================================== */
 
+/* ---- Accent bar (toned-down ticker) ---- */
+
+.empty-accent-bar {
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #ff6600;
+  border-bottom: 3px solid #FFFDF7;
+  flex-shrink: 0;
+}
+
+.empty-accent-text {
+  display: inline-block;
+  flex-shrink: 0;
+  color: #000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  padding: 6px 0;
+  animation: empty-ticker-scroll 12s linear infinite;
+}
+
+@keyframes empty-ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ---- Main empty body ---- */
+
 .empty-body {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1305,6 +1337,30 @@ nav[aria-label="Site navigation"] {
   padding: 28px 24px;
   background-color: #242424;
   text-align: center;
+  overflow: hidden;
+}
+
+/* ---- Corner bracket accents ---- */
+
+.empty-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #ff6600;
+  border-style: solid;
+  opacity: 0.5;
+}
+
+.empty-corner-tl {
+  top: 12px;
+  left: 12px;
+  border-width: 3px 0 0 3px;
+}
+
+.empty-corner-br {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 3px 3px 0;
 }
 
 .empty-icon-display {
@@ -1344,6 +1400,72 @@ nav[aria-label="Site navigation"] {
   font-weight: 500;
   color: #9a9a9a;
   letter-spacing: 0.02em;
+}
+
+/* ---- Floating decorative tags ---- */
+
+.empty-deco-tags {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.empty-tag {
+  position: absolute;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 2px solid;
+  padding: 2px 6px;
+  opacity: 0;
+}
+
+.empty-tag-1 {
+  top: 18%;
+  left: 6%;
+  border-color: #ff6600;
+  color: #ff6600;
+  animation: empty-tag-drift-1 5s ease-in-out infinite 0.2s;
+}
+
+.empty-tag-2 {
+  bottom: 22%;
+  right: 6%;
+  border-color: #ffe500;
+  color: #ffe500;
+  animation: empty-tag-drift-2 6s ease-in-out infinite 1s;
+}
+
+.empty-tag-3 {
+  top: 55%;
+  right: 10%;
+  border-color: #FFFDF7;
+  color: #FFFDF7;
+  animation: empty-tag-drift-3 5.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes empty-tag-drift-1 {
+  0%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
+  20%      { opacity: 0.45; }
+  50%      { opacity: 0.45; transform: translateY(-8px) rotate(-4deg); }
+  80%      { opacity: 0.45; }
+}
+
+@keyframes empty-tag-drift-2 {
+  0%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
+  20%      { opacity: 0.4; }
+  50%      { opacity: 0.4; transform: translateY(6px) rotate(3deg); }
+  80%      { opacity: 0.4; }
+}
+
+@keyframes empty-tag-drift-3 {
+  0%, 100% { opacity: 0; transform: translateX(0) rotate(0deg); }
+  20%      { opacity: 0.35; }
+  50%      { opacity: 0.35; transform: translateX(-6px) rotate(-2deg); }
+  80%      { opacity: 0.35; }
 }
 
 /* ---- Mode Toggle ---- */
