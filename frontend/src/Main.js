@@ -13,30 +13,38 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 const QR_THEME = {
   dotsOptions: {
     type: 'rounded',
-    color: '#0d0d14',
+    gradient: {
+      type: 'linear',
+      rotation: Math.PI / 4,
+      colorStops: [
+        { offset: 0, color: '#ff6600' },
+        { offset: 0.5, color: '#a02060' },
+        { offset: 1, color: '#0a1628' },
+      ],
+    },
   },
   cornersSquareOptions: { color: '#0d0d14', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#0d0d14', type: 'dot' },
+  cornersDotOptions: { color: '#ff6600', type: 'dot' },
   backgroundOptions: { color: '#00000000' },
 };
 
 function drawPremiumMask(ctx, w, h) {
-  // Base: diagonal gradient with deep dark tones and subtle color shift
+  // Base: bold diagonal gradient with brand-inspired warm-to-cool tones
   const base = ctx.createLinearGradient(0, 0, w * 0.8, h);
-  base.addColorStop(0, '#08080e');
-  base.addColorStop(0.25, '#0c1220');
-  base.addColorStop(0.5, '#101a30');
-  base.addColorStop(0.75, '#0e1528');
-  base.addColorStop(1, '#08080e');
+  base.addColorStop(0, '#2d0a00');
+  base.addColorStop(0.25, '#a04000');
+  base.addColorStop(0.5, '#ff6600');
+  base.addColorStop(0.75, '#6b1a6b');
+  base.addColorStop(1, '#0a1628');
   ctx.fillStyle = base;
   ctx.fillRect(0, 0, w, h);
 
-  // Secondary cross-gradient for depth and dimension
+  // Cross-gradient for depth and dimension
   const cross = ctx.createLinearGradient(w, 0, 0, h);
-  cross.addColorStop(0, 'rgba(0, 140, 180, 0.10)');
+  cross.addColorStop(0, 'rgba(0, 200, 255, 0.12)');
   cross.addColorStop(0.4, 'rgba(0, 0, 0, 0)');
   cross.addColorStop(0.6, 'rgba(0, 0, 0, 0)');
-  cross.addColorStop(1, 'rgba(200, 80, 0, 0.08)');
+  cross.addColorStop(1, 'rgba(255, 120, 0, 0.10)');
   ctx.fillStyle = cross;
   ctx.fillRect(0, 0, w, h);
 
@@ -47,33 +55,33 @@ function drawPremiumMask(ctx, w, h) {
   const sheen = ctx.createLinearGradient(-w, 0, w, 0);
   sheen.addColorStop(0, 'rgba(255,255,255,0)');
   sheen.addColorStop(0.38, 'rgba(255,255,255,0)');
-  sheen.addColorStop(0.46, 'rgba(180,200,220,0.06)');
-  sheen.addColorStop(0.50, 'rgba(220,230,245,0.13)');
-  sheen.addColorStop(0.54, 'rgba(180,200,220,0.06)');
+  sheen.addColorStop(0.46, 'rgba(255,220,180,0.10)');
+  sheen.addColorStop(0.50, 'rgba(255,240,220,0.18)');
+  sheen.addColorStop(0.54, 'rgba(255,220,180,0.10)');
   sheen.addColorStop(0.62, 'rgba(255,255,255,0)');
   sheen.addColorStop(1, 'rgba(255,255,255,0)');
   ctx.fillStyle = sheen;
   ctx.fillRect(-w, -h, w * 2, h * 2);
   ctx.restore();
 
-  // Subtle radial accent — warm brand tone, top-left
+  // Radial accent — warm brand tone, top-left
   const glow1 = ctx.createRadialGradient(w * 0.15, h * 0.15, 0, w * 0.15, h * 0.15, w * 0.45);
-  glow1.addColorStop(0, 'rgba(255, 102, 0, 0.10)');
-  glow1.addColorStop(0.5, 'rgba(255, 102, 0, 0.03)');
+  glow1.addColorStop(0, 'rgba(255, 102, 0, 0.20)');
+  glow1.addColorStop(0.5, 'rgba(255, 102, 0, 0.06)');
   glow1.addColorStop(1, 'rgba(255, 102, 0, 0)');
   ctx.fillStyle = glow1;
   ctx.fillRect(0, 0, w, h);
 
-  // Subtle radial accent — cool tone, bottom-right
+  // Radial accent — cool purple tone, bottom-right
   const glow2 = ctx.createRadialGradient(w * 0.85, h * 0.85, 0, w * 0.85, h * 0.85, w * 0.45);
-  glow2.addColorStop(0, 'rgba(0, 160, 210, 0.08)');
-  glow2.addColorStop(0.5, 'rgba(0, 160, 210, 0.02)');
-  glow2.addColorStop(1, 'rgba(0, 160, 210, 0)');
+  glow2.addColorStop(0, 'rgba(120, 0, 200, 0.15)');
+  glow2.addColorStop(0.5, 'rgba(120, 0, 200, 0.05)');
+  glow2.addColorStop(1, 'rgba(120, 0, 200, 0)');
   ctx.fillStyle = glow2;
   ctx.fillRect(0, 0, w, h);
 
   // Fine grid overlay for tech-circuit aesthetic
-  ctx.strokeStyle = 'rgba(120, 160, 220, 0.045)';
+  ctx.strokeStyle = 'rgba(255, 160, 80, 0.06)';
   ctx.lineWidth = 0.5;
   const gridStep = Math.max(7, Math.floor(w / 30));
   for (let x = 0; x <= w; x += gridStep) {
@@ -91,7 +99,7 @@ function drawPremiumMask(ctx, w, h) {
 
   // Preserve QR finder pattern corners — solid dark for reliable scanning
   const fp = w * 0.28;
-  const fpFill = '#08080e';
+  const fpFill = '#0d0d14';
   ctx.fillStyle = fpFill;
   ctx.fillRect(0, 0, fp, fp);
   ctx.fillRect(w - fp, 0, fp, fp);
