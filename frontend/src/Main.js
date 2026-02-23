@@ -24,7 +24,7 @@ function drawGlitchMask(ctx, w, h) {
   ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, w, h);
 
-  // Acid palette: neon green, hot pink, electric cyan, acid yellow
+  // Acid palette: neon green, hot pink, electric cyan, acid yellow, neon red, violet
   const glitchColors = ['#39FF14', '#FF00FF', '#00FFFF', '#DFFF00', '#FF073A', '#B026FF'];
 
   // Horizontal glitch bars — displaced data-corruption stripes
