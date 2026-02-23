@@ -793,7 +793,7 @@ nav[aria-label="Site navigation"] {
     align-items: stretch;
     justify-content: center;
     text-align: center;
-    opacity: 0.55;
+    opacity: 0.85;
   }
 
   .option-buttons {
@@ -1294,8 +1294,8 @@ nav[aria-label="Site navigation"] {
   display: flex;
   white-space: nowrap;
   overflow: hidden;
-  background-color: #ff6600;
-  border-bottom: 3px solid #FFFDF7;
+  background-color: #ffe500;
+  border-bottom: 3px solid #ff6600;
   flex-shrink: 0;
 }
 
@@ -1328,20 +1328,22 @@ nav[aria-label="Site navigation"] {
   justify-content: center;
   gap: 16px;
   padding: 28px 24px;
-  background-color: #242424;
   text-align: center;
   overflow: hidden;
+  border: 3px solid #ff6600;
+  border-top: none;
+  box-shadow: 6px 6px 0px #ffe500;
 }
 
 /* ---- Corner bracket accents ---- */
 
 .empty-corner {
   position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: #ff6600;
+  width: 22px;
+  height: 22px;
+  border-color: #ffe500;
   border-style: solid;
-  opacity: 0.5;
+  opacity: 0.85;
 }
 
 .empty-corner-tl {
@@ -1363,8 +1365,8 @@ nav[aria-label="Site navigation"] {
   width: 88px;
   height: 88px;
   background-color: #1a1a1a;
-  border: 3px solid #FFFDF7;
-  box-shadow: 4px 4px 0px #ff6600;
+  border: 3px solid #ffe500;
+  box-shadow: 5px 5px 0px #ff6600;
   animation: empty-icon-float 3s ease-in-out infinite;
 }
 
@@ -1411,7 +1413,7 @@ nav[aria-label="Site navigation"] {
   font-family: 'Space Grotesk', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  border: 2px solid;
+  border: 3px solid;
   padding: 2px 6px;
   opacity: 0;
 }
@@ -1442,23 +1444,23 @@ nav[aria-label="Site navigation"] {
 
 @keyframes empty-tag-drift-1 {
   0%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
-  20%      { opacity: 0.45; }
-  50%      { opacity: 0.45; transform: translateY(-8px) rotate(-4deg); }
-  80%      { opacity: 0.45; }
+  20%      { opacity: 0.7; }
+  50%      { opacity: 0.7; transform: translateY(-8px) rotate(-4deg); }
+  80%      { opacity: 0.7; }
 }
 
 @keyframes empty-tag-drift-2 {
   0%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
-  20%      { opacity: 0.4; }
-  50%      { opacity: 0.4; transform: translateY(6px) rotate(3deg); }
-  80%      { opacity: 0.4; }
+  20%      { opacity: 0.65; }
+  50%      { opacity: 0.65; transform: translateY(6px) rotate(3deg); }
+  80%      { opacity: 0.65; }
 }
 
 @keyframes empty-tag-drift-3 {
   0%, 100% { opacity: 0; transform: translateX(0) rotate(0deg); }
-  20%      { opacity: 0.35; }
-  50%      { opacity: 0.35; transform: translateX(-6px) rotate(-2deg); }
-  80%      { opacity: 0.35; }
+  20%      { opacity: 0.6; }
+  50%      { opacity: 0.6; transform: translateX(-6px) rotate(-2deg); }
+  80%      { opacity: 0.6; }
 }
 
 /* ---- Mode Toggle ---- */
