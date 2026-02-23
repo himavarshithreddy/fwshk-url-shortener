@@ -12,87 +12,87 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
 const QR_THEME = {
   dotsOptions: {
-    type: 'classy-rounded',
-    color: '#1a1a1a',
+    type: 'rounded',
+    color: '#0d0d14',
   },
-  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#1a1a1a', type: 'dot' },
+  cornersSquareOptions: { color: '#0d0d14', type: 'extra-rounded' },
+  cornersDotOptions: { color: '#0d0d14', type: 'dot' },
   backgroundOptions: { color: '#00000000' },
 };
 
-function drawGlitchMask(ctx, w, h) {
-  ctx.fillStyle = '#1a1a1a';
+function drawPremiumMask(ctx, w, h) {
+  // Base: diagonal gradient with deep dark tones and subtle color shift
+  const base = ctx.createLinearGradient(0, 0, w * 0.8, h);
+  base.addColorStop(0, '#08080e');
+  base.addColorStop(0.25, '#0c1220');
+  base.addColorStop(0.5, '#101a30');
+  base.addColorStop(0.75, '#0e1528');
+  base.addColorStop(1, '#08080e');
+  ctx.fillStyle = base;
   ctx.fillRect(0, 0, w, h);
 
-  // Brand palette: orange, yellow, and their shades
-  const glitchColors = ['#ff6600', '#ffe500', '#cc5200', '#ffb347', '#e65c00', '#ffd633'];
+  // Secondary cross-gradient for depth and dimension
+  const cross = ctx.createLinearGradient(w, 0, 0, h);
+  cross.addColorStop(0, 'rgba(0, 140, 180, 0.10)');
+  cross.addColorStop(0.4, 'rgba(0, 0, 0, 0)');
+  cross.addColorStop(0.6, 'rgba(0, 0, 0, 0)');
+  cross.addColorStop(1, 'rgba(200, 80, 0, 0.08)');
+  ctx.fillStyle = cross;
+  ctx.fillRect(0, 0, w, h);
 
-  // Horizontal glitch bars — displaced data-corruption stripes
-  const barCount = 14;
-  for (let i = 0; i < barCount; i++) {
-    // Knuth multiplicative hash for deterministic pseudo-random positioning
-    const y = (((i * 7 + 3) * 2654435761) >>> 0) % h;
-    const barH = 2 + ((i * 13 + 5) % 7) * (h * 0.012);
-    const xOff = ((i % 3) - 1) * w * 0.12;
-    ctx.fillStyle = glitchColors[i % glitchColors.length];
-    ctx.globalAlpha = 0.6 + (i % 4) * 0.1;
-    ctx.fillRect(xOff, y, w + Math.abs(xOff), barH);
+  // Diagonal metallic sheen band
+  ctx.save();
+  ctx.translate(w * 0.5, h * 0.5);
+  ctx.rotate(-Math.PI / 4.5);
+  const sheen = ctx.createLinearGradient(-w, 0, w, 0);
+  sheen.addColorStop(0, 'rgba(255,255,255,0)');
+  sheen.addColorStop(0.38, 'rgba(255,255,255,0)');
+  sheen.addColorStop(0.46, 'rgba(180,200,220,0.06)');
+  sheen.addColorStop(0.50, 'rgba(220,230,245,0.13)');
+  sheen.addColorStop(0.54, 'rgba(180,200,220,0.06)');
+  sheen.addColorStop(0.62, 'rgba(255,255,255,0)');
+  sheen.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = sheen;
+  ctx.fillRect(-w, -h, w * 2, h * 2);
+  ctx.restore();
+
+  // Subtle radial accent — warm brand tone, top-left
+  const glow1 = ctx.createRadialGradient(w * 0.15, h * 0.15, 0, w * 0.15, h * 0.15, w * 0.45);
+  glow1.addColorStop(0, 'rgba(255, 102, 0, 0.10)');
+  glow1.addColorStop(0.5, 'rgba(255, 102, 0, 0.03)');
+  glow1.addColorStop(1, 'rgba(255, 102, 0, 0)');
+  ctx.fillStyle = glow1;
+  ctx.fillRect(0, 0, w, h);
+
+  // Subtle radial accent — cool tone, bottom-right
+  const glow2 = ctx.createRadialGradient(w * 0.85, h * 0.85, 0, w * 0.85, h * 0.85, w * 0.45);
+  glow2.addColorStop(0, 'rgba(0, 160, 210, 0.08)');
+  glow2.addColorStop(0.5, 'rgba(0, 160, 210, 0.02)');
+  glow2.addColorStop(1, 'rgba(0, 160, 210, 0)');
+  ctx.fillStyle = glow2;
+  ctx.fillRect(0, 0, w, h);
+
+  // Fine grid overlay for tech-circuit aesthetic
+  ctx.strokeStyle = 'rgba(120, 160, 220, 0.045)';
+  ctx.lineWidth = 0.5;
+  const gridStep = Math.max(7, Math.floor(w / 30));
+  for (let x = 0; x <= w; x += gridStep) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, h);
+    ctx.stroke();
   }
-  ctx.globalAlpha = 1;
-
-  // Channel-split blocks — chromatic aberration in brand tones
-  const splits = [
-    [0.05, 0.15, 0.35, 0.10],
-    [0.50, 0.55, 0.25, 0.08],
-    [0.20, 0.70, 0.30, 0.12],
-    [0.60, 0.30, 0.20, 0.06],
-    [0.10, 0.45, 0.28, 0.09],
-  ];
-  for (const [bx, by, bw, bh] of splits) {
-    ctx.fillStyle = 'rgba(255, 102, 0, 0.45)';
-    ctx.fillRect(bx * w + 3, by * h, bw * w, bh * h);
-    ctx.fillStyle = 'rgba(255, 229, 0, 0.45)';
-    ctx.fillRect(bx * w - 3, by * h, bw * w, bh * h);
+  for (let y = 0; y <= h; y += gridStep) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(w, y);
+    ctx.stroke();
   }
 
-  // Static noise scatter (LCG pseudo-random generator)
-  const step = 4;
-  let seed = 42;
-  for (let x = 0; x < w; x += step) {
-    for (let y = 0; y < h; y += step) {
-      seed = ((seed * 1103515245 + 12345) & 0x7fffffff) >>> 0;
-      if ((seed % 100) > 82) {
-        const b = (seed >> 8) & 0xff;
-        ctx.fillStyle = `rgb(${b},${b},${b})`;
-        ctx.globalAlpha = 0.25 + ((seed >> 16) & 0x0f) * 0.03;
-        ctx.fillRect(x, y, step, step);
-      }
-    }
-  }
-  ctx.globalAlpha = 1;
-
-  // Scanline overlay
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
-  for (let y = 0; y < h; y += 4) {
-    ctx.fillRect(0, y, w, 2);
-  }
-
-  // Large displaced glitch blocks in brand colors
-  const blocks = [
-    [0.02, 0.38, 0.22, 0.10, '#ff6600'],
-    [0.55, 0.10, 0.18, 0.14, '#ffe500'],
-    [0.35, 0.78, 0.28, 0.09, '#cc5200'],
-  ];
-  for (const [bx, by, bw, bh, color] of blocks) {
-    ctx.fillStyle = color;
-    ctx.globalAlpha = 0.65;
-    ctx.fillRect(bx * w, by * h, bw * w, bh * h);
-  }
-  ctx.globalAlpha = 1;
-
-  // Preserve QR finder pattern corners (keep them scannable)
+  // Preserve QR finder pattern corners — solid dark for reliable scanning
   const fp = w * 0.28;
-  ctx.fillStyle = '#1a1a1a';
+  const fpFill = '#08080e';
+  ctx.fillStyle = fpFill;
   ctx.fillRect(0, 0, fp, fp);
   ctx.fillRect(w - fp, 0, fp, fp);
   ctx.fillRect(0, h - fp, fp, fp);
@@ -306,7 +306,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       patternCanvas.width = w;
       patternCanvas.height = h;
       const patternCtx = patternCanvas.getContext('2d');
-      drawGlitchMask(patternCtx, w, h);
+      drawPremiumMask(patternCtx, w, h);
 
       patternCtx.globalCompositeOperation = 'destination-in';
       patternCtx.drawImage(qrCanvas, 0, 0);
