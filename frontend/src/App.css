@@ -20,6 +20,7 @@ fieldset.shortcode-options {
   border: none;
   padding: 0;
   margin: 0;
+  margin-bottom: 16px;
 }
 
 * {
@@ -748,11 +749,13 @@ nav[aria-label="Site navigation"] {
   }
 
   .main-layout {
+    flex: 1;
     flex-direction: row;
     max-width: 1100px;
     border: 3px solid #FFFDF7;
     box-shadow: 8px 8px 0px #FFFDF7;
     align-items: stretch;
+    min-height: calc(100vh - 80px);
   }
 
   .left-panel {
@@ -790,6 +793,19 @@ nav[aria-label="Site navigation"] {
     justify-content: center;
     text-align: center;
     opacity: 0.55;
+  }
+
+  .option-buttons {
+    gap: 16px;
+    border: none;
+  }
+
+  .option-btn {
+    border: 3px solid #FFFDF7;
+  }
+
+  .option-btn:first-child {
+    border-right: 3px solid #FFFDF7;
   }
 
   .selects-row {
