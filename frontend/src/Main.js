@@ -312,7 +312,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       patternCtx.drawImage(qrCanvas, 0, 0);
 
       qrCtx.clearRect(0, 0, w, h);
-      qrCtx.fillStyle = '#E8E4DC';
+      qrCtx.fillStyle = '#FFFDF7';
       qrCtx.fillRect(0, 0, w, h);
       qrCtx.drawImage(patternCanvas, 0, 0);
 
@@ -466,7 +466,7 @@ function Main() {
     ctx.fillRect(fx, fy, frameW, frameH);
 
     // Frame background
-    ctx.fillStyle = '#E8E4DC';
+    ctx.fillStyle = '#FFFDF7';
     ctx.fillRect(fx + border, fy + border, frameW - border * 2, frameH - border * 2);
 
     // QR code
@@ -510,11 +510,11 @@ function Main() {
     drawLabel('FWSHK', fx - 4, fy - 12, '#ff6600', fontSize);
 
     // Top-right: SCAN (cream)
-    drawLabel('SCAN', fx + frameW + 4 - measureLabel('SCAN', fontSize), fy - 12, '#E8E4DC', fontSize);
+    drawLabel('SCAN', fx + frameW + 4 - measureLabel('SCAN', fontSize), fy - 12, '#FFFDF7', fontSize);
 
     // Bottom-left: ■■■ (cream)
     const blLabelH = lb + py + smallFontSize + py + lb;
-    drawLabel('\u25A0\u25A0\u25A0', fx - 4, fy + frameH + 12 - blLabelH, '#E8E4DC', smallFontSize);
+    drawLabel('\u25A0\u25A0\u25A0', fx - 4, fy + frameH + 12 - blLabelH, '#FFFDF7', smallFontSize);
 
     // Bottom-right: QR (orange)
     const brLabelH = lb + py + fontSize + py + lb;
@@ -671,7 +671,7 @@ function Main() {
 
             <div className="selects-row">
               <div className="ttl-options">
-                <label className="ttl-label" htmlFor="ttl-select">Expiration</label>
+                <label className="ttl-label" htmlFor="ttl-select">Expiration:</label>
                 <select
                   id="ttl-select"
                   className="ttl-select"
@@ -687,7 +687,7 @@ function Main() {
               </div>
 
               <div className="ttl-options">
-                <label className="ttl-label" htmlFor="redirect-type-select">Redirect</label>
+                <label className="ttl-label" htmlFor="redirect-type-select">Redirect:</label>
                 <select
                   id="redirect-type-select"
                   className="ttl-select"
