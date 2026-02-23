@@ -12,20 +12,20 @@ const CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
 
 const QR_THEME = {
   dotsOptions: {
-    type: 'classy-rounded',
-    color: '#1a1a1a',
+    type: 'square',
+    color: '#000000',
   },
-  cornersSquareOptions: { color: '#ff6600', type: 'extra-rounded' },
-  cornersDotOptions: { color: '#1a1a1a', type: 'dot' },
+  cornersSquareOptions: { color: '#39FF14', type: 'square' },
+  cornersDotOptions: { color: '#FF00FF', type: 'square' },
   backgroundOptions: { color: '#00000000' },
 };
 
 function drawGlitchMask(ctx, w, h) {
-  ctx.fillStyle = '#1a1a1a';
+  ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, w, h);
 
-  // Brand palette: orange, yellow, and their shades
-  const glitchColors = ['#ff6600', '#ffe500', '#cc5200', '#ffb347', '#e65c00', '#ffd633'];
+  // Acid palette: neon green, hot pink, electric cyan, acid yellow
+  const glitchColors = ['#39FF14', '#FF00FF', '#00FFFF', '#DFFF00', '#FF073A', '#B026FF'];
 
   // Horizontal glitch bars — displaced data-corruption stripes
   const barCount = 14;
@@ -49,9 +49,9 @@ function drawGlitchMask(ctx, w, h) {
     [0.10, 0.45, 0.28, 0.09],
   ];
   for (const [bx, by, bw, bh] of splits) {
-    ctx.fillStyle = 'rgba(255, 102, 0, 0.45)';
+    ctx.fillStyle = 'rgba(255, 0, 255, 0.45)';
     ctx.fillRect(bx * w + 3, by * h, bw * w, bh * h);
-    ctx.fillStyle = 'rgba(255, 229, 0, 0.45)';
+    ctx.fillStyle = 'rgba(57, 255, 20, 0.45)';
     ctx.fillRect(bx * w - 3, by * h, bw * w, bh * h);
   }
 
@@ -79,9 +79,9 @@ function drawGlitchMask(ctx, w, h) {
 
   // Large displaced glitch blocks in brand colors
   const blocks = [
-    [0.02, 0.38, 0.22, 0.10, '#ff6600'],
-    [0.55, 0.10, 0.18, 0.14, '#ffe500'],
-    [0.35, 0.78, 0.28, 0.09, '#cc5200'],
+    [0.02, 0.38, 0.22, 0.10, '#39FF14'],
+    [0.55, 0.10, 0.18, 0.14, '#FF00FF'],
+    [0.35, 0.78, 0.28, 0.09, '#00FFFF'],
   ];
   for (const [bx, by, bw, bh, color] of blocks) {
     ctx.fillStyle = color;
@@ -92,7 +92,7 @@ function drawGlitchMask(ctx, w, h) {
 
   // Preserve QR finder pattern corners (keep them scannable)
   const fp = w * 0.28;
-  ctx.fillStyle = '#1a1a1a';
+  ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, fp, fp);
   ctx.fillRect(w - fp, 0, fp, fp);
   ctx.fillRect(0, h - fp, fp, fp);
@@ -312,7 +312,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       patternCtx.drawImage(qrCanvas, 0, 0);
 
       qrCtx.clearRect(0, 0, w, h);
-      qrCtx.fillStyle = '#FFFDF7';
+      qrCtx.fillStyle = '#FFFFFF';
       qrCtx.fillRect(0, 0, w, h);
       qrCtx.drawImage(patternCanvas, 0, 0);
 
@@ -466,7 +466,7 @@ function Main() {
     ctx.fillRect(fx, fy, frameW, frameH);
 
     // Frame background
-    ctx.fillStyle = '#FFFDF7';
+    ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(fx + border, fy + border, frameW - border * 2, frameH - border * 2);
 
     // QR code
@@ -506,19 +506,19 @@ function Main() {
       return lb + px + ctx.measureText(text).width + px + lb;
     };
 
-    // Top-left: FWSHK (orange)
-    drawLabel('FWSHK', fx - 4, fy - 12, '#ff6600', fontSize);
+    // Top-left: FWSHK (neon green)
+    drawLabel('FWSHK', fx - 4, fy - 12, '#39FF14', fontSize);
 
-    // Top-right: SCAN (cream)
-    drawLabel('SCAN', fx + frameW + 4 - measureLabel('SCAN', fontSize), fy - 12, '#FFFDF7', fontSize);
+    // Top-right: SCAN (magenta)
+    drawLabel('SCAN', fx + frameW + 4 - measureLabel('SCAN', fontSize), fy - 12, '#FF00FF', fontSize);
 
-    // Bottom-left: ■■■ (cream)
+    // Bottom-left: ■■■ (cyan)
     const blLabelH = lb + py + smallFontSize + py + lb;
-    drawLabel('\u25A0\u25A0\u25A0', fx - 4, fy + frameH + 12 - blLabelH, '#FFFDF7', smallFontSize);
+    drawLabel('\u25A0\u25A0\u25A0', fx - 4, fy + frameH + 12 - blLabelH, '#00FFFF', smallFontSize);
 
-    // Bottom-right: QR (orange)
+    // Bottom-right: QR (neon green)
     const brLabelH = lb + py + fontSize + py + lb;
-    drawLabel('QR', fx + frameW + 4 - measureLabel('QR', fontSize), fy + frameH + 12 - brLabelH, '#ff6600', fontSize);
+    drawLabel('QR', fx + frameW + 4 - measureLabel('QR', fontSize), fy + frameH + 12 - brLabelH, '#39FF14', fontSize);
 
     return c;
   };
