@@ -340,6 +340,7 @@ body {
   border: 3px solid #FFFDF7;
   border-top: none;
   animation: slideDown 0.2s ease-out;
+  overflow: hidden;
 }
 
 .custom-url-preview {
@@ -354,6 +355,9 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .custom-code-input {
@@ -1784,5 +1788,13 @@ nav[aria-label="Site navigation"] {
 
   .qr-result-label {
     box-shadow: 3px 3px 0px #FFFDF7;
+  }
+
+  .custom-url-preview {
+    flex-wrap: wrap;
+  }
+
+  .base-url {
+    font-size: 0.8rem;
   }
 }
