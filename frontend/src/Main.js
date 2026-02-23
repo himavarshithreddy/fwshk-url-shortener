@@ -20,83 +20,6 @@ const QR_THEME = {
   backgroundOptions: { color: '#00000000' },
 };
 
-function drawPremiumMask(ctx, w, h) {
-  // Base: diagonal gradient with deep dark tones and subtle color shift
-  const base = ctx.createLinearGradient(0, 0, w * 0.8, h);
-  base.addColorStop(0, '#08080e');
-  base.addColorStop(0.25, '#0c1220');
-  base.addColorStop(0.5, '#101a30');
-  base.addColorStop(0.75, '#0e1528');
-  base.addColorStop(1, '#08080e');
-  ctx.fillStyle = base;
-  ctx.fillRect(0, 0, w, h);
-
-  // Secondary cross-gradient for depth and dimension
-  const cross = ctx.createLinearGradient(w, 0, 0, h);
-  cross.addColorStop(0, 'rgba(0, 140, 180, 0.10)');
-  cross.addColorStop(0.4, 'rgba(0, 0, 0, 0)');
-  cross.addColorStop(0.6, 'rgba(0, 0, 0, 0)');
-  cross.addColorStop(1, 'rgba(200, 80, 0, 0.08)');
-  ctx.fillStyle = cross;
-  ctx.fillRect(0, 0, w, h);
-
-  // Diagonal metallic sheen band
-  ctx.save();
-  ctx.translate(w * 0.5, h * 0.5);
-  ctx.rotate(-Math.PI / 4.5);
-  const sheen = ctx.createLinearGradient(-w, 0, w, 0);
-  sheen.addColorStop(0, 'rgba(255,255,255,0)');
-  sheen.addColorStop(0.38, 'rgba(255,255,255,0)');
-  sheen.addColorStop(0.46, 'rgba(180,200,220,0.06)');
-  sheen.addColorStop(0.50, 'rgba(220,230,245,0.13)');
-  sheen.addColorStop(0.54, 'rgba(180,200,220,0.06)');
-  sheen.addColorStop(0.62, 'rgba(255,255,255,0)');
-  sheen.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = sheen;
-  ctx.fillRect(-w, -h, w * 2, h * 2);
-  ctx.restore();
-
-  // Subtle radial accent — warm brand tone, top-left
-  const glow1 = ctx.createRadialGradient(w * 0.15, h * 0.15, 0, w * 0.15, h * 0.15, w * 0.45);
-  glow1.addColorStop(0, 'rgba(255, 102, 0, 0.10)');
-  glow1.addColorStop(0.5, 'rgba(255, 102, 0, 0.03)');
-  glow1.addColorStop(1, 'rgba(255, 102, 0, 0)');
-  ctx.fillStyle = glow1;
-  ctx.fillRect(0, 0, w, h);
-
-  // Subtle radial accent — cool tone, bottom-right
-  const glow2 = ctx.createRadialGradient(w * 0.85, h * 0.85, 0, w * 0.85, h * 0.85, w * 0.45);
-  glow2.addColorStop(0, 'rgba(0, 160, 210, 0.08)');
-  glow2.addColorStop(0.5, 'rgba(0, 160, 210, 0.02)');
-  glow2.addColorStop(1, 'rgba(0, 160, 210, 0)');
-  ctx.fillStyle = glow2;
-  ctx.fillRect(0, 0, w, h);
-
-  // Fine grid overlay for tech-circuit aesthetic
-  ctx.strokeStyle = 'rgba(120, 160, 220, 0.045)';
-  ctx.lineWidth = 0.5;
-  const gridStep = Math.max(7, Math.floor(w / 30));
-  for (let x = 0; x <= w; x += gridStep) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, h);
-    ctx.stroke();
-  }
-  for (let y = 0; y <= h; y += gridStep) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(w, y);
-    ctx.stroke();
-  }
-
-  // Preserve QR finder pattern corners — solid dark for reliable scanning
-  const fp = w * 0.28;
-  const fpFill = '#08080e';
-  ctx.fillStyle = fpFill;
-  ctx.fillRect(0, 0, fp, fp);
-  ctx.fillRect(w - fp, 0, fp, fp);
-  ctx.fillRect(0, h - fp, fp, fp);
-}
 
 function FwshkLoader() {
   const scrambleRef = useRef(null);
@@ -294,31 +217,7 @@ function NeoQRCode({ value, size = 220, onReady }) {
       qrRef.current.update(config);
     }
 
-    const t = setTimeout(() => {
-      const qrCanvas = containerRef.current?.querySelector('canvas');
-      if (!qrCanvas) return;
-
-      const w = qrCanvas.width;
-      const h = qrCanvas.height;
-      const qrCtx = qrCanvas.getContext('2d');
-
-      const patternCanvas = document.createElement('canvas');
-      patternCanvas.width = w;
-      patternCanvas.height = h;
-      const patternCtx = patternCanvas.getContext('2d');
-      drawPremiumMask(patternCtx, w, h);
-
-      patternCtx.globalCompositeOperation = 'destination-in';
-      patternCtx.drawImage(qrCanvas, 0, 0);
-
-      qrCtx.clearRect(0, 0, w, h);
-      qrCtx.fillStyle = '#FFFDF7';
-      qrCtx.fillRect(0, 0, w, h);
-      qrCtx.drawImage(patternCanvas, 0, 0);
-
-      if (onReady) onReady(containerRef.current);
-    }, 300);
-    return () => clearTimeout(t);
+    if (onReady) onReady(containerRef.current);
   }, [value, size, onReady]);
 
   return <div ref={containerRef} className="neo-qr-canvas" />;
