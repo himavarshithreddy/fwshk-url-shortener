@@ -775,9 +775,8 @@ function Main() {
                     </svg>
                   ) : (
                     <svg className="empty-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M27 17l4.6-4.6a5.5 5.5 0 0 1 7.8 7.8L34.8 25" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                      <path d="M21 31l-4.6 4.6a5.5 5.5 0 0 1-7.8-7.8L13.2 23" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                      <line x1="18" y1="30" x2="30" y2="18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                      <path d="M20 26a10 10 0 0 0 15.08 1.08l6-6a10 10 0 0 0-14.14-14.14l-3.44 3.42" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M28 22a10 10 0 0 0-15.08-1.08l-6 6a10 10 0 0 0 14.14 14.14l3.42-3.42" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   )}
                 </div>
