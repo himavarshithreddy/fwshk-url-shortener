@@ -1,6 +1,6 @@
 # **FWSHK — URLs on diet.**
 
-**Fwshk** is a bold, fast, and free URL shortener & QR code generator built with a sharp **neo brutalism** design. Paste any long link, get a clean short URL or a styled QR code in seconds — no sign-up, no fluff. Heavy borders, hard shadows, and raw typography. That's the Fwshk way.
+**Fwshk** is a bold, fast, and free URL shortener & QR code generator. Paste any long link, get a clean short URL or a styled QR code in seconds — no sign-up, no fluff. Heavy borders, hard shadows, and raw typography. That's the Fwshk way.
 
 ---
 
@@ -24,19 +24,7 @@
 - ⏳ **Link Expiration** — Set your links to expire after a chosen duration, or keep them permanent
 - 🔀 **Redirect Types** — Choose between **Permanent (308)** redirects or **Track Clicks (302)** redirects
 - ⚡ **Lightning Fast** — Built on a serverless, globally distributed infrastructure for sub-millisecond redirects
-
----
-
-## **Design — Neo Brutalism**
-
-Fwshk is designed with a raw, bold **neo-brutalist** aesthetic:
-
-- **Sharp geometry** — No rounded corners, all hard edges
-- **Heavy borders & hard shadows** — Thick strokes and offset drop shadows on every element
-- **Bold uppercase typography** — Syne for headers, Space Grotesk for body and buttons
-- **High contrast palette** — Dark backgrounds (#1a1a1a), off-white text (#FFFDF7), and a vivid orange accent (#ff6600)
-- **Animated loaders** — CRT scanline effects and pixel grid animations while your URL is being trimmed or your QR code is being encoded
-
+  
 ---
 
 ## **Use Cases**
