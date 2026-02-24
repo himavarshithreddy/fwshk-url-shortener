@@ -1,13 +1,21 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const dotenv = require('dotenv');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const linkRoutes = require('./routes/linkRoutes');
+const { proxyDetection } = require('./middleware/security');
 
 dotenv.config();
 
 const app = express();
+
+// Trust the first proxy (Vercel / load-balancer) so req.ip reflects the real client
+app.set('trust proxy', 1);
+
+// Security headers (XSS, HSTS, Content-Type sniffing, etc.)
+app.use(helmet());
 
 const corsOptions = {
   origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : '*',
@@ -19,8 +27,11 @@ const corsOptions = {
 app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
+// Proxy detection – block requests with too many proxy hops
+app.use(proxyDetection);
+
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 
 // Serve favicon explicitly
 const faviconLimiter = rateLimit({
