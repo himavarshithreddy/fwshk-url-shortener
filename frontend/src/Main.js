@@ -233,12 +233,23 @@ function Main() {
   const qrRef = useRef(null);
   const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
+  const recaptchaSiteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY || '';
 
   // Warm up the backend serverless function on page load so the first
   // URL-shortening request doesn't pay the cold-start penalty.
   useEffect(() => {
     fetch(`${apiUrl}/health`).catch(() => {});
   }, [apiUrl]);
+
+  // Load reCAPTCHA v3 script when site key is configured
+  useEffect(() => {
+    if (!recaptchaSiteKey) return;
+    if (document.querySelector('script[src*="recaptcha/api.js"]')) return;
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`;
+    script.async = true;
+    document.head.appendChild(script);
+  }, [recaptchaSiteKey]);
   const [shortenedUrl, setShortenedUrl] = useState('');
   const [shortCode, setShortCode] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
@@ -293,6 +304,17 @@ function Main() {
   
     try {
       setIsLoading(true);
+
+      // Obtain reCAPTCHA v3 token when site key is configured
+      let captchaToken;
+      if (recaptchaSiteKey && window.grecaptcha) {
+        try {
+          captchaToken = await window.grecaptcha.execute(recaptchaSiteKey, { action: 'shorten' });
+        } catch (_) {
+          // Continue without token if reCAPTCHA fails
+        }
+      }
+
       // Call the backend API with the formatted URL and optional custom code
       const response = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
@@ -304,6 +326,7 @@ function Main() {
           ...(useCustomCode && { customShortCode: customCode }),
           ...(ttl && { ttl: parseInt(ttl, 10) }),
           redirectType,
+          ...(captchaToken && { captchaToken }),
         }),
       });
   
