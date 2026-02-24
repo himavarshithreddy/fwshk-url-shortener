@@ -238,6 +238,13 @@ function cleanup() {
 const cleanupTimer = setInterval(cleanup, 5 * MINUTE);
 if (cleanupTimer.unref) cleanupTimer.unref();
 
+/**
+ * Graceful shutdown: clear the cleanup timer.
+ */
+function shutdown() {
+  clearInterval(cleanupTimer);
+}
+
 module.exports = {
   recordLinkCreation,
   recordRedirect,
@@ -247,6 +254,7 @@ module.exports = {
   detectClickAnomaly,
   detectIpSpike,
   getDashboardData,
+  shutdown,
   // Exposed for testing
   _stats: stats,
 };

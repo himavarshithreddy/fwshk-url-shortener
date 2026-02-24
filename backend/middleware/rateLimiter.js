@@ -248,10 +248,18 @@ function cleanup() {
 const cleanupTimer = setInterval(cleanup, CLEANUP_INTERVAL);
 if (cleanupTimer.unref) cleanupTimer.unref();
 
+/**
+ * Graceful shutdown: clear the cleanup timer.
+ */
+function shutdown() {
+  clearInterval(cleanupTimer);
+}
+
 module.exports = {
   creationRateLimiter,
   getSubnet,
   isSuspiciousUA,
+  shutdown,
   // Exposed for testing
   _ipBuckets: ipBuckets,
   _subnetBuckets: subnetBuckets,
