@@ -1,8 +1,28 @@
 /**
- * Security middleware for proxy detection and IP-based abuse prevention.
+ * Security middleware for proxy detection, IP reputation,
+ * and abuse prevention.
  */
 
 const MAX_FORWARDED_IPS = 5;
+
+// Known data-center / cloud provider IP ranges (partial, common CIDR prefixes)
+// These are well-known ranges used by hosting providers, not residential ISPs
+const DATACENTER_IP_PREFIXES = [
+  '10.',         // RFC1918 private
+  '172.16.', '172.17.', '172.18.', '172.19.', '172.20.', '172.21.',
+  '172.22.', '172.23.', '172.24.', '172.25.', '172.26.', '172.27.',
+  '172.28.', '172.29.', '172.30.', '172.31.',
+  '192.168.',    // RFC1918 private
+];
+
+// Headers that indicate Tor, VPN, or anonymising proxy usage
+const ANONYMISING_HEADERS = [
+  'via',
+  'x-proxy-id',
+  'forwarded',
+  'x-tor-is',
+  'x-tor',
+];
 
 /**
  * Extract the real client IP from the request.
@@ -13,9 +33,19 @@ function getClientIp(req) {
 }
 
 /**
- * Middleware that detects potentially suspicious proxy usage.
- * Flags requests that pass through an unusual number of proxies
- * or include known anonymising headers.
+ * Check if an IP appears to be from a known data center range.
+ * This is a heuristic check using common prefixes.
+ */
+function isDataCenterIp(ip) {
+  if (!ip) return false;
+  // Normalise IPv4-mapped IPv6
+  const normalised = ip.replace(/^::ffff:/i, '');
+  return DATACENTER_IP_PREFIXES.some(prefix => normalised.startsWith(prefix));
+}
+
+/**
+ * Middleware that detects potentially suspicious proxy usage,
+ * Tor exit nodes, VPN indicators, and data center IPs.
  */
 function proxyDetection(req, res, next) {
   const xff = req.headers['x-forwarded-for'];
@@ -26,14 +56,17 @@ function proxyDetection(req, res, next) {
     }
   }
 
-  // Flag requests with common anonymising proxy headers
-  const suspiciousHeaders = ['via', 'x-proxy-id', 'forwarded'];
-  const hasSuspiciousHeaders = suspiciousHeaders.some(h => req.headers[h]);
+  // Flag requests with common anonymising proxy/Tor headers
+  const hasSuspiciousHeaders = ANONYMISING_HEADERS.some(h => req.headers[h]);
+
+  const clientIp = getClientIp(req);
+  const dcIp = isDataCenterIp(clientIp);
 
   // Attach metadata for downstream middleware / logging
   req.securityMeta = {
-    clientIp: getClientIp(req),
+    clientIp,
     proxied: hasSuspiciousHeaders || Boolean(xff),
+    dataCenterIp: dcIp,
   };
 
   next();
@@ -50,4 +83,5 @@ module.exports = {
   proxyDetection,
   rateLimitKeyGenerator,
   getClientIp,
+  isDataCenterIp,
 };
