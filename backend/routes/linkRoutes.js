@@ -22,7 +22,6 @@ const generalLimiter = rateLimit({
   legacyHeaders: false,
   keyGenerator: rateLimitKeyGenerator,
   message: { error: 'Too many requests. Please try again later.' },
-
 });
 
 // Health check route
