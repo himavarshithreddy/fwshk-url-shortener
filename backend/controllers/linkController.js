@@ -1,11 +1,12 @@
 const { createLink, getRedirectRecord, findByShortCode, incrementClickCount, checkRedisConnection, warmupReady } = require('../models/Link');
 const { customAlphabet } = require('nanoid');
+const { recordLinkCreation, recordRedirect, recordFlaggedLink, detectClickAnomaly, getDashboardData } = require('../middleware/monitoring');
 
 const MIN_TTL_SECONDS = 60;
 const MAX_TTL_SECONDS = 31536000; // 1 year
 const VALID_REDIRECT_TYPES = new Set(['301', '302', '308']);
-const SHORT_CODE_LENGTH = 4;
-const SHORT_CODE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
+const SHORT_CODE_LENGTH = 8;
+const SHORT_CODE_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const generateShortCode = customAlphabet(SHORT_CODE_ALPHABET, SHORT_CODE_LENGTH);
 
 /**
@@ -71,6 +72,10 @@ const createShortUrl = async (req, res) => {
       return res.status(400).json({ error: 'Shortcode already exists' });
     }
 
+    // Record creation for monitoring
+    const clientIp = req.securityMeta?.clientIp || req.ip || 'unknown';
+    recordLinkCreation(shortCode, originalUrl, clientIp);
+
     res.json({ shortCode, originalUrl, expiresAt: link.expiresAt });
   } catch (err) {
     if (err.message === 'Redis connection is not available') {
@@ -109,6 +114,14 @@ const getOriginalUrl = async (req, res) => {
     }
 
     const statusCode = parseInt(record.r, 10) || 308;
+
+    // Record redirect for monitoring (fire-and-forget)
+    recordRedirect(shortCode);
+
+    // Check for anomalous click patterns (possible phishing)
+    if (detectClickAnomaly(shortCode)) {
+      console.warn(`[ANOMALY] Link ${shortCode} has anomalous click volume`);
+    }
 
     // Send redirect immediately with minimal headers
     res.set('Location', record.u);
@@ -170,9 +183,66 @@ const healthCheck = async (req, res) => {
   });
 };
 
+// Monitoring dashboard controller
+const monitoringDashboard = async (req, res) => {
+  res.json(getDashboardData());
+};
+
+// Link info controller (for interstitial page)
+const getLinkInfo = async (req, res) => {
+  const { shortCode } = req.params;
+
+  if (!shortCode || !/^[a-zA-Z0-9_-]+$/.test(shortCode)) {
+    return res.status(404).json({ error: 'Link not found' });
+  }
+
+  try {
+    await warmupReady;
+    const record = await getRedirectRecord(shortCode);
+
+    if (!record) {
+      return res.status(404).json({ error: 'Link not found' });
+    }
+
+    if (record.t > 0 && Date.now() > record.t) {
+      return res.status(410).json({ error: 'Link has expired' });
+    }
+
+    if (record.e !== 1) {
+      return res.status(404).json({ error: 'Link not found' });
+    }
+
+    const { calculateDomainTrustScore } = require('../middleware/urlSafety');
+    const trustScore = calculateDomainTrustScore(record.u);
+
+    // Determine if interstitial warning is needed
+    const isNewLink = record.ca && (Date.now() - new Date(record.ca).getTime()) < 24 * 60 * 60 * 1000;
+    const showWarning = trustScore < 50 || isNewLink;
+
+    res.json({
+      originalUrl: record.u,
+      shortCode,
+      trustScore,
+      showWarning,
+      warningReason: showWarning
+        ? (trustScore < 50 ? 'low_trust_domain' : 'newly_created')
+        : null,
+      createdAt: record.ca || null,
+    });
+  } catch (err) {
+    if (err.message === 'Redis connection is not available') {
+      return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
+    }
+    console.error('Error getting link info:', err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 module.exports = {
   createShortUrl,
   getOriginalUrl,
   trackClicks,
   healthCheck,
+  monitoringDashboard,
+  getLinkInfo,
 };
