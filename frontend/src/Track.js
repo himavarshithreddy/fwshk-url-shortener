@@ -13,6 +13,25 @@ function TrackingPage() {
     setUrlCode(event.target.value);
   };
 
+  const extractShortCode = (input) => {
+    let code = input.trim();
+    try {
+      const url = new URL(code);
+      const pathSegments = url.pathname.split('/').filter(Boolean);
+      if (pathSegments.length > 0) {
+        code = pathSegments[pathSegments.length - 1];
+      }
+    } catch {
+      if (code.includes('/')) {
+        const segments = code.split('/').filter(Boolean);
+        if (segments.length > 0) {
+          code = segments[segments.length - 1];
+        }
+      }
+    }
+    return code;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!urlCode) {
@@ -22,9 +41,11 @@ function TrackingPage() {
     setIsLoading(true);
     setError('');
 
+    const code = extractShortCode(urlCode);
+
     try {
       const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
-      const response = await fetch(`${apiUrl}/track/${urlCode}`);
+      const response = await fetch(`${apiUrl}/track/${code}`);
       const data = await response.json();
 
       if (response.ok) {
