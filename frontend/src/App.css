@@ -20,7 +20,7 @@ fieldset.shortcode-options {
   border: none;
   padding: 0;
   margin: 0;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 * {
@@ -51,7 +51,7 @@ body {
 /* Two-column layout for the main page */
 .main-layout {
   width: 100%;
-  max-width: 620px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
 }
@@ -60,7 +60,7 @@ body {
   background-color: #242424;
   border: 3px solid #FFFDF7;
   box-shadow: 8px 8px 0px #FFFDF7;
-  padding: 24px 32px;
+  padding: 20px 24px;
   width: 100%;
 }
 
@@ -79,8 +79,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .selects-row .ttl-options {
@@ -94,7 +94,7 @@ body {
   box-shadow: 8px 8px 0px #FFFDF7;
   padding: 48px 40px;
   width: 100%;
-  max-width: 620px;
+  max-width: 500px;
   position: relative;
 }
 
@@ -117,7 +117,7 @@ body {
 
 .title {
   font-family: 'Syne', sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: #FFFDF7;
   letter-spacing: -0.02em;
@@ -127,10 +127,10 @@ body {
 
 .subtitle {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: #FFFDF7;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   letter-spacing: 0.02em;
 }
 
@@ -140,7 +140,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 10px;
 }
 
 .form > .input {
@@ -158,13 +158,13 @@ body {
 
 .input {
   width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
   border: 3px solid #FFFDF7;
   border-radius: 0;
   background-color: #2e2e2e;
   color: #FFFDF7;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 500;
   transition: box-shadow 0.1s ease;
@@ -184,12 +184,12 @@ body {
 
 .submit-btn {
   width: 100%;
-  padding: 12px 20px;
+  padding: 10px 16px;
   border: 3px solid #FFFDF7;
   border-radius: 0;
   background-color: #ff6600;
   color: #000;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
@@ -248,7 +248,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .shortened-url-container {
@@ -307,7 +307,7 @@ body {
 
 .shortcode-options {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .option-buttons {
@@ -319,7 +319,7 @@ body {
 }
 
 .option-btn {
-  padding: 14px;
+  padding: 10px;
   border: none;
   background-color: #2e2e2e;
   cursor: pointer;
@@ -420,7 +420,7 @@ nav[aria-label="Site navigation"] {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .track-links-btn {
@@ -483,7 +483,7 @@ nav[aria-label="Site navigation"] {
   display: flex;
   align-items: stretch;
   gap: 0;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   border: 3px solid #FFFDF7;
 }
 
@@ -593,12 +593,12 @@ nav[aria-label="Site navigation"] {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #9a9a9a;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .redirect-pw-icon {
@@ -619,7 +619,7 @@ nav[aria-label="Site navigation"] {
 
 .redirect-url {
   color: #ff6600;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
@@ -669,7 +669,7 @@ nav[aria-label="Site navigation"] {
   color: #ff6666;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .warning-message {
@@ -677,12 +677,12 @@ nav[aria-label="Site navigation"] {
   font-weight: 500;
   color: #9a9a9a;
   letter-spacing: 0.02em;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .warning-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
   margin-top: 24px;
   flex-wrap: wrap;
@@ -741,7 +741,7 @@ nav[aria-label="Site navigation"] {
   color: #ff6600;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   margin-top: 36px;
 }
 
@@ -752,7 +752,7 @@ nav[aria-label="Site navigation"] {
 .seo-features {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 8px;
 }
 
@@ -764,7 +764,7 @@ nav[aria-label="Site navigation"] {
 
 .seo-feature h3 {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #FFFDF7;
   margin-bottom: 8px;
@@ -840,14 +840,14 @@ nav[aria-label="Site navigation"] {
   font-size: 1.1rem;
   font-weight: 700;
   color: #FFFDF7;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .footer-nav {
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .footer-nav a {
@@ -870,7 +870,7 @@ nav[aria-label="Site navigation"] {
 /* ---- Link History Section ---- */
 
 .history-section {
-  max-width: 620px;
+  max-width: 500px;
   width: 100%;
   margin-top: 36px;
 }
@@ -879,7 +879,7 @@ nav[aria-label="Site navigation"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .history-title {
@@ -1137,8 +1137,8 @@ nav[aria-label="Site navigation"] {
 
   .selects-row {
     flex-direction: column;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 12px;
   }
 
   .history-section {
@@ -1203,7 +1203,7 @@ nav[aria-label="Site navigation"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   padding: 22px 24px;
   background-color: #242424;
   animation: loader-shake 0.11s steps(3) infinite;
@@ -1274,7 +1274,7 @@ nav[aria-label="Site navigation"] {
 
 .loader-slash {
   font-family: 'Syne', sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: #000;
   line-height: 1;
@@ -1283,7 +1283,7 @@ nav[aria-label="Site navigation"] {
 
 .loader-scramble {
   font-family: 'Syne', sans-serif;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: #000;
   letter-spacing: 0.04em;
@@ -1650,7 +1650,7 @@ nav[aria-label="Site navigation"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   padding: 28px 24px;
   text-align: center;
   overflow: hidden;
@@ -1706,7 +1706,7 @@ nav[aria-label="Site navigation"] {
 }
 
 .empty-state .empty-state-text {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #FFFDF7;
   text-transform: uppercase;
@@ -1790,7 +1790,7 @@ nav[aria-label="Site navigation"] {
 /* ---- Mode Toggle ---- */
 .mode-toggle {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .mode-buttons {
@@ -1801,7 +1801,7 @@ nav[aria-label="Site navigation"] {
 }
 
 .mode-btn {
-  padding: 14px;
+  padding: 10px;
   border: none;
   background-color: #2e2e2e;
   cursor: pointer;
@@ -2046,7 +2046,7 @@ nav[aria-label="Site navigation"] {
     text-align: center;
     border-left: none;
     border-top: 3px solid #FFFDF7;
-    padding: 14px;
+    padding: 10px;
   }
 
   .ttl-options {
@@ -2148,7 +2148,7 @@ nav[aria-label="Site navigation"] {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 14px;
+  padding: 10px;
   border: none;
   background-color: #2e2e2e;
   cursor: pointer;
