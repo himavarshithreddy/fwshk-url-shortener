@@ -74,13 +74,6 @@ export default function AdModal({ isOpen, onClose, onComplete }) {
                 CONTINUE SEQUENCE <span className="arrow-icon">→</span>
               </button>
             )}
-            
-            <button 
-              className="ad-cancel-btn"
-              onClick={onClose}
-            >
-              [ ABORT ]
-            </button>
           </div>
         </div>
       </div>
