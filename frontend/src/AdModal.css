@@ -1,0 +1,178 @@
+/* =========================================
+   AdModal
+   ========================================= */
+.ad-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ad-modal-container {
+  background-color: #242424;
+  border: 3px solid #ff6600;
+  box-shadow: 8px 8px 0px #ff6600;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.ad-modal-header {
+  background-color: #ff6600;
+  color: #000;
+  padding: 12px 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: 3px solid #FFFDF7;
+}
+
+.ad-modal-title {
+  position: relative;
+  z-index: 2;
+}
+
+.ad-modal-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ad-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ad-modal-text {
+  font-size: 1rem;
+  color: #FFFDF7;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.ad-slot-container {
+  width: 100%;
+  min-height: 250px;
+  background-color: #111;
+  border: 2px dashed #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ad-slot-container::before {
+  content: 'ADVERTISEMENT SLOT';
+  position: absolute;
+  color: #444;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  z-index: 0;
+}
+
+.ad-slot-container ins {
+  z-index: 1;
+  position: relative;
+}
+
+.ad-modal-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ad-timer {
+  background-color: #1a1a1a;
+  border: 2px solid #FFFDF7;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ad-timer-label {
+  font-size: 0.75rem;
+  color: #a8a8a8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ad-timer-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ff6600;
+}
+
+.ad-continue-btn {
+  width: 100%;
+  padding: 16px 24px;
+  border: 3px solid #FFFDF7;
+  background-color: #ff6600;
+  color: #000;
+  font-size: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #FFFDF7;
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.ad-continue-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #FFFDF7;
+}
+
+.ad-cancel-btn {
+  background: none;
+  border: none;
+  color: #a8a8a8;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+  padding: 8px;
+}
+
+.ad-cancel-btn:hover {
+  color: #ff6600;
+}

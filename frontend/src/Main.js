@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import './App.css';
 import { Link } from 'react-router-dom';
 import logo from './logo.svg';
+import AdModal from './AdModal';
 
 // Lazy-load QRCodeStyling — the library is ~50 kB gzipped and is only needed
 // when the user selects QR mode or receives a result.  Lazy-loading keeps the
@@ -269,6 +270,7 @@ function Main() {
   const [usePassword, setUsePassword] = useState(false);
   const [password, setPassword] = useState('');
   const [mode, setMode] = useState('shorten');
+  const [isAdModalOpen, setIsAdModalOpen] = useState(false);
   const qrRef = useRef(null);
   const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
   const BASE_URL = process.env.REACT_APP_BASE_URL || window.location.origin;
@@ -357,56 +359,9 @@ function Main() {
     setCustomCode(sanitizedValue);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-  
-    if (!url) {
-      setError('Please enter a URL.');
-      return;
-    }
-
-    if (useCustomCode && !customCode) {
-      setError('Please enter a custom shortcode.');
-      return;
-    }
-
-    // Format URL if needed
-    let formattedUrl = url.trim();
-    
-    // Check if the URL starts with http:// or https://
-    if (!/^https?:\/\//i.test(formattedUrl)) {
-      formattedUrl = `https://${formattedUrl}`;
-    }
-    
-    // Validate URL format
-    const isValidUrl = (string) => {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;
-      }
-    };
-  
-    if (!isValidUrl(formattedUrl)) {
-      setError('Please enter a valid URL.');
-      return;
-    }
-  
+  const executeShorten = async (formattedUrl, captchaToken) => {
     try {
       setIsLoading(true);
-
-      // Obtain reCAPTCHA v3 token when site key is configured
-      let captchaToken;
-      if (recaptchaSiteKey && window.grecaptcha) {
-        try {
-          captchaToken = await window.grecaptcha.execute(recaptchaSiteKey, { action: 'shorten' });
-        } catch (_) {
-          // Continue without token if reCAPTCHA fails
-        }
-      }
-
-      // Call the backend API with the formatted URL and optional custom code
       const response = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
         headers: {
@@ -417,7 +372,6 @@ function Main() {
           ...(useCustomCode && { customShortCode: customCode }),
           ...(ttl && { ttl: parseInt(ttl, 10) }),
           redirectType,
-          // selfDestruct takes precedence over maxClicks (maps to maxClicks=1 on backend)
           ...(selfDestruct
             ? { selfDestruct: true }
             : (maxClicks && { maxClicks: parseInt(maxClicks, 10) })),
@@ -437,7 +391,6 @@ function Main() {
         setResultPasswordProtected(!!data.passwordProtected);
         setError('');
 
-        // Cache link in local history
         saveToHistory({
           shortCode: data.shortCode,
           shortenedUrl: fullShortenedUrl,
@@ -455,6 +408,69 @@ function Main() {
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    if (!url) {
+      setError('Please enter a URL.');
+      return;
+    }
+
+    if (useCustomCode && !customCode) {
+      setError('Please enter a custom shortcode.');
+      return;
+    }
+
+    let formattedUrl = url.trim();
+    if (!/^https?:\/\//i.test(formattedUrl)) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+    
+    const isValidUrl = (string) => {
+      try {
+        new URL(string);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    };
+  
+    if (!isValidUrl(formattedUrl)) {
+      setError('Please enter a valid URL.');
+      return;
+    }
+
+    let captchaToken;
+    if (recaptchaSiteKey && window.grecaptcha) {
+      try {
+        captchaToken = await window.grecaptcha.execute(recaptchaSiteKey, { action: 'shorten' });
+      } catch (_) {
+        // Continue without token
+      }
+    }
+
+    if (useCustomCode) {
+      // Require ad viewing for custom code
+      setIsAdModalOpen(true);
+      // We attach the data to the modal or we can just capture it in the scope
+      // Since formattedUrl and captchaToken are local, we can't easily pass them.
+      // Instead, we will store them in a ref or we can just rely on the state for URL.
+      // Actually, since executeShorten needs them, let's store them in a ref to call later.
+      submitDataRef.current = { formattedUrl, captchaToken };
+    } else {
+      executeShorten(formattedUrl, captchaToken);
+    }
+  };
+
+  const submitDataRef = useRef(null);
+
+  const handleAdComplete = () => {
+    if (submitDataRef.current) {
+      executeShorten(submitDataRef.current.formattedUrl, submitDataRef.current.captchaToken);
+      submitDataRef.current = null;
     }
   };
 
@@ -1045,6 +1061,12 @@ function Main() {
           <p className="footer-description">A fast, free URL shortener and QR code generator with custom short codes, link expiration, and click tracking. No sign-up required.</p>
         </div>
       </footer>
+
+      <AdModal 
+        isOpen={isAdModalOpen} 
+        onClose={() => setIsAdModalOpen(false)} 
+        onComplete={handleAdComplete} 
+      />
     </div>
   );
 }
