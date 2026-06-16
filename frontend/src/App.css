@@ -92,7 +92,7 @@ body {
   background-color: #242424;
   border: 3px solid #FFFDF7;
   box-shadow: 8px 8px 0px #FFFDF7;
-  padding: 48px 40px;
+  padding: 20px 40px;
   width: 100%;
   max-width: 500px;
   position: relative;
@@ -105,7 +105,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .app-logo {
@@ -197,7 +197,7 @@ body {
   cursor: pointer;
   box-shadow: 5px 5px 0px #FFFDF7;
   transition: box-shadow 0.1s ease, transform 0.1s ease;
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .submit-btn:hover {
@@ -582,7 +582,7 @@ nav[aria-label="Site navigation"] {
   background-color: #242424;
   border: 3px solid #FFFDF7;
   box-shadow: 8px 8px 0px #FFFDF7;
-  padding: 48px 40px;
+  padding: 20px 40px;
   width: 100%;
   max-width: 520px;
   text-align: center;
@@ -610,7 +610,7 @@ nav[aria-label="Site navigation"] {
 .redirect-url-box {
   border: 3px solid #FFFDF7;
   background-color: #2e2e2e;
-  padding: 16px 18px;
+  padding: 10px 18px;
   margin-bottom: 28px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -651,7 +651,7 @@ nav[aria-label="Site navigation"] {
   color: #ffe500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   padding: 8px 16px;
   border: 2px solid #ffe500;
   display: inline-block;
@@ -753,7 +753,7 @@ nav[aria-label="Site navigation"] {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .seo-feature {
@@ -767,7 +767,7 @@ nav[aria-label="Site navigation"] {
   font-size: 0.85rem;
   font-weight: 700;
   color: #FFFDF7;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -932,7 +932,7 @@ nav[aria-label="Site navigation"] {
 }
 
 .history-item {
-  padding: 16px 18px;
+  padding: 10px 18px;
   background-color: #242424;
   border-bottom: 2px solid #333;
   transition: background-color 0.1s ease;
@@ -1025,7 +1025,7 @@ nav[aria-label="Site navigation"] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .history-meta {
@@ -1105,7 +1105,7 @@ nav[aria-label="Site navigation"] {
     flex: 1;
     margin-top: 0;
     background-color: #1a1a1a;
-    padding: 48px 40px;
+    padding: 20px 40px;
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -1700,8 +1700,8 @@ nav[aria-label="Site navigation"] {
 }
 
 .empty-icon-svg {
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   color: #ff6600;
 }
 
@@ -2073,7 +2073,7 @@ nav[aria-label="Site navigation"] {
   }
 
   .seo-content-heading {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 
   .qr-result {
@@ -2138,7 +2138,7 @@ nav[aria-label="Site navigation"] {
 .extra-options-row {
   display: flex;
   gap: 0;
-  margin-top: 8px;
+  margin-top: 4px;
   border: 3px solid #FFFDF7;
 }
 
@@ -2188,7 +2188,7 @@ nav[aria-label="Site navigation"] {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .password-input {
