@@ -102,23 +102,23 @@
   "dataRoutes": [
     {
       "page": "/author/brnk-team",
-      "dataRouteRegex": "^/_next/data/uyZGJRJocRZqG\\-z1HtSXQ/author/brnk-team\\.json$"
+      "dataRouteRegex": "^/_next/data/pkHwE73U\\-ww\\-jIiBGbEnG/author/brnk-team\\.json$"
     },
     {
       "page": "/blog",
-      "dataRouteRegex": "^/_next/data/uyZGJRJocRZqG\\-z1HtSXQ/blog\\.json$"
+      "dataRouteRegex": "^/_next/data/pkHwE73U\\-ww\\-jIiBGbEnG/blog\\.json$"
     },
     {
       "page": "/blog/[slug]",
       "routeKeys": {
         "nxtPslug": "nxtPslug"
       },
-      "dataRouteRegex": "^/_next/data/uyZGJRJocRZqG\\-z1HtSXQ/blog/([^/]+?)\\.json$",
-      "namedDataRouteRegex": "^/_next/data/uyZGJRJocRZqG\\-z1HtSXQ/blog/(?<nxtPslug>[^/]+?)\\.json$"
+      "dataRouteRegex": "^/_next/data/pkHwE73U\\-ww\\-jIiBGbEnG/blog/([^/]+?)\\.json$",
+      "namedDataRouteRegex": "^/_next/data/pkHwE73U\\-ww\\-jIiBGbEnG/blog/(?<nxtPslug>[^/]+?)\\.json$"
     },
     {
       "page": "/sitemap.xml",
-      "dataRouteRegex": "^/_next/data/uyZGJRJocRZqG\\-z1HtSXQ/sitemap.xml\\.json$"
+      "dataRouteRegex": "^/_next/data/pkHwE73U\\-ww\\-jIiBGbEnG/sitemap.xml\\.json$"
     }
   ],
   "rsc": {
