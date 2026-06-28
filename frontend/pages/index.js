@@ -272,9 +272,9 @@ function Main() {
   const [mode, setMode] = useState('shorten');
   const [isAdModalOpen, setIsAdModalOpen] = useState(false);
   const qrRef = useRef(null);
-  const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
-  const BASE_URL = process.env.REACT_APP_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
-  const recaptchaSiteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY || '';
+  const apiUrl = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '');
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
   // Warm up the backend serverless function on page load so the first
   // URL-shortening request doesn't pay the cold-start penalty.

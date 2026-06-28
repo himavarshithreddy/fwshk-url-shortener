@@ -9,7 +9,7 @@ function TrackingPage() {
   const [trackingData, setTrackingData] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = process.env.REACT_APP_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
 
   const handleInputChange = (event) => {
     setUrlCode(event.target.value);
@@ -46,7 +46,7 @@ function TrackingPage() {
     const code = extractShortCode(urlCode);
 
     try {
-      const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
+      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '');
       console.log(`[DEBUG-FRONTEND] track: sending request to ${apiUrl}/track/${code}`);
       const response = await fetch(`${apiUrl}/track/${code}`);
       console.log('[DEBUG-FRONTEND] track: response status =', response.status);
