@@ -10,25 +10,19 @@
       "use": "@vercel/next"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "back.brnk.in" }],
-      "dest": "/backend/server.js"
+      "destination": "/backend/server.js"
     },
-    { "src": "/health", "dest": "/backend/server.js" },
-    { "src": "/shorten", "dest": "/backend/server.js" },
-    { "src": "/track/([^/]+)", "dest": "/backend/server.js" },
-    { "src": "/verify-password/([^/]+)", "dest": "/backend/server.js" },
-    { "src": "/link-info/([^/]+)", "dest": "/backend/server.js" },
-    { "src": "/about", "dest": "/frontend/about" },
-    { "src": "/track", "dest": "/frontend/track" },
-    { "src": "/terms", "dest": "/frontend/terms" },
-    { "src": "/report", "dest": "/frontend/report" },
-    { "src": "/contact", "dest": "/frontend/contact" },
-    { "src": "/privacy-policy", "dest": "/frontend/privacy-policy" },
-    { "src": "/([a-zA-Z0-9_-]{5,})", "dest": "/backend/server.js" },
-    { "src": "/(.*)", "dest": "/frontend/$1" }
+    { "source": "/health", "destination": "/backend/server.js" },
+    { "source": "/shorten", "destination": "/backend/server.js" },
+    { "source": "/track/:id", "destination": "/backend/server.js" },
+    { "source": "/verify-password/:id", "destination": "/backend/server.js" },
+    { "source": "/link-info/:id", "destination": "/backend/server.js" },
+    { "source": "/:code([a-zA-Z0-9_-]{5,})", "destination": "/backend/server.js" },
+    { "source": "/:path*", "destination": "/frontend/:path*" }
   ]
 }
   
