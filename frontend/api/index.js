@@ -61,6 +61,7 @@ app.get('/favicon.svg', faviconLimiter, (req, res) => {
 });
 
 app.use('/', linkRoutes);
+app.use('/api', linkRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
