@@ -4,8 +4,8 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
-const linkRoutes = require('./routes/linkRoutes');
-const { proxyDetection } = require('./middleware/security');
+const linkRoutes = require('../routes/linkRoutes');
+const { proxyDetection } = require('../middleware/security');
 
 dotenv.config();
 
@@ -57,7 +57,7 @@ const faviconLimiter = rateLimit({
   legacyHeaders: false,
 });
 app.get('/favicon.svg', faviconLimiter, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'favicon.svg'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'favicon.svg'));
 });
 
 app.use('/', linkRoutes);
