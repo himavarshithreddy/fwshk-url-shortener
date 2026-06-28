@@ -47,8 +47,11 @@ function TrackingPage() {
 
     try {
       const apiUrl = (process.env.REACT_APP_API_URL || '').replace(/\/+$/, '');
+      console.log(`[DEBUG-FRONTEND] track: sending request to ${apiUrl}/track/${code}`);
       const response = await fetch(`${apiUrl}/track/${code}`);
+      console.log('[DEBUG-FRONTEND] track: response status =', response.status);
       const data = await response.json();
+      console.log('[DEBUG-FRONTEND] track: response data =', data);
 
       if (response.ok) {
         setTrackingData(data);
@@ -58,6 +61,7 @@ function TrackingPage() {
         setError(data.error || 'Failed to track the URL.');
       }
     } catch (err) {
+      console.error('[DEBUG-FRONTEND] track error:', err);
       setTrackingData(null);
       setError('An error occurred. Please try again.');
     } finally {

@@ -2,12 +2,19 @@ const { Redis } = require('@upstash/redis');
 
 let redis;
 try {
+  const url = process.env.UPSTASH_REDIS_REST_URL || '';
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || '';
+  console.log('[DEBUG-DB] Upstash Redis Configuration:');
+  console.log(`[DEBUG-DB] URL: ${url ? `${url.substring(0, 20)}...` : 'MISSING'}`);
+  console.log(`[DEBUG-DB] TOKEN: ${token ? `${token.substring(0, 5)}... (len: ${token.length})` : 'MISSING'}`);
+
   redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    url: url || undefined,
+    token: token || undefined,
   });
+  console.log('[DEBUG-DB] Redis client instance created.');
 } catch (err) {
-  console.error('Failed to initialize Redis client:', err.message,
+  console.error('[DEBUG-DB] Failed to initialize Redis client:', err.message,
     '- Ensure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables are set.');
 }
 
@@ -77,11 +84,17 @@ if (l1CleanupTimer.unref) l1CleanupTimer.unref();
 // ---------------------------------------------------------------------------
 
 async function checkRedisConnection() {
-  if (!redis) return false;
+  if (!redis) {
+    console.error('[DEBUG-DB] checkRedisConnection: redis client not initialized.');
+    return false;
+  }
   try {
-    await redis.ping();
+    console.log('[DEBUG-DB] Pinging Redis...');
+    const res = await redis.ping();
+    console.log('[DEBUG-DB] Redis ping response:', res);
     return true;
-  } catch {
+  } catch (err) {
+    console.error('[DEBUG-DB] Redis ping failed:', err.message);
     return false;
   }
 }
@@ -160,19 +173,28 @@ async function createLink(shortCode, originalUrl, ttlSeconds = null, redirectTyp
     ...(passwordHash && { pw: passwordHash }),
   };
 
-  const setOptions = ttlSeconds ? { nx: true, ex: ttlSeconds } : { nx: true };
-  const setResult = await redis.set(key, record, setOptions);
+  try {
+    const setOptions = ttlSeconds ? { nx: true, ex: ttlSeconds } : { nx: true };
+    const setResult = await redis.set(key, record, setOptions);
 
-  if (setResult === null) return null;
+    if (setResult === null) {
+      console.log(`[DEBUG-DB] createLink: key collision or write failed for shortCode: ${shortCode}`);
+      return null;
+    }
 
-  // Eagerly populate L1 cache so the first redirect is served from memory
-  l1Set(shortCode, record);
+    // Eagerly populate L1 cache so the first redirect is served from memory
+    l1Set(shortCode, record);
 
-  return {
-    shortCode,
-    originalUrl,
-    expiresAt: expiresTimestamp ? new Date(expiresTimestamp).toISOString() : null,
-  };
+    console.log(`[DEBUG-DB] createLink success for ${shortCode} -> ${originalUrl}`);
+    return {
+      shortCode,
+      originalUrl,
+      expiresAt: expiresTimestamp ? new Date(expiresTimestamp).toISOString() : null,
+    };
+  } catch (err) {
+    console.error(`[DEBUG-DB] createLink failed for ${shortCode}:`, err.message);
+    throw err;
+  }
 }
 
 /**
@@ -183,22 +205,33 @@ async function getRedirectRecord(shortCode) {
   if (!redis) throw new Error('Redis connection is not available');
 
   const cached = l1Get(shortCode);
-  if (cached !== null) return cached === false ? null : cached;
-
-  const raw = await redis.get(`${LINK_PREFIX}${shortCode}`);
-
-  if (!raw) {
-    l1Set(shortCode, false, L1_MISS_TTL_MS);
-    return null;
+  if (cached !== null) {
+    console.log(`[DEBUG-DB] getRedirectRecord: L1 cache hit for ${shortCode}`);
+    return cached === false ? null : cached;
   }
 
-  const record = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  try {
+    console.log(`[DEBUG-DB] getRedirectRecord: Fetching ${shortCode} from Redis...`);
+    const raw = await redis.get(`${LINK_PREFIX}${shortCode}`);
 
-  // Normalise redirect type to integer once on fetch
-  if (typeof record.r === 'string') record.r = Number(record.r) || 308;
+    if (!raw) {
+      console.log(`[DEBUG-DB] getRedirectRecord: Miss in Redis for ${shortCode}`);
+      l1Set(shortCode, false, L1_MISS_TTL_MS);
+      return null;
+    }
 
-  l1Set(shortCode, record);
-  return record;
+    const record = typeof raw === 'string' ? JSON.parse(raw) : raw;
+
+    // Normalise redirect type to integer once on fetch
+    if (typeof record.r === 'string') record.r = Number(record.r) || 308;
+
+    l1Set(shortCode, record);
+    console.log(`[DEBUG-DB] getRedirectRecord: Hit in Redis for ${shortCode}`);
+    return record;
+  } catch (err) {
+    console.error(`[DEBUG-DB] getRedirectRecord error for ${shortCode}:`, err.message);
+    throw err;
+  }
 }
 
 /**

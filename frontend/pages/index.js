@@ -354,7 +354,6 @@ function Main() {
   };
 
   const handleCustomCodeChange = (event) => {
-    
     const sanitizedValue = event.target.value.replace(/[^a-zA-Z0-9-]/g, '');
     setCustomCode(sanitizedValue);
   };
@@ -362,6 +361,7 @@ function Main() {
   const executeShorten = async (formattedUrl, captchaToken) => {
     try {
       setIsLoading(true);
+      console.log(`[DEBUG-FRONTEND] executeShorten: sending request to ${apiUrl}/shorten`);
       const response = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
         headers: {
@@ -380,7 +380,9 @@ function Main() {
         }),
       });
   
+      console.log('[DEBUG-FRONTEND] executeShorten: response status =', response.status);
       const data = await response.json();
+      console.log('[DEBUG-FRONTEND] executeShorten: response data =', data);
   
       if (response.ok) {
         const fullShortenedUrl = `${BASE_URL}/${data.shortCode}`;
@@ -390,7 +392,7 @@ function Main() {
         setResultSelfDestruct(!!data.selfDestruct);
         setResultPasswordProtected(!!data.passwordProtected);
         setError('');
-
+ 
         saveToHistory({
           shortCode: data.shortCode,
           shortenedUrl: fullShortenedUrl,
@@ -405,6 +407,7 @@ function Main() {
         setError(data.error || 'Failed to shorten URL.');
       }
     } catch (err) {
+      console.error('[DEBUG-FRONTEND] executeShorten error:', err);
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);

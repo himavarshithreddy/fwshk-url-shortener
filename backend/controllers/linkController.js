@@ -96,6 +96,7 @@ function isValidUrl(string) {
 }
 
 const createShortUrl = async (req, res) => {
+  console.log('[DEBUG-API] POST /shorten request body:', req.body);
   const { originalUrl, customShortCode, ttl, redirectType, maxClicks, password, selfDestruct } = req.body;
 
   if (!originalUrl || typeof originalUrl !== 'string') {
@@ -187,10 +188,10 @@ const createShortUrl = async (req, res) => {
       passwordProtected: !!passwordHash,
     });
   } catch (err) {
+    console.error('[DEBUG-API] Error creating short URL:', err);
     if (err.message === 'Redis connection is not available') {
       return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
     }
-    console.error('Error creating short URL:', err.message);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -206,8 +207,10 @@ const createShortUrl = async (req, res) => {
 // ---------------------------------------------------------------------------
 const getOriginalUrl = async (req, res) => {
   const { shortCode } = req.params;
+  console.log(`[DEBUG-API] GET /${shortCode} redirect request`);
 
   if (!shortCode || !VALID_SHORT_CODE_RE.test(shortCode)) {
+    console.log(`[DEBUG-API] GET /${shortCode}: Invalid shortCode format`);
     return res.status(404).json({ error: 'Link not found' });
   }
 
@@ -294,10 +297,10 @@ const getOriginalUrl = async (req, res) => {
     }
     trackClickStats(shortCode, ua, req.headers['x-vercel-ip-country'] || '');
   } catch (err) {
+    console.error(`[DEBUG-API] GET /${shortCode} error redirecting:`, err);
     if (err.message === 'Redis connection is not available') {
       return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });
     }
-    console.error('Error redirecting:', err.message);
     res.status(500).json({ error: 'Server error' });
   }
 };
