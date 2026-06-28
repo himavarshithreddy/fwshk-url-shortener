@@ -11,7 +11,7 @@ self.__SERVER_FILES_MANIFEST={
     "cleanDistDir": true,
     "assetPrefix": "",
     "cacheMaxMemorySize": 52428800,
-    "configOrigin": "default",
+    "configOrigin": "next.config.js",
     "useFileSystemPublicRoutes": true,
     "generateEtags": true,
     "pageExtensions": [
@@ -84,7 +84,7 @@ self.__SERVER_FILES_MANIFEST={
     "productionBrowserSourceMaps": false,
     "excludeDefaultMomentLocales": true,
     "reactProductionProfiling": false,
-    "reactStrictMode": null,
+    "reactStrictMode": true,
     "reactMaxHeadersLength": 6000,
     "httpAgentOptions": {
       "keepAlive": true
@@ -220,7 +220,6 @@ self.__SERVER_FILES_MANIFEST={
       "turbopackFileSystemCacheForBuild": false,
       "turbopackInferModuleSideEffects": true,
       "turbopackPluginRuntimeStrategy": "childProcesses",
-      "middlewarePrefetch": "flexible",
       "optimizePackageImports": [
         "lucide-react",
         "date-fns",
@@ -307,7 +306,17 @@ self.__SERVER_FILES_MANIFEST={
     "turbopack": {
       "root": "S:\\Code\\Projects\\Brnk\\frontend"
     },
-    "distDirRoot": ".next"
+    "distDirRoot": ".next",
+    "_originalRewrites": {
+      "beforeFiles": [],
+      "afterFiles": [
+        {
+          "source": "/frontend/:path*",
+          "destination": "/:path*"
+        }
+      ],
+      "fallback": []
+    }
   },
   "appDir": "S:\\Code\\Projects\\Brnk\\frontend",
   "relativeAppDir": "",

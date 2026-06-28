@@ -5,7 +5,7 @@ type AppRoutes = never
 type PageRoutes = "/" | "/404" | "/about" | "/author/brnk-team" | "/blog" | "/blog/[slug]" | "/contact" | "/privacy-policy" | "/report" | "/sitemap.xml" | "/terms" | "/track"
 type LayoutRoutes = never
 type RedirectRoutes = never
-type RewriteRoutes = never
+type RewriteRoutes = "/frontend/[[...path]]"
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes
 
 
@@ -17,6 +17,7 @@ interface ParamMap {
   "/blog": {}
   "/blog/[slug]": { "slug": string; }
   "/contact": {}
+  "/frontend/[[...path]]": { "path"?: string[]; }
   "/privacy-policy": {}
   "/report": {}
   "/sitemap.xml": {}
