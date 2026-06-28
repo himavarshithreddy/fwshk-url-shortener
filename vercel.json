@@ -21,6 +21,12 @@
     { "src": "/track/([^/]+)", "dest": "/backend/server.js" },
     { "src": "/verify-password/([^/]+)", "dest": "/backend/server.js" },
     { "src": "/link-info/([^/]+)", "dest": "/backend/server.js" },
+    { "src": "/about", "dest": "/frontend/about" },
+    { "src": "/track", "dest": "/frontend/track" },
+    { "src": "/terms", "dest": "/frontend/terms" },
+    { "src": "/report", "dest": "/frontend/report" },
+    { "src": "/contact", "dest": "/frontend/contact" },
+    { "src": "/privacy-policy", "dest": "/frontend/privacy-policy" },
     { "src": "/([a-zA-Z0-9_-]{5,})", "dest": "/backend/server.js" },
     { "src": "/(.*)", "dest": "/frontend/$1" }
   ]
