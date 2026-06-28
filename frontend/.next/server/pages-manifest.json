@@ -1,0 +1,17 @@
+{
+  "/": "pages/index.html",
+  "/404": "pages/404.html",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/_error": "pages/_error.js",
+  "/about": "pages/about.html",
+  "/author/brnk-team": "pages/author/brnk-team.js",
+  "/blog": "pages/blog.js",
+  "/blog/[slug]": "pages/blog/[slug].js",
+  "/contact": "pages/contact.html",
+  "/privacy-policy": "pages/privacy-policy.html",
+  "/report": "pages/report.html",
+  "/sitemap.xml": "pages/sitemap.xml.js",
+  "/terms": "pages/terms.html",
+  "/track": "pages/track.html"
+}

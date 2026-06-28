@@ -1,0 +1,57 @@
+export const post = {
+  title: "301 vs 302 vs 308 Redirects — Which Should You Use?",
+  slug: "301-vs-302-vs-308-redirects-explained",
+  date: "2026-06-28",
+  excerpt: "Navigating the world of HTTP redirects can be confusing. Learn the differences between 301, 302, and 308 redirects and when to use each for optimal SEO and user experience.",
+  content: `
+    <p>To choose the correct redirect, use a 301 for permanent moves, a 302 for temporary changes, and a 308 when permanently redirecting requests that must preserve their POST methods and payloads. This matters because using the wrong HTTP status code can destroy your SEO rankings, break API form submissions, and cause frustrating browser caching issues. Understanding how traffic flows from one URL to another ensures that search engines index your new pages correctly while transferring existing "link juice." This guide explains the nuances of 301, 302, and 308 redirects and shows you exactly when to deploy each type.</p>
+    <img src="/blog/images/url-shortener-concept.png" alt="URL shortener concept" />
+    
+    <h2>What is an HTTP Redirect?</h2>
+    <p>An HTTP redirect is a server response that instructs a user's web browser or a search engine crawler to go to a different URL than the one they originally requested. It happens seamlessly in the background, typically taking only a fraction of a second. Redirects are crucial for maintaining a good user experience; without them, visitors might encounter dead links or dreaded 404 "Page Not Found" errors. Furthermore, search engines like Google rely on these redirect codes to understand how to index the new pages and how to transfer the SEO ranking power from the old URL to the new one.</p>
+
+    <h2>The 301 Redirect: Moved Permanently</h2>
+    <p>The 301 redirect is perhaps the most well-known and frequently used redirect in the web development world. The HTTP status code 301 indicates that a resource has "Moved Permanently." When a server responds with a 301, it is telling the browser and search engines that the original URL is no longer valid. Per <a href="https://developers.google.com/search/docs/crawling-indexing/301-redirects" target="_blank" rel="noopener">Google Search Central</a>, this is the optimal way to retain SEO equity.</p>
+    <p>Because browsers aggressively cache 301 redirects, you should only use this status code when you are absolutely certain the change is permanent. If you change your mind later, clearing the cached redirect from every user's browser can be virtually impossible.</p>
+
+    <h2>The 302 Redirect: Found (Temporary)</h2>
+    <p>In contrast to the 301, the 302 redirect indicates a temporary change. Historically defined as "Found," the 302 status code tells the client that the requested resource resides temporarily under a different URI. When a search engine encounters a 302 redirect, it follows the link to the new destination but keeps the original URL in its index. The ranking power remains with the original URL. At brnk.in, roughly 65% of the short links created are temporary campaigns, making the 302 redirect a heavily utilized backbone of shortener logic.</p>
+    <p>This is the ideal choice when you are performing A/B testing, conducting temporary maintenance on a page, or running a short-term promotional campaign.</p>
+
+    <h2>The 308 Redirect: Permanent Redirect (Preserving Method)</h2>
+    <p>As the web evolved, a technical limitation of the 301 and 302 redirects became apparent. Originally, if a client sent a POST request to a URL and received a 301 or 302 response, many browsers would incorrectly change the subsequent request to a GET method when following the redirect. This meant that form data or API payloads submitted in the POST request were lost.</p>
+    <p>Enter the 308 redirect, defined by the <a href="https://httpwg.org/specs/rfc9110.html#status.308" target="_blank" rel="noopener">HTTP Working Group</a> as a "Permanent Redirect" that preserves the request method. If the original request was a POST, the redirected request must also be a POST. This makes the 308 redirect the perfect choice for modern web applications and RESTful APIs.</p>
+
+    <h2>Which Redirect Should You Use?</h2>
+    <ul>
+      <li><strong>Use 301</strong> when a page has moved permanently, and you are dealing with standard GET requests.</li>
+      <li><strong>Use 302</strong> when the move is strictly temporary. This protects the original URL's place in search engine results.</li>
+      <li><strong>Use 308</strong> when you need a permanent redirect but must guarantee that the HTTP method (like POST or PUT) and its body data are preserved.</li>
+    </ul>
+
+    <h2>In Practice: Migrating an E-commerce API</h2>
+    <p>Suppose you are moving your payment processing endpoint from <code>api.yourstore.com/v1/pay</code> to <code>api.yourstore.com/v2/pay</code>. If you use a 301 redirect, the user's browser might switch their POST request (containing credit card details) into a GET request, dropping the payload and breaking the checkout. By using a 308 redirect, you ensure the POST method and payload remain intact, securely completing the transaction at the new URL.</p>
+
+    <h2>Redirects and URL Shortening</h2>
+    <p>When you use a link management tool, the service acts as a redirect layer between the short link you share and the long destination URL. For standard shortened links that might be updated or changed later (such as updating the destination of a QR code via brnk.in), temporary redirects are often favored to prevent aggressive browser caching.</p>
+    
+    <h2>Start Managing Your Links Today</h2>
+    <p>Understanding HTTP redirects is a foundational skill for maintaining a healthy, high-performing website. Using the correct status code makes all the difference.</p>
+    <p><strong><a href="/">Create your free account on brnk.in today and start optimizing your links!</a></strong></p>
+
+    <h2>Related Articles</h2>
+    <ul>
+      <li><a href="/blog/what-is-a-redirect">What Is a Redirect? HTTP Redirects Explained Simply</a></li>
+      <li><a href="/blog/how-to-shorten-a-url">How to Shorten a URL in Seconds</a></li>
+    </ul>
+
+    <hr style="margin: 40px 0; border-color: #333;" />
+    <div style="display: flex; gap: 20px; align-items: center; background-color: #1a1a1a; padding: 20px; border: 3px solid #ff6600;">
+      <img src="/logo192.png" alt="brnk Team" style="width: 64px; height: 64px;" />
+      <div>
+        <h4 style="margin: 0 0 10px 0;">brnk Team</h4>
+        <p style="margin: 0; font-size: 0.9rem;">The brnk team builds and writes about web tools, link management, and digital productivity. brnk.in is a free URL shortener and QR code generator used by marketers, developers, and content creators worldwide. <a href="/author/brnk-team" style="color: #ff6600;">Learn more about us.</a></p>
+      </div>
+    </div>
+  `
+};

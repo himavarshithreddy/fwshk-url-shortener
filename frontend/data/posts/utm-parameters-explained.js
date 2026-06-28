@@ -1,0 +1,51 @@
+export const post = {
+  title: "UTM Parameters Explained — Track Your Links in Google Analytics",
+  slug: "utm-parameters-explained",
+  date: "2025-10-15",
+  excerpt: "Learn everything you need to know about UTM parameters and how tracking your short links in Google Analytics can revolutionize your digital marketing strategy.",
+  content: `
+    <p>UTM parameters are short text snippets added to a URL to track the specific source, medium, and campaign of incoming traffic. This matters because identifying exactly where your visitors originate allows you to determine which marketing efforts generate the best return on investment. In this article, we explain the five core UTM tags, best practices for using them, and how to analyze your traffic data.</p>
+    <img src="/blog/images/link-analytics.png" alt="UTM tracking analytics" style="max-width: 100%; height: auto;" />
+    
+    <h2>What Are UTM Parameters?</h2>
+    <p>UTM stands for Urchin Tracking Module, named after the predecessor to Google Analytics. UTM parameters are appended to URLs so analytics tools can capture detailed information about the click that brought a visitor to your website. This standard aligns with the <a href="https://datatracker.ietf.org/doc/html/rfc3986" target="_blank" rel="noopener noreferrer">RFC 3986 URL specification</a> for query strings.</p>
+    
+    <h2>The Five Core UTM Parameters</h2>
+    <ul>
+      <li><strong>utm_source:</strong> Identifies the specific place where the link is located (e.g., "facebook", "newsletter").</li>
+      <li><strong>utm_medium:</strong> Describes the type of channel that drove the traffic (e.g., "cpc", "social", "email").</li>
+      <li><strong>utm_campaign:</strong> Groups tracking links under one marketing initiative (e.g., "summer_sale_2025").</li>
+      <li><strong>utm_term:</strong> An optional parameter used for paid search to track specific keywords.</li>
+      <li><strong>utm_content:</strong> Differentiates between similar content or links within the same ad or email.</li>
+    </ul>
+
+    <h2>Real Example</h2>
+    <p>Suppose you are running a Black Friday sale. Your base URL is incredibly long once you append <code>?utm_source=twitter&utm_medium=social&utm_campaign=black_friday</code>. By using a shortener, you can condense that massive string into <code>brnk.in/bf-twitter</code>. Using UTM parameters with a short link like brnk.in can reduce URL character length by up to 85%, preventing your links from breaking in restrictive environments like SMS or character-limited social posts.</p>
+    
+    <h2>Best Practices for Using UTM Parameters</h2>
+    <p><strong>1. Use a Consistent Naming Convention:</strong> Google Analytics is case-sensitive. Establish a lowercase policy to avoid fragmenting data.</p>
+    <p><strong>2. Keep It Simple:</strong> Use clear, descriptive terms that anyone on your team can understand.</p>
+    <p><strong>3. Use Underscores or Hyphens:</strong> Avoid spaces in your UTM parameters, as they encode as "%20".</p>
+    <p><strong>4. Track Everything:</strong> Add UTM parameters to every external link you share.</p>
+    
+    <h2>Analyzing Your UTM Data in Google Analytics</h2>
+    <p>In <a href="https://support.google.com/analytics/answer/10901610" target="_blank" rel="noopener noreferrer">Google Analytics 4 (GA4)</a>, navigate to the "Acquisition" reports and check the "Traffic acquisition" report. Change the primary dimension to "Session source/medium" to see how your tagged links perform. Analyze metrics such as engagement rate and conversion events to see which channels drive the most valuable traffic.</p>
+    
+    <p>You can create trackable, UTM-powered short links right from the <a href="/">brnk.in homepage</a> today.</p>
+
+    <h2>Related Articles</h2>
+    <ul>
+      <li><a href="/blog/what-is-link-analytics">What Is Link Analytics?</a></li>
+      <li><a href="/blog/best-free-url-shorteners-2025">Best Free URL Shorteners in 2025</a></li>
+    </ul>
+
+    <hr style="margin: 40px 0; border-color: #333;" />
+    <div style="display: flex; gap: 20px; align-items: center; background-color: #1a1a1a; padding: 20px; border: 3px solid #ff6600;">
+      <img src="/logo192.png" alt="brnk Team" style="width: 64px; height: 64px;" />
+      <div>
+        <h4 style="margin: 0 0 10px 0;">brnk Team</h4>
+        <p style="margin: 0; font-size: 0.9rem;">The brnk team builds and writes about web tools, link management, and digital productivity. brnk.in is a free URL shortener and QR code generator used by marketers, developers, and content creators worldwide. <a href="/author/brnk-team" style="color: #ff6600;">Learn more about us.</a></p>
+      </div>
+    </div>
+  `
+};
