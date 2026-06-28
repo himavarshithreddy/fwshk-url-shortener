@@ -4,7 +4,7 @@
     "/author/brnk-team": {
       "initialRevalidateSeconds": false,
       "srcRoute": null,
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/author/brnk-team.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/author/brnk-team.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -17,7 +17,7 @@
     "/blog": {
       "initialRevalidateSeconds": false,
       "srcRoute": null,
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -30,7 +30,7 @@
     "/blog/301-vs-302-vs-308-redirects-explained": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/301-vs-302-vs-308-redirects-explained.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/301-vs-302-vs-308-redirects-explained.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -43,7 +43,7 @@
     "/blog/ab-test-landing-pages-short-urls": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/ab-test-landing-pages-short-urls.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/ab-test-landing-pages-short-urls.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -56,7 +56,7 @@
     "/blog/are-short-urls-safe": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/are-short-urls-safe.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/are-short-urls-safe.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -69,7 +69,7 @@
     "/blog/best-free-url-shorteners-2025": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/best-free-url-shorteners-2025.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/best-free-url-shorteners-2025.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -82,7 +82,7 @@
     "/blog/best-qr-code-generators-2025": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/best-qr-code-generators-2025.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/best-qr-code-generators-2025.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -95,7 +95,7 @@
     "/blog/brnk-vs-bitly": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/brnk-vs-bitly.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/brnk-vs-bitly.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -108,7 +108,7 @@
     "/blog/clean-up-link-profile": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/clean-up-link-profile.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/clean-up-link-profile.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -121,7 +121,7 @@
     "/blog/clicks-vs-visitors-analytics": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/clicks-vs-visitors-analytics.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/clicks-vs-visitors-analytics.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -134,7 +134,7 @@
     "/blog/data-privacy-url-shortening": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/data-privacy-url-shortening.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/data-privacy-url-shortening.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -147,7 +147,7 @@
     "/blog/deep-linking-vs-short-linking": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/deep-linking-vs-short-linking.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/deep-linking-vs-short-linking.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -160,7 +160,7 @@
     "/blog/do-url-shorteners-hurt-seo": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/do-url-shorteners-hurt-seo.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/do-url-shorteners-hurt-seo.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -173,7 +173,7 @@
     "/blog/event-marketing-qr-codes": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/event-marketing-qr-codes.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/event-marketing-qr-codes.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -186,7 +186,7 @@
     "/blog/free-vs-paid-url-shorteners": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/free-vs-paid-url-shorteners.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/free-vs-paid-url-shorteners.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -199,7 +199,7 @@
     "/blog/future-of-retail-qr-codes": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/future-of-retail-qr-codes.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/future-of-retail-qr-codes.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -212,7 +212,7 @@
     "/blog/how-to-create-custom-short-link": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/how-to-create-custom-short-link.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/how-to-create-custom-short-link.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -225,7 +225,7 @@
     "/blog/how-to-generate-qr-code-for-link": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/how-to-generate-qr-code-for-link.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/how-to-generate-qr-code-for-link.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -238,7 +238,7 @@
     "/blog/how-to-print-qr-codes": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/how-to-print-qr-codes.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/how-to-print-qr-codes.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -251,7 +251,7 @@
     "/blog/how-to-set-url-expiration": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/how-to-set-url-expiration.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/how-to-set-url-expiration.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -264,7 +264,7 @@
     "/blog/how-to-shorten-a-url": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/how-to-shorten-a-url.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/how-to-shorten-a-url.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -277,7 +277,7 @@
     "/blog/how-to-track-clicks-on-short-url": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/how-to-track-clicks-on-short-url.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/how-to-track-clicks-on-short-url.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -290,7 +290,7 @@
     "/blog/instagram-story-short-links": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/instagram-story-short-links.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/instagram-story-short-links.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -303,7 +303,7 @@
     "/blog/link-cloaking-vs-shortening": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/link-cloaking-vs-shortening.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/link-cloaking-vs-shortening.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -316,7 +316,7 @@
     "/blog/link-in-bio-vs-url-shorteners": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/link-in-bio-vs-url-shorteners.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/link-in-bio-vs-url-shorteners.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -329,7 +329,7 @@
     "/blog/managing-affiliate-links": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/managing-affiliate-links.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/managing-affiliate-links.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -342,7 +342,7 @@
     "/blog/page-speed-redirect-links": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/page-speed-redirect-links.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/page-speed-redirect-links.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -355,7 +355,7 @@
     "/blog/preview-short-url-before-clicking": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/preview-short-url-before-clicking.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/preview-short-url-before-clicking.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -368,7 +368,7 @@
     "/blog/psychology-of-custom-slugs": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/psychology-of-custom-slugs.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/psychology-of-custom-slugs.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -381,7 +381,7 @@
     "/blog/qr-codes-on-business-cards": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/qr-codes-on-business-cards.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/qr-codes-on-business-cards.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -394,7 +394,7 @@
     "/blog/real-estate-qr-codes": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/real-estate-qr-codes.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/real-estate-qr-codes.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -407,7 +407,7 @@
     "/blog/restaurant-qr-code-uses": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/restaurant-qr-code-uses.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/restaurant-qr-code-uses.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -420,7 +420,7 @@
     "/blog/share-links-on-social-media": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/share-links-on-social-media.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/share-links-on-social-media.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -433,7 +433,7 @@
     "/blog/short-urls-for-email-newsletters": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/short-urls-for-email-newsletters.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/short-urls-for-email-newsletters.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -446,7 +446,7 @@
     "/blog/short-urls-for-marketing-campaigns": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/short-urls-for-marketing-campaigns.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/short-urls-for-marketing-campaigns.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -459,7 +459,7 @@
     "/blog/time-sensitive-short-links": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/time-sensitive-short-links.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/time-sensitive-short-links.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -472,7 +472,7 @@
     "/blog/track-sponsor-link-clicks": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/track-sponsor-link-clicks.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/track-sponsor-link-clicks.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -485,7 +485,7 @@
     "/blog/url-shorteners-cybersecurity": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/url-shorteners-cybersecurity.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/url-shorteners-cybersecurity.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -498,7 +498,7 @@
     "/blog/url-shorteners-for-small-business": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/url-shorteners-for-small-business.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/url-shorteners-for-small-business.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -511,7 +511,7 @@
     "/blog/utm-parameters-explained": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/utm-parameters-explained.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/utm-parameters-explained.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -524,7 +524,7 @@
     "/blog/utm-parameters-facebook-ads": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/utm-parameters-facebook-ads.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/utm-parameters-facebook-ads.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -537,7 +537,7 @@
     "/blog/what-is-a-qr-code": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/what-is-a-qr-code.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/what-is-a-qr-code.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -550,7 +550,7 @@
     "/blog/what-is-a-redirect": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/what-is-a-redirect.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/what-is-a-redirect.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -563,7 +563,7 @@
     "/blog/what-is-a-url-shortener": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/what-is-a-url-shortener.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/what-is-a-url-shortener.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -576,7 +576,7 @@
     "/blog/what-is-link-analytics": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/what-is-link-analytics.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/what-is-link-analytics.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -589,7 +589,7 @@
     "/blog/why-https-matters-short-links": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/why-https-matters-short-links.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/why-https-matters-short-links.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -602,7 +602,7 @@
     "/blog/youtube-description-short-urls": {
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/[slug]",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/youtube-description-short-urls.json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/youtube-description-short-urls.json",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -616,9 +616,9 @@
   "dynamicRoutes": {
     "/blog/[slug]": {
       "routeRegex": "^/blog/([^/]+?)(?:/)?$",
-      "dataRoute": "/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/[slug].json",
+      "dataRoute": "/_next/data/gE4-nnwli7FcL-ziSDOsq/blog/[slug].json",
       "fallback": null,
-      "dataRouteRegex": "^/_next/data/T9fi3A4ntOgyA1UMeRo2A/blog/([^/]+?)\\.json$",
+      "dataRouteRegex": "^/_next/data/gE4\\-nnwli7FcL\\-ziSDOsq/blog/([^/]+?)\\.json$",
       "allowHeader": [
         "host",
         "x-matched-path",

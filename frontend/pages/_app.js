@@ -6,10 +6,6 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CookieBanner from '../components/CookieBanner';
-import { Space_Grotesk, Syne } from 'next/font/google';
-
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['400', '500', '700'] });
-const syne = Syne({ subsets: ['latin'], weight: ['800'] });
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -32,11 +28,11 @@ function MyApp({ Component, pageProps }) {
           }
         `}} />
       </Head>
-      <div className={`${spaceGrotesk.className} font-sans`}>
+      <div className="font-sans">
         <style jsx global>{`
           :root {
-            --font-space-grotesk: ${spaceGrotesk.style.fontFamily};
-            --font-syne: ${syne.style.fontFamily};
+            --font-space-grotesk: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-syne: 'Syne', sans-serif;
           }
           h1, h2, h3, .title, .logo {
             font-family: var(--font-syne), sans-serif !important;
