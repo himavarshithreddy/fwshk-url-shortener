@@ -1087,7 +1087,8 @@ nav[aria-label="Site navigation"] {
     border: 3px solid #FFFDF7;
     box-shadow: 8px 8px 0px #FFFDF7;
     align-items: stretch;
-    min-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
+    max-height: calc(100vh - 80px);
   }
 
   .left-panel {
@@ -1099,6 +1100,7 @@ nav[aria-label="Site navigation"] {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: auto;
   }
 
   .right-panel {
@@ -1110,6 +1112,7 @@ nav[aria-label="Site navigation"] {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
   }
 
   .right-panel .result {
