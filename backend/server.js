@@ -4,8 +4,8 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
-const linkRoutes = require('../routes/linkRoutes');
-const { proxyDetection } = require('../middleware/security');
+const linkRoutes = require('./routes/linkRoutes');
+const { proxyDetection } = require('./middleware/security');
 
 dotenv.config();
 
@@ -57,14 +57,17 @@ const faviconLimiter = rateLimit({
   legacyHeaders: false,
 });
 app.get('/favicon.svg', faviconLimiter, (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'favicon.svg'));
+  res.sendFile(path.join(__dirname, 'public', 'favicon.svg'));
 });
 
 app.use('/', linkRoutes);
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Only listen when running locally, not on Vercel
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
