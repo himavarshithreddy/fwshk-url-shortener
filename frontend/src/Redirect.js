@@ -18,7 +18,7 @@ function RedirectPage() {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const apiUrl = (process.env.NEXT_PUBLIC_API_URL || window.location.origin).replace(/\/+$/, '');
+  const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://back.brnk.in').replace(/\/+$/, '');
 
   const doRedirect = useCallback(() => {
     window.location.replace(`${apiUrl}/${encodeURIComponent(shortCode)}`);

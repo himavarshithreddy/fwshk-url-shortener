@@ -46,7 +46,7 @@ function TrackingPage() {
     const code = extractShortCode(urlCode);
 
     try {
-      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '');
+      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://back.brnk.in').replace(/\/+$/, '');
       console.log(`[DEBUG-FRONTEND] track: sending request to ${apiUrl}/track/${code}`);
       const response = await fetch(`${apiUrl}/track/${code}`);
       console.log('[DEBUG-FRONTEND] track: response status =', response.status);

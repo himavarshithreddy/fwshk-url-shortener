@@ -272,7 +272,7 @@ function Main() {
   const [mode, setMode] = useState('shorten');
   const [isAdModalOpen, setIsAdModalOpen] = useState(false);
   const qrRef = useRef(null);
-  const apiUrl = (process.env.NEXT_PUBLIC_API_URL || '').replace(/\/+$/, '');
+  const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://back.brnk.in').replace(/\/+$/, '');
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
