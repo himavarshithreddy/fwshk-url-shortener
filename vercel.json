@@ -22,7 +22,7 @@
     { "src": "/verify-password/([^/]+)", "dest": "/backend/server.js" },
     { "src": "/link-info/([^/]+)", "dest": "/backend/server.js" },
     { "src": "/([a-zA-Z0-9_-]{5,})", "dest": "/backend/server.js" },
-    { "src": "/(.*)", "dest": "/$1" }
+    { "src": "/(.*)", "dest": "/frontend/$1" }
   ]
 }
   
