@@ -1,50 +1,70 @@
-# **BRNK — URLs on diet.**
+# Getting Started with Create React App
 
-**BRNK** is a bold, fast, and free URL shortener & QR code generator. Paste any long link, get a clean short URL or a styled QR code in seconds — no sign-up, no fluff. Heavy borders, hard shadows, and raw typography. That's the brnk way.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
----
+## Available Scripts
 
-## **How It Works**
+In the project directory, you can run:
 
-1. **Paste your URL** — Drop any long link into the input box.
-2. **Pick your mode** — Hit **Shorten URL** to trim links, or **QR Code** to generate a scannable code.
-3. **Customize (optional)** — Choose a custom short code or let brnk generate a random one.
-4. **Set expiration** — Keep your link alive forever, or set it to expire (1 Hour, 1 Day, 7 Days, 30 Days).
-5. **Copy & share** — Grab your short link, copy the QR image, or download it as a PNG with a branded frame.
-6. **Track clicks** — Visit the tracking page to see how many times your link has been hit.
+### `npm start`
 
----
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## **Features**
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-- 🔗 **Instant Shortening** — Get a short link in one click, zero sign-up required
-- 📱 **QR Code Generation** — Generate bold, styled QR codes with brnk branding, download as PNG, or copy the image to your clipboard
-- ✏️ **Custom Short Codes** — Pick a memorable alias for your link (e.g. `brnk.app/my-link`)
-- 📊 **Click Tracking** — Monitor how many times your link has been visited via a dedicated tracking page
-- ⏳ **Link Expiration** — Set your links to expire after a chosen duration, or keep them permanent
-- 🔀 **Redirect Types** — Choose between **Permanent (308)** redirects or **Track Clicks (302)** redirects
-- ⚡ **Lightning Fast** — Built on a serverless, globally distributed infrastructure for sub-millisecond redirects
-  
----
+### `npm test`
 
-## **Use Cases**
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-- Share links on social media without character limits getting in the way
-- Make long affiliate or referral URLs presentable
-- Generate scannable QR codes for print materials, business cards, or posters
-- Create memorable links for marketing campaigns
-- Track engagement on links you share via the dedicated tracking page
+### `npm run build`
 
----
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## **Documentation**
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-For complete technical and non-technical documentation, see:
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- [`docs/README.md`](docs/README.md)
+### `npm run eject`
 
----
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-## **License**
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-[MIT](LICENSE)
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
