@@ -228,9 +228,11 @@ const getOriginalUrl = async (req, res) => {
     }
 
     // Password-protected links must be accessed via the verify-password endpoint.
-    // Return a 401 so the frontend interstitial (Redirect.js) can prompt for the password.
+    // Redirect to the frontend interstitial page so it can prompt for the password.
     if (record.pw) {
-      return res.status(401).json({ error: 'Password required', passwordRequired: true });
+      res.set('Location', `/p/${shortCode}`);
+      res.set(CACHE_HEADERS_NOSTORE);
+      return res.status(302).end();
     }
 
     // Bot detection – return OG meta tags for link unfurling instead of redirect.
