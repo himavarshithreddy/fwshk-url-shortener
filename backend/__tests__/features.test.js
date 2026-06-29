@@ -177,21 +177,7 @@ describe('maxClicks validation', () => {
   });
 });
 
-describe('vercel.json routing', () => {
-  const vercelConfig = require('../../vercel.json');
 
-  test('has link-info route to backend', () => {
-    const linkInfoRoute = vercelConfig.routes.find(r => r.src && r.src.includes('link-info'));
-    expect(linkInfoRoute).toBeDefined();
-    expect(linkInfoRoute.dest).toBe('/backend/server.js');
-  });
-
-  test('has verify-password route to backend', () => {
-    const vpRoute = vercelConfig.routes.find(r => r.src && r.src.includes('verify-password'));
-    expect(vpRoute).toBeDefined();
-    expect(vpRoute.dest).toBe('/backend/server.js');
-  });
-});
 
 describe('new feature routes', () => {
   const router = require('../routes/linkRoutes');

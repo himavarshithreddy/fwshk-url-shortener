@@ -1165,6 +1165,7 @@ nav[aria-label="Site navigation"] {
   border: 3px solid #FFFDF7;
   box-shadow: 5px 5px 0px #FFFDF7;
   min-height: 280px;
+  min-width: 0;
 }
 
 /* ---- Scrolling ticker strip ---- */
@@ -1174,6 +1175,7 @@ nav[aria-label="Site navigation"] {
   border-bottom: 3px solid #FFFDF7;
   overflow: hidden;
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .loader-ticker-inner {
@@ -1210,6 +1212,7 @@ nav[aria-label="Site navigation"] {
   padding: 22px 24px;
   background-color: #242424;
   animation: loader-shake 0.11s steps(3) infinite;
+  min-width: 0;
 }
 
 @keyframes loader-shake {
@@ -1227,6 +1230,7 @@ nav[aria-label="Site navigation"] {
   border: 2px solid #444;
   padding: 7px 10px;
   background-color: #1a1a1a;
+  min-width: 0;
 }
 
 .loader-url-text {
