@@ -272,7 +272,7 @@ function Main() {
   const [mode, setMode] = useState('shorten');
   const [isAdModalOpen, setIsAdModalOpen] = useState(false);
   const qrRef = useRef(null);
-  const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://back.brnk.in').replace(/\/+$/, '');
+  const apiUrl = (process.env.NEXT_PUBLIC_CLIENT_API_URL || '/api').replace(/\/+$/, '');
   const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '')).replace(/\/+$/, '');
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '';
 
@@ -361,7 +361,6 @@ function Main() {
   const executeShorten = async (formattedUrl, captchaToken) => {
     try {
       setIsLoading(true);
-      console.log(`[DEBUG-FRONTEND] executeShorten: sending request to ${apiUrl}/shorten`);
       const response = await fetch(`${apiUrl}/shorten`, {
         method: 'POST',
         headers: {
@@ -380,9 +379,7 @@ function Main() {
         }),
       });
   
-      console.log('[DEBUG-FRONTEND] executeShorten: response status =', response.status);
       const data = await response.json();
-      console.log('[DEBUG-FRONTEND] executeShorten: response data =', data);
   
       if (response.ok) {
         const fullShortenedUrl = `${BASE_URL}/${data.shortCode}`;
@@ -407,7 +404,7 @@ function Main() {
         setError(data.error || 'Failed to shorten URL.');
       }
     } catch (err) {
-      console.error('[DEBUG-FRONTEND] executeShorten error:', err);
+      console.error('Error shortening URL:', err);
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -477,11 +474,31 @@ function Main() {
     }
   };
 
+  const copyText = async (text) => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-1000px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    } catch {
+      setError('Copy failed. Please copy it manually.');
+    }
+  };
+
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(shortenedUrl);
+    copyText(shortenedUrl);
   };
   const copyShortCode = () => {
-    navigator.clipboard.writeText(shortCode);
+    copyText(shortCode);
   };
 
   // ---------------------------------------------------------------------------
@@ -688,7 +705,7 @@ function Main() {
         `}} />
       </Head>
       <nav aria-label="Site navigation">
-        <Link href="/track" className="tracking-link">
+        <Link href="/track" className="track-links-btn">
           <span className="tracking-icon">→</span>
           Track a Link
         </Link>
@@ -800,6 +817,7 @@ function Main() {
                   value={redirectType}
                   onChange={(e) => setRedirectType(e.target.value)}
                 >
+                  <option value="301">Permanent (301)</option>
                   <option value="308">Permanent (308)</option>
                   <option value="302">Track Clicks (302)</option>
                 </select>
@@ -1016,7 +1034,7 @@ function Main() {
                   <div className="history-item-actions">
                     <button
                       className="history-copy-btn"
-                      onClick={() => navigator.clipboard.writeText(item.shortenedUrl)}
+                      onClick={() => copyText(item.shortenedUrl)}
                       aria-label={`Copy ${item.shortenedUrl}`}
                     >
                       Copy
@@ -1115,23 +1133,23 @@ function Main() {
           </div>
         </div>
         <h2 className="seo-content-heading" style={{ marginTop: '40px' }}>Latest from the Blog</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-          <div style={{ border: '2px solid #333', padding: '16px', borderRadius: '8px' }}>
-            <h3 style={{ fontSize: '1.1rem', margin: '0 0 10px 0' }}><Link href="/blog/do-url-shorteners-hurt-seo" style={{ color: '#ff6600', textDecoration: 'none' }}>Do URL Shorteners Hurt SEO? The Truth in 2025</Link></h3>
+        <div className="home-blog-grid">
+          <Link href="/blog/do-url-shorteners-hurt-seo" className="home-blog-card">
+            <h3>Do URL Shorteners Hurt SEO? The Truth in 2025</h3>
             <p style={{ fontSize: '0.9rem', margin: '0', color: '#ccc' }}>Understand how 301 and 302 redirects affect your search rankings and page authority.</p>
-          </div>
-          <div style={{ border: '2px solid #333', padding: '16px', borderRadius: '8px' }}>
-            <h3 style={{ fontSize: '1.1rem', margin: '0 0 10px 0' }}><Link href="/blog/what-is-a-qr-code" style={{ color: '#ff6600', textDecoration: 'none' }}>What Is a QR Code? History and Uses</Link></h3>
+          </Link>
+          <Link href="/blog/what-is-a-qr-code" className="home-blog-card">
+            <h3>What Is a QR Code? History and Uses</h3>
             <p style={{ fontSize: '0.9rem', margin: '0', color: '#ccc' }}>Learn how QR codes work, their history, and how businesses use them today.</p>
-          </div>
-          <div style={{ border: '2px solid #333', padding: '16px', borderRadius: '8px' }}>
-            <h3 style={{ fontSize: '1.1rem', margin: '0 0 10px 0' }}><Link href="/blog/best-free-url-shorteners-2025" style={{ color: '#ff6600', textDecoration: 'none' }}>Best Free URL Shorteners in 2025</Link></h3>
+          </Link>
+          <Link href="/blog/best-free-url-shorteners-2025" className="home-blog-card">
+            <h3>Best Free URL Shorteners in 2025</h3>
             <p style={{ fontSize: '0.9rem', margin: '0', color: '#ccc' }}>A comprehensive comparison of the top free link shortening tools available.</p>
-          </div>
-          <div style={{ border: '2px solid #333', padding: '16px', borderRadius: '8px' }}>
-            <h3 style={{ fontSize: '1.1rem', margin: '0 0 10px 0' }}><Link href="/blog/are-short-urls-safe" style={{ color: '#ff6600', textDecoration: 'none' }}>Are Short URLs Safe? Spotting Phishing Links</Link></h3>
+          </Link>
+          <Link href="/blog/are-short-urls-safe" className="home-blog-card">
+            <h3>Are Short URLs Safe? Spotting Phishing Links</h3>
             <p style={{ fontSize: '0.9rem', margin: '0', color: '#ccc' }}>How to safely preview and verify short links before clicking on them.</p>
-          </div>
+          </Link>
         </div>
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <Link href="/blog" style={{ color: '#FFFDF7', borderBottom: '2px solid #ff6600', textDecoration: 'none', fontWeight: 'bold' }}>View All 45+ Guides →</Link>

@@ -7,12 +7,19 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CookieBanner from '../components/CookieBanner';
 
+import { useRouter } from 'next/router';
+
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const canonicalUrl = `https://brnk.in${router.asPath.split('?')[0]}`;
+
   return (
     <>
       <Head>
         <title>brnk - Simple URL Shortener</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta key="robots" name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href={canonicalUrl} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
           {
             "@context": "https://schema.org",

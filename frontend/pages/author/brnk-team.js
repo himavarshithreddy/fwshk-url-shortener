@@ -44,9 +44,9 @@ export default function AuthorPage({ posts }) {
           Latest Articles by brnk Team ({posts.length})
         </h2>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '30px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 350px), 1fr))', gap: '30px' }}>
           {posts.map((post) => (
-            <article key={post.slug} className="author-post-card" style={{ 
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="author-post-card" style={{ 
               display: 'flex',
               flexDirection: 'column',
               backgroundColor: '#1a1a1a', 
@@ -54,21 +54,23 @@ export default function AuthorPage({ posts }) {
               padding: '25px',
               transition: 'all 0.2s ease',
               cursor: 'pointer',
-              height: '100%'
+              height: '100%',
+              color: 'inherit',
+              textDecoration: 'none'
             }}>
               <p style={{ color: '#ff6600', fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '10px', textTransform: 'uppercase' }}>{post.date}</p>
               <h3 style={{ fontSize: '1.3rem', margin: '0 0 15px 0', lineHeight: '1.4' }}>
-                <Link href={`/blog/${post.slug}`} style={{ color: '#FFFDF7', textDecoration: 'none' }}>
+                <span style={{ color: '#FFFDF7', textDecoration: 'none' }}>
                   {post.title}
-                </Link>
+                </span>
               </h3>
               <p style={{ color: '#a8a8a8', lineHeight: '1.5', flexGrow: 1, marginBottom: '20px' }}>
                 {post.excerpt.length > 120 ? post.excerpt.substring(0, 120) + '...' : post.excerpt}
               </p>
-              <Link href={`/blog/${post.slug}`} style={{ color: '#ff6600', fontWeight: 'bold', textDecoration: 'none', display: 'inline-block', borderBottom: '2px solid transparent' }}>
+              <span style={{ color: '#ff6600', fontWeight: 'bold', textDecoration: 'none', display: 'inline-block', borderBottom: '2px solid transparent' }}>
                 Read Article &rarr;
-              </Link>
-            </article>
+              </span>
+            </Link>
           ))}
         </div>
       </div>
@@ -79,7 +81,7 @@ export default function AuthorPage({ posts }) {
           transform: translateY(-5px);
           box-shadow: 6px 6px 0px rgba(255, 102, 0, 0.2);
         }
-        .author-post-card a:hover {
+        .author-post-card:hover span:last-child {
           border-bottom-color: #ff6600 !important;
         }
       `}</style>

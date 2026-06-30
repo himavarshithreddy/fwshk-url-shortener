@@ -16,28 +16,30 @@ export default function BlogIndex({ posts }) {
           <p className="subtitle" style={{ marginTop: '10px' }}>Tips, guides, and tutorials for mastering your links.</p>
         </header>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '30px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 350px), 1fr))', gap: '30px' }}>
           {posts.map((post) => (
-            <article key={post.slug} className="blog-index-card" style={{ 
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="blog-index-card" style={{ 
               padding: '25px', 
               border: '2px solid #333', 
               backgroundColor: '#1a1a1a', 
               display: 'flex',
               flexDirection: 'column',
               transition: 'all 0.2s ease',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              textDecoration: 'none',
+              color: 'inherit'
             }}>
               <p style={{ color: '#ff6600', fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '10px', textTransform: 'uppercase' }}>{post.date}</p>
               <h2 style={{ fontSize: '1.4rem', marginBottom: '15px', lineHeight: '1.4' }}>
-                <Link href={`/blog/${post.slug}`} style={{ color: '#FFFDF7', textDecoration: 'none' }}>
+                <span style={{ color: '#FFFDF7', textDecoration: 'none' }}>
                   {post.title}
-                </Link>
+                </span>
               </h2>
               <p style={{ color: '#a8a8a8', lineHeight: '1.5', flexGrow: 1, marginBottom: '20px' }}>{post.excerpt}</p>
-              <Link href={`/blog/${post.slug}`} style={{ color: '#ff6600', fontWeight: 'bold', textDecoration: 'none', textTransform: 'uppercase', fontSize: '0.9rem', borderBottom: '2px solid transparent', display: 'inline-block' }}>
+              <span style={{ color: '#ff6600', fontWeight: 'bold', textDecoration: 'none', textTransform: 'uppercase', fontSize: '0.9rem', borderBottom: '2px solid transparent', display: 'inline-block' }}>
                 Read More &rarr;
-              </Link>
-            </article>
+              </span>
+            </Link>
           ))}
           {posts.length === 0 && (
             <p style={{ textAlign: 'center', color: '#a8a8a8', gridColumn: '1 / -1' }}>Coming soon...</p>
@@ -50,7 +52,7 @@ export default function BlogIndex({ posts }) {
           transform: translateY(-5px);
           box-shadow: 6px 6px 0px rgba(255, 102, 0, 0.2);
         }
-        .blog-index-card a:hover {
+        .blog-index-card:hover span:last-child {
           border-bottom-color: #ff6600 !important;
         }
       `}</style>

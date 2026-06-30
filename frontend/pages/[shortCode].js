@@ -1,6 +1,6 @@
-import RedirectInterstitial from '../../components/RedirectInterstitial';
+import RedirectInterstitial from '../components/RedirectInterstitial';
 
-export default function PasswordProtectedPage({ shortCode }) {
+export default function ShortCodePage({ shortCode }) {
   return <RedirectInterstitial shortCode={shortCode} />;
 }
 

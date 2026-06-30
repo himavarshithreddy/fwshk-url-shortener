@@ -12,6 +12,7 @@ const mockDetectClickAnomaly = jest.fn().mockReturnValue(false);
 const mockTrackDeviceStat = jest.fn().mockResolvedValue();
 const mockTrackGeoStat = jest.fn().mockResolvedValue();
 const mockDetectDeviceType = jest.fn().mockReturnValue('desktop');
+const mockCalculateDomainTrustScore = jest.fn().mockReturnValue(80);
 
 jest.mock('../models/Link', () => ({
   getRedirectRecord: (...a) => mockGetRedirectRecord(...a),
@@ -39,10 +40,10 @@ jest.mock('../middleware/monitoring', () => ({
 }));
 
 jest.mock('../middleware/urlSafety', () => ({
-  calculateDomainTrustScore: jest.fn().mockReturnValue(80),
+  calculateDomainTrustScore: (...a) => mockCalculateDomainTrustScore(...a),
 }));
 
-const { getOriginalUrl } = require('../controllers/linkController');
+const { getOriginalUrl, verifyLinkPassword } = require('../controllers/linkController');
 
 function makeReqRes(shortCode, { ua = 'Mozilla/5.0', accept = 'text/html,application/xhtml+xml' } = {}) {
   const headers = {};
@@ -198,5 +199,56 @@ describe('maxClicks redirect cache-header enforcement', () => {
     const { req: reqOver, res: resOver } = makeReqRes('lim3');
     await getOriginalUrl(reqOver, resOver);
     expect(resOver._status).toBe(410);
+  });
+
+  test('password-protected link redirects to configured frontend origin', async () => {
+    const originalFrontendUrl = process.env.FRONTEND_URL;
+    process.env.FRONTEND_URL = 'https://brnk.in, https://preview.brnk.in';
+
+    mockGetRedirectRecord.mockResolvedValue({
+      u: 'https://example.com',
+      t: 0,
+      e: 1,
+      r: 308,
+      mc: 0,
+      pw: 'hash',
+    });
+
+    const { req, res } = makeReqRes('pw01');
+    await getOriginalUrl(req, res);
+
+    expect(res._status).toBe(302);
+    expect(res._headers.Location).toBe('https://brnk.in/p/pw01');
+    expect(res._headers['Cache-Control']).toBe('no-store');
+
+    if (originalFrontendUrl === undefined) delete process.env.FRONTEND_URL;
+    else process.env.FRONTEND_URL = originalFrontendUrl;
+  });
+
+  test('verified password response includes warning metadata for low-trust destinations', async () => {
+    const crypto = require('crypto');
+    const password = 'open-sesame';
+    const hash = crypto.createHash('sha256').update(password).digest('hex');
+    mockGetRedirectRecord.mockResolvedValue({
+      u: 'https://low-trust.example',
+      t: 0,
+      e: 1,
+      r: 308,
+      mc: 0,
+      pw: hash,
+    });
+    mockCalculateDomainTrustScore.mockReturnValue(30);
+
+    const { req, res } = makeReqRes('pw02');
+    req.body = { password };
+    await verifyLinkPassword(req, res);
+
+    expect(res._body).toMatchObject({
+      verified: true,
+      originalUrl: 'https://low-trust.example',
+      trustScore: 30,
+      showWarning: true,
+      warningReason: 'low_trust_domain',
+    });
   });
 });

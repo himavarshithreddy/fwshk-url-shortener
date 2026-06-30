@@ -35,7 +35,6 @@ export default function Document() {
         <meta name="color-scheme" content="dark" />
 
         <meta name="author" content="brnk" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="referrer" content="origin-when-cross-origin" />
         
         <meta property="og:site_name" content="brnk" />

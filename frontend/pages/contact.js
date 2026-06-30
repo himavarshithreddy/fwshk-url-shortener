@@ -3,9 +3,14 @@ import { useState } from 'react';
 
 export default function Contact() {
   const [status, setStatus] = useState('');
+  const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!web3FormsAccessKey) {
+      setStatus('Contact form is not configured. Please email us directly at hello@brnk.in.');
+      return;
+    }
     setStatus('Submitting...');
     
     const formData = new FormData(e.target);
@@ -44,7 +49,7 @@ export default function Contact() {
         </header>
 
         <form onSubmit={handleSubmit} className="form">
-          <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY} />
+          <input type="hidden" name="access_key" value={web3FormsAccessKey} />
           <input type="hidden" name="subject" value="New Contact Submission from brnk.in" />
           <input type="checkbox" name="botcheck" id="" style={{ display: 'none' }} />
 
@@ -105,7 +110,7 @@ export default function Contact() {
           <button type="submit" className="submit-btn">Send Message</button>
           
           {status && (
-            <p style={{ marginTop: '15px', textAlign: 'center', fontWeight: 'bold', color: status.includes('Error') || status.includes('wrong') ? '#ff6600' : '#FFFDF7' }}>
+            <p style={{ marginTop: '15px', textAlign: 'center', fontWeight: 'bold', color: status.includes('Error') || status.includes('wrong') || status.includes('not configured') ? '#ff6600' : '#FFFDF7' }}>
               {status}
             </p>
           )}

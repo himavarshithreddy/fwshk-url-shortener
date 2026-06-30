@@ -14,11 +14,20 @@ export default function AdModal({ isOpen, onClose, onComplete }) {
         if (window.adsbygoogle) {
           window.adsbygoogle.push({});
         }
-      } catch (e) {
-        console.error('AdSense error:', e);
+      } catch {
+        // Ad blockers or unavailable AdSense scripts should not block custom-code flow.
       }
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   useEffect(() => {
     let timer;
@@ -33,10 +42,19 @@ export default function AdModal({ isOpen, onClose, onComplete }) {
   if (!isOpen) return null;
 
   return (
-    <div className="ad-modal-overlay">
-      <div className="ad-modal-container">
+    <div className="ad-modal-overlay" onMouseDown={onClose}>
+      <div
+        className="ad-modal-container"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="custom-code-ad-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
         <div className="ad-modal-header">
-          <span className="ad-modal-title">SYSTEM OVERRIDE: AD_REQUIRED</span>
+          <span id="custom-code-ad-title" className="ad-modal-title">SYSTEM OVERRIDE: AD_REQUIRED</span>
+          <button className="ad-modal-close" type="button" onClick={onClose} aria-label="Close ad dialog">
+            &times;
+          </button>
           <div className="ad-modal-scanlines" />
         </div>
         

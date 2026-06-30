@@ -54,6 +54,14 @@ const CACHE_HEADERS_NOSTORE = { 'Cache-Control': 'no-store' };
 // Bot user-agent detection for link metadata unfurling (OG tags)
 const BOT_UA_RE = /Twitterbot|Slackbot|Discordbot|WhatsApp|facebookexternalhit|LinkedInBot|Googlebot|bingbot|TelegramBot|Applebot|Pinterestbot/i;
 
+function frontendPath(path) {
+  const configuredOrigin = (process.env.FRONTEND_URL || process.env.PUBLIC_BASE_URL || '')
+    .split(',')[0]
+    .trim()
+    .replace(/\/+$/, '');
+  return configuredOrigin ? `${configuredOrigin}${path}` : path;
+}
+
 /**
  * Generate HTML with OpenGraph meta tags for bot crawlers.
  */
@@ -96,10 +104,15 @@ function isValidUrl(string) {
 }
 
 const createShortUrl = async (req, res) => {
-  const { originalUrl, customShortCode, ttl, redirectType, maxClicks, password, selfDestruct } = req.body;
+  let { originalUrl, customShortCode, ttl, redirectType, maxClicks, password, selfDestruct } = req.body;
 
   if (!originalUrl || typeof originalUrl !== 'string') {
     return res.status(400).json({ error: 'Original URL is required' });
+  }
+
+  originalUrl = originalUrl.trim();
+  if (!/^https?:\/\//i.test(originalUrl)) {
+    originalUrl = `https://${originalUrl}`;
   }
 
   if (originalUrl.length > 2048) {
@@ -230,7 +243,7 @@ const getOriginalUrl = async (req, res) => {
     // Password-protected links must be accessed via the verify-password endpoint.
     // Redirect to the frontend interstitial page so it can prompt for the password.
     if (record.pw) {
-      res.set('Location', `/p/${shortCode}`);
+      res.set('Location', frontendPath(`/p/${encodeURIComponent(shortCode)}`));
       res.set(CACHE_HEADERS_NOSTORE);
       return res.status(302).end();
     }
@@ -374,6 +387,16 @@ const getLinkInfo = async (req, res) => {
       return res.status(404).json({ error: 'Link not found' });
     }
 
+    const clickCount = await getClickCount(shortCode);
+
+    if (record.mc > 0 && clickCount >= record.mc) {
+      return res.status(410).json({
+        error: record.mc === 1
+          ? 'This self-destruct link has already been used'
+          : 'Link has reached its maximum number of clicks',
+      });
+    }
+
     // For password-protected links, return minimal info (do not expose destination URL).
     if (record.pw) {
       return res.json({
@@ -389,9 +412,6 @@ const getLinkInfo = async (req, res) => {
 
     // Determine if interstitial warning is needed
     const showWarning = trustScore < 50;
-
-    // Fetch click count for the preview page
-    const clickCount = await getClickCount(shortCode);
 
     let domain;
     try {
@@ -450,6 +470,10 @@ const verifyLinkPassword = async (req, res) => {
       return res.status(401).json({ error: 'Incorrect password' });
     }
 
+    const { calculateDomainTrustScore } = require('../middleware/urlSafety');
+    const trustScore = calculateDomainTrustScore(record.u);
+    const showWarning = trustScore < 50;
+
     // Enforce maxClicks before granting access
     if (record.mc > 0) {
       const newCount = await atomicIncrClickCount(shortCode);
@@ -465,7 +489,13 @@ const verifyLinkPassword = async (req, res) => {
     // Track device / geo stats for this verified access
     trackClickStats(shortCode, req.headers['user-agent'] || '', req.headers['x-vercel-ip-country'] || '');
 
-    res.json({ verified: true, originalUrl: record.u });
+    res.json({
+      verified: true,
+      originalUrl: record.u,
+      trustScore,
+      showWarning,
+      warningReason: showWarning ? 'low_trust_domain' : null,
+    });
   } catch (err) {
     if (err.message === 'Redis connection is not available') {
       return res.status(503).json({ error: 'Service temporarily unavailable. Please try again later.' });

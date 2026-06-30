@@ -34,7 +34,7 @@ body {
   background-color: #1a1a1a;
   color: #FFFDF7;
   min-height: 100vh;
-  overflow-y: auto;
+  overflow-y: scroll;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -68,6 +68,11 @@ body {
   width: 100%;
   margin-top: 24px;
   overflow: hidden;
+}
+
+.right-panel > * {
+  width: 100%;
+  min-width: 0;
 }
 
 /* Placeholder shown when no URL has been shortened yet */
@@ -241,6 +246,9 @@ body {
   background-color: #1a1a1a;
   border: 3px solid #FFFDF7;
   box-shadow: 5px 5px 0px #FFFDF7;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .shortened-text {
@@ -257,6 +265,7 @@ body {
   align-items: stretch;
   gap: 0;
   border: 3px solid #FFFDF7;
+  min-width: 0;
 }
 
 .shortened-url {
@@ -420,35 +429,43 @@ body {
 nav[aria-label="Site navigation"] {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 12px;
+  justify-content: center;
+  margin-bottom: 18px;
 }
 
 .track-links-btn {
-  padding: 12px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
   border: 3px solid #FFFDF7;
   border-radius: 0;
-  background-color: #ff6600;
+  background-color: #ffe500;
   color: #000;
-  font-size: 0.825rem;
+  font-size: 0.9rem;
   font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   cursor: pointer;
-  box-shadow: 4px 4px 0px #FFFDF7;
+  box-shadow: 6px 6px 0px #ff6600;
   transition: box-shadow 0.1s ease, transform 0.1s ease;
   text-decoration: none;
 }
 
 .track-links-btn:hover {
-  box-shadow: 5px 5px 0px #FFFDF7;
-  transform: translate(-1px, -1px);
+  box-shadow: 8px 8px 0px #ff6600;
+  transform: translate(-2px, -2px);
 }
 
 .track-links-btn:active {
-  box-shadow: 2px 2px 0px #FFFDF7;
+  box-shadow: 2px 2px 0px #ff6600;
   transform: translate(2px, 2px);
+}
+
+.tracking-icon {
+  font-weight: 900;
 }
 
 .go-to-shortener-btn {
@@ -587,6 +604,13 @@ nav[aria-label="Site navigation"] {
   width: 100%;
   max-width: 520px;
   text-align: center;
+}
+
+.redirect-page-shell {
+  margin-top: 80px;
+  width: min(100%, 500px);
+  display: flex;
+  flex-direction: column;
 }
 
 .redirect-label {
@@ -819,6 +843,33 @@ nav[aria-label="Site navigation"] {
 
 .seo-steps a:hover {
   color: #ff8833;
+}
+
+.home-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 20px;
+}
+
+.home-blog-card {
+  border: 2px solid #333;
+  padding: 16px;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.home-blog-card:hover {
+  border-color: #ff6600;
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px rgba(255, 102, 0, 0.22);
+}
+
+.home-blog-card h3 {
+  color: #ff6600;
+  font-size: 1.1rem;
+  margin: 0 0 10px 0;
 }
 
 /* ---- Site Footer ---- */
@@ -1089,8 +1140,7 @@ nav[aria-label="Site navigation"] {
     border: 3px solid #FFFDF7;
     box-shadow: 8px 8px 0px #FFFDF7;
     align-items: stretch;
-    height: calc(100vh - 80px);
-    max-height: calc(100vh - 80px);
+    min-height: calc(100vh - 120px);
   }
 
   .left-panel {
@@ -1852,6 +1902,9 @@ nav[aria-label="Site navigation"] {
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .qr-result-label {
@@ -2337,4 +2390,51 @@ nav[aria-label="Site navigation"] {
 
 .contact-faq-item:hover {
   border-color: #ff6600;
+}
+
+.blog-ad-slot {
+  margin: 28px 0;
+  min-height: 320px;
+  border: 3px solid #FFFDF7;
+  background-color: #111;
+  box-shadow: 6px 6px 0px #ff6600;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-ad-slot-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 16px;
+  border-bottom: 3px solid #FFFDF7;
+  background-color: #ff6600;
+  color: #000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.blog-ad-slot-body {
+  flex: 1;
+  min-height: 280px;
+  padding: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 102, 0, 0.08), rgba(255, 102, 0, 0)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 253, 247, 0.04),
+      rgba(255, 253, 247, 0.04) 1px,
+      transparent 1px,
+      transparent 12px
+    ),
+    #1a1a1a;
+}
+
+.blog-ad-slot-body .adsbygoogle {
+  min-height: 248px;
 }

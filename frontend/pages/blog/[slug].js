@@ -2,9 +2,58 @@ import fs from 'fs';
 import path from 'path';
 import Head from 'next/head';
 import Link from 'next/link';
+import BlogAdSlot from '../../components/BlogAdSlot';
 
 export default function BlogPost({ post }) {
   if (!post) return <div style={{ color: '#FFFDF7' }}>Post not found</div>;
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    url: `https://brnk.in/blog/${post.slug}`,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: 'brnk Team',
+      url: 'https://brnk.in/about',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'brnk',
+      url: 'https://brnk.in',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://brnk.in/logo512.png',
+      },
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://brnk.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://brnk.in/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://brnk.in/blog/${post.slug}`,
+      },
+    ],
+  };
 
   return (
     <>
@@ -14,56 +63,8 @@ export default function BlogPost({ post }) {
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
         <meta property="og:type" content="article" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
-          {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "${post.title}",
-            "description": "${post.excerpt}",
-            "url": "https://brnk.in/blog/${post.slug}",
-            "datePublished": "${post.date}",
-            "author": {
-              "@type": "Person",
-              "name": "brnk Team",
-              "url": "https://brnk.in/about"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "brnk",
-              "url": "https://brnk.in",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://brnk.in/logo512.png"
-              }
-            }
-          }
-        `}} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://brnk.in"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog",
-                "item": "https://brnk.in/blog"
-              },
-              {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "${post.title}",
-                "item": "https://brnk.in/blog/${post.slug}"
-              }
-            ]
-          }
-        `}} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       </Head>
       <article className="form-container" style={{ marginTop: '24px', maxWidth: '800px', width: '100%', lineHeight: '1.8' }}>
         <header style={{ marginBottom: '30px', borderBottom: '3px solid #ff6600', paddingBottom: '20px' }}>
@@ -78,10 +79,7 @@ export default function BlogPost({ post }) {
           <p style={{ color: '#a8a8a8', marginTop: '10px' }}>Published on {post.date} • By brnk Team</p>
         </header>
 
-        {/* Ad Placeholder Top */}
-        <div style={{ margin: '20px 0', padding: '10px', border: '1px dashed #a8a8a8', textAlign: 'center', color: '#a8a8a8' }}>
-          <small>Ad Placement</small>
-        </div>
+        <BlogAdSlot className="blog-ad-slot-top" />
 
         <div 
           className="blog-content"
@@ -89,16 +87,14 @@ export default function BlogPost({ post }) {
           dangerouslySetInnerHTML={{ __html: post.content }} 
         />
 
-        {/* Ad Placeholder Bottom */}
-        <div style={{ margin: '40px 0', padding: '10px', border: '1px dashed #a8a8a8', textAlign: 'center', color: '#a8a8a8' }}>
-          <small>Ad Placement</small>
-        </div>
+        <BlogAdSlot className="blog-ad-slot-bottom" />
       </article>
       
       <style jsx global>{`
-        .blog-content h2 { margin-top: 40px; margin-bottom: 20px; font-size: 1.5rem; color: '#ff6600'; }
+        .blog-content h2 { margin-top: 40px; margin-bottom: 20px; font-size: 1.5rem; color: #ff6600; }
         .blog-content h3 { margin-top: 30px; margin-bottom: 15px; font-size: 1.25rem; }
         .blog-content p { margin-bottom: 20px; }
+        .blog-content img { display: block; max-width: 100% !important; width: auto; height: auto !important; max-height: 420px; object-fit: contain; margin: 24px auto; border-radius: 8px; }
         .blog-content ul, .blog-content ol { margin-left: 20px; margin-bottom: 20px; }
         .blog-content li { margin-bottom: 10px; }
         .blog-content a { color: #ff6600; text-decoration: underline; font-weight: bold; }

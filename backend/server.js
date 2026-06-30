@@ -29,10 +29,20 @@ app.use((req, res, next) => {
   next();
 });
 
+function parseAllowedOrigins(value) {
+  if (!value) return '*';
+  const origins = value
+    .split(',')
+    .map(origin => origin.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+  return origins.length <= 1 ? origins[0] : origins;
+}
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : '*',
+  origin: parseAllowedOrigins(process.env.FRONTEND_URL),
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'X-API-Key', 'X-Captcha-Token', 'Authorization'],
+  exposedHeaders: ['X-API-Version'],
 };
 
 app.options('*', cors(corsOptions));

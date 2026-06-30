@@ -3,9 +3,14 @@ import { useState } from 'react';
 
 export default function Report() {
   const [status, setStatus] = useState('');
+  const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!web3FormsAccessKey) {
+      setStatus('Report form is not configured. Please email abuse details directly to hello@brnk.in.');
+      return;
+    }
     setStatus('Submitting report...');
     
     const formData = new FormData(e.target);
@@ -60,7 +65,7 @@ export default function Report() {
 
         <div style={{ padding: '20px', border: '3px solid #ff6600', backgroundColor: '#1a1a1a', marginBottom: '30px' }}>
           <form onSubmit={handleSubmit} className="form">
-            <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="access_key" value={web3FormsAccessKey} />
             <input type="hidden" name="subject" value="URGENT: Abuse Report for brnk.in" />
             <input type="checkbox" name="botcheck" id="" style={{ display: 'none' }} />
 

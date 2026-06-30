@@ -1,15 +1,21 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 function TrackingPage() {
   const router = useRouter();
-  const [urlCode, setUrlCode] = useState(router.query.q || '');
+  const [urlCode, setUrlCode] = useState('');
   const [trackingData, setTrackingData] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const queryValue = Array.isArray(router.query.q) ? router.query.q[0] : router.query.q;
+    if (queryValue) setUrlCode(queryValue);
+  }, [router.isReady, router.query.q]);
 
   const handleInputChange = (event) => {
     setUrlCode(event.target.value);
@@ -45,13 +51,17 @@ function TrackingPage() {
 
     const code = extractShortCode(urlCode);
 
+    if (!/^[a-zA-Z0-9_-]+$/.test(code)) {
+      setTrackingData(null);
+      setError('Please enter a valid shortened URL code.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://back.brnk.in').replace(/\/+$/, '');
-      console.log(`[DEBUG-FRONTEND] track: sending request to ${apiUrl}/track/${code}`);
-      const response = await fetch(`${apiUrl}/track/${code}`);
-      console.log('[DEBUG-FRONTEND] track: response status =', response.status);
+      const apiUrl = (process.env.NEXT_PUBLIC_CLIENT_API_URL || '/api').replace(/\/+$/, '');
+      const response = await fetch(`${apiUrl}/track/${encodeURIComponent(code)}`);
       const data = await response.json();
-      console.log('[DEBUG-FRONTEND] track: response data =', data);
 
       if (response.ok) {
         setTrackingData(data);
@@ -61,7 +71,7 @@ function TrackingPage() {
         setError(data.error || 'Failed to track the URL.');
       }
     } catch (err) {
-      console.error('[DEBUG-FRONTEND] track error:', err);
+      console.error('Error tracking URL:', err);
       setTrackingData(null);
       setError('An error occurred. Please try again.');
     } finally {
@@ -97,7 +107,7 @@ function TrackingPage() {
         <meta name="twitter:description" content="Track clicks and view analytics for your brnk shortened URLs. Enter your short code to see click counts, creation date, and expiration details." />
         <meta name="twitter:image" content="https://brnk.in/logo512.png" />
         <meta name="twitter:image:alt" content="brnk URL analytics dashboard logo" />
-        <script type="application/ld+json">{`
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
           {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
@@ -116,8 +126,8 @@ function TrackingPage() {
               }
             ]
           }
-        `}</script>
-        <script type="application/ld+json">{`
+        `}} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
@@ -130,7 +140,7 @@ function TrackingPage() {
               "url": "https://brnk.in/"
             }
           }
-        `}</script>
+        `}} />
       </Head>
       <nav aria-label="Site navigation">
         <Link href="/" className="track-links-btn">
