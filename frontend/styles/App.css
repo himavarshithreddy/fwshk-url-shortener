@@ -2,6 +2,16 @@
    NEO BRUTALISM — brnk URL Shortener
    ========================================= */
 
+/* Force strict box model and permanent scrollbar to prevent ANY layout jumps */
+*, *::before, *::after {
+  box-sizing: border-box !important;
+}
+
+body {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+}
+
 /* Screen-reader only utility — visually hidden but accessible to assistive technology */
 .sr-only {
   position: absolute;
@@ -240,13 +250,13 @@ body {
 
 .result {
   margin-top: 28px;
+  padding: 22px;
   background-color: #242424;
   border: 3px solid #FFFDF7;
   box-shadow: 8px 8px 0px #FFFDF7;
   width: 100%;
   min-width: 0;
   overflow: hidden;
-  padding: 0;
 }
 
 @media (max-width: 640px) {
@@ -1283,6 +1293,9 @@ nav[aria-label="Site navigation"] {
   background-color: #242424;
   animation: loader-shake 0.11s steps(3) infinite;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 @keyframes loader-shake {
@@ -1302,6 +1315,7 @@ nav[aria-label="Site navigation"] {
   background-color: #1a1a1a;
   min-width: 0;
   width: 100%;
+  max-width: 100%;
 }
 
 .loader-url-text {
