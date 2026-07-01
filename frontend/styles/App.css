@@ -1169,13 +1169,17 @@ nav[aria-label="Site navigation"] {
     overflow-x: hidden;
   }
 
-  .right-panel .result {
-    margin-top: 0;
-    box-shadow: none !important;
-    border: none !important;
-    background-color: transparent !important;
-    min-height: unset;
+  .right-panel .result,
+  .right-panel .qr-result,
+  .right-panel .brnk-loader {
+    margin: 0 !important;
     padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    min-height: unset !important;
+    height: auto !important;
+    width: 100% !important;
   }
 
   .empty-state {
@@ -1673,14 +1677,7 @@ nav[aria-label="Site navigation"] {
     min-height: unset;
   }
 
-  .right-panel .qr-result {
-    margin-top: 0;
-    box-shadow: none !important;
-    border: none !important;
-    background-color: transparent !important;
-    padding: 0 !important;
-    min-height: unset;
-  }
+
 }
 
 /* ======================================================
