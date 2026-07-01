@@ -70,8 +70,9 @@ export default function About() {
 
         <section style={{ marginBottom: '24px' }}>
           <h2>Meet the Team</h2>
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center', backgroundColor: '#1a1a1a', padding: '24px', border: '3px solid #ff6600', borderRadius: '8px' }}>
+          <div className="about-team-box">
             <img src="/logo192.png" alt="brnk Team Logo" style={{ width: '80px', height: '80px' }} />
+
             <div>
               <h3 style={{ margin: '0 0 8px 0', color: '#ff6600' }}>The brnk Developers</h3>
               <p style={{ margin: '0', fontSize: '0.95rem' }}>We are a small, passionate group of web developers and digital marketers dedicated to building fast, privacy-first tools for the modern web. We were tired of clunky, ad-infested URL shorteners, so we built the tool we wanted to use ourselves.</p>

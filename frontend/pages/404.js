@@ -9,7 +9,7 @@ export default function Custom404() {
         <title>404 - Page Not Found | brnk.in</title>
         <meta name="description" content="The page you're looking for doesn't exist or has been moved." />
       </Head>
-      <main className="form-container" style={{ textAlign: 'center', padding: '60px 20px', minHeight: '60vh' }}>
+      <div className="form-container" style={{ textAlign: 'center', padding: '60px 20px', minHeight: '60vh' }}>
         <h1 className="title" style={{ fontSize: '3rem', marginBottom: '20px' }}>Page Not Found</h1>
         <p className="subtitle" style={{ fontSize: '1.2rem', marginBottom: '40px', maxWidth: '600px', margin: '0 auto 40px auto' }}>
           The page you're looking for doesn't exist or has been moved. 
@@ -34,7 +34,7 @@ export default function Custom404() {
             <li><Link href="/contact" style={{ color: '#FFFDF7', textDecoration: 'underline' }}>Contact Support</Link></li>
           </ul>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -3,19 +3,8 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer style={{
-      width: '100%',
-      padding: '40px 20px',
-      borderTop: '3px solid #333',
-      backgroundColor: '#111',
-      marginTop: '60px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '30px',
-      color: '#e0e0e0'
-    }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px', width: '100%', maxWidth: '1000px', paddingBottom: '30px', borderBottom: '1px solid #333' }}>
+    <footer className="site-footer">
+      <div className="footer-grid">
         
         <div>
           <h3 style={{ color: '#ff6600', marginBottom: '15px', fontSize: '1.2rem' }}>brnk.in</h3>

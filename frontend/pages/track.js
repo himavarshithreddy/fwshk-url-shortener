@@ -142,7 +142,7 @@ function TrackingPage() {
           }
         `}} />
       </Head>
-      <main className="form-container">
+      <div className="form-container">
         <header>
           <h1 className="title">Track Your brnk URL</h1>
           <p className="subtitle">Enter your shortened URL code to view click analytics and link details</p>
@@ -243,7 +243,7 @@ function TrackingPage() {
             )}
           </section>
         )}
-      </main>
+      </div>
 
     </div>
   );

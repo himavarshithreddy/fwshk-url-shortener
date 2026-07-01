@@ -711,7 +711,8 @@ function Main() {
           }
         `}} />
       </Head>
-      <main className="main-layout">
+      <section className="main-layout" aria-label="URL Shortener Dashboard">
+
         {/* Left panel — branding + form */}
         <section className="left-panel" aria-label="URL shortener form">
           <header className="app-header">
@@ -1010,7 +1011,7 @@ function Main() {
             </div>
           )}
         </section>
-      </main>
+      </section>
 
       {/* Link History */}
       {linkHistory.length > 0 && (

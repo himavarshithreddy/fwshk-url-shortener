@@ -4,9 +4,9 @@ import Footer from './Footer';
 
 const Layout = ({ children }) => {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="layout-container" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#1a1a1a', color: '#FFFDF7' }}>
       <Header />
-      <main style={{ flex: 1, width: '100%', padding: '0 20px' }}>
+      <main className="layout-main">
         {children}
       </main>
       <Footer />

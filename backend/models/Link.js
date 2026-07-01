@@ -4,8 +4,7 @@ let redis;
 
 if (
   process.env.UPSTASH_REDIS_REST_URL &&
-  process.env.UPSTASH_REDIS_REST_TOKEN &&
-  !process.env.UPSTASH_REDIS_REST_URL.includes('great-chamois-9278.upstash.io')
+  process.env.UPSTASH_REDIS_REST_TOKEN
 ) {
   try {
     redis = new Redis({
