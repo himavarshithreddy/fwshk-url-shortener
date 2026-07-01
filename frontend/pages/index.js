@@ -896,9 +896,6 @@ function Main() {
             </button>
           </form>
           {error && <p className="error-message" role="alert">{error}</p>}
-          <div className="track-helper-container">
-            Already have a short link? <Link href="/track" className="track-helper-link">Track its clicks →</Link>
-          </div>
         </section>
 
         {/* Right panel — result / loader */}

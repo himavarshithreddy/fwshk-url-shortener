@@ -19,12 +19,27 @@ const Header = () => {
           <h1 className="title" style={{ fontSize: '1.5rem', cursor: 'pointer' }}>brnk.in</h1>
         </Link>
       </div>
-      <nav style={{ display: 'flex', gap: '20px' }}>
+      <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
         <Link href="/" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Home</Link>
-        <Link href="/track" style={{ color: '#ff6600', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Track Link</Link>
         <Link href="/blog" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Blog</Link>
         <Link href="/about" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>About</Link>
         <Link href="/contact" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Contact</Link>
+        <Link href="/track" style={{
+          backgroundColor: '#ff6600',
+          color: '#000',
+          padding: '8px 16px',
+          border: '2px solid #FFFDF7',
+          boxShadow: '3px 3px 0px #FFFDF7',
+          textDecoration: 'none',
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          fontSize: '0.9rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          transition: 'transform 0.1s ease, box-shadow 0.1s ease'
+        }}>
+          Track Link
+        </Link>
       </nav>
     </header>
   );
