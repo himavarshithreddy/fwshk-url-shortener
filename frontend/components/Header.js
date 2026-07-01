@@ -1,7 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter();
+  const isTrackPage = router.pathname === '/track';
+
   return (
     <header style={{
       width: '100%',
@@ -24,7 +28,8 @@ const Header = () => {
         <Link href="/blog" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Blog</Link>
         <Link href="/about" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>About</Link>
         <Link href="/contact" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Contact</Link>
-        <Link href="/track" style={{
+        
+        <Link href={isTrackPage ? "/" : "/track"} style={{
           backgroundColor: '#ff6600',
           color: '#000',
           padding: '8px 16px',
@@ -38,7 +43,7 @@ const Header = () => {
           alignItems: 'center',
           transition: 'transform 0.1s ease, box-shadow 0.1s ease'
         }}>
-          Track Link
+          {isTrackPage ? "← Shorten a URL" : "Track Link"}
         </Link>
       </nav>
     </header>

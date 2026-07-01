@@ -12,6 +12,13 @@ body {
   overflow-x: hidden !important;
 }
 
+/* Global container for centering auxiliary pages */
+.form-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 /* Screen-reader only utility — visually hidden but accessible to assistive technology */
 .sr-only {
   position: absolute;
@@ -1179,18 +1186,6 @@ nav[aria-label="Site navigation"] {
     overflow-x: hidden;
   }
 
-  .right-panel .result,
-  .right-panel .qr-result,
-  .right-panel .brnk-loader {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-    background-color: transparent !important;
-    min-height: unset !important;
-    height: auto !important;
-    width: 100% !important;
-  }
 
   .empty-state {
     display: flex;

@@ -142,11 +142,6 @@ function TrackingPage() {
           }
         `}} />
       </Head>
-      <nav aria-label="Site navigation">
-        <Link href="/" className="track-links-btn">
-          ← Shorten a URL
-        </Link>
-      </nav>
       <main className="form-container">
         <header>
           <h1 className="title">Track Your brnk URL</h1>
