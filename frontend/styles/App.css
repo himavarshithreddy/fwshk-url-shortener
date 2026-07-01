@@ -50,10 +50,12 @@ body {
 
 /* Two-column layout for the main page */
 .main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   width: 100%;
   max-width: 500px;
-  display: flex;
-  flex-direction: column;
+  margin: 0 auto;
+  gap: 24px;
 }
 
 .left-panel {
@@ -66,13 +68,9 @@ body {
 
 .right-panel {
   width: 100%;
-  margin-top: 24px;
   overflow: hidden;
-}
-
-.right-panel > * {
-  width: 100%;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Placeholder shown when no URL has been shortened yet */
@@ -928,9 +926,9 @@ nav[aria-label="Site navigation"] {
 /* ---- Link History Section ---- */
 
 .history-section {
-  max-width: 500px;
   width: 100%;
-  margin-top: 36px;
+  max-width: 500px;
+  margin: 36px auto 0 auto;
 }
 
 .history-header {
@@ -1139,38 +1137,36 @@ nav[aria-label="Site navigation"] {
   }
 
   .main-layout {
-    flex: 1;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0;
     width: 100%;
     max-width: 1100px;
+    margin: 0 auto;
     border: 3px solid #FFFDF7;
     box-shadow: 8px 8px 0px #FFFDF7;
-    align-items: stretch;
     min-height: calc(100vh - 120px);
   }
 
   .left-panel {
-    flex: 1;
     border: none;
     border-right: 3px solid #FFFDF7;
     box-shadow: none;
-    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .right-panel {
-    flex: 1;
-    margin-top: 0;
     background-color: #1a1a1a;
     padding: 20px 40px;
-    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .right-panel .result {
@@ -1227,6 +1223,7 @@ nav[aria-label="Site navigation"] {
   box-shadow: 8px 8px 0px #FFFDF7;
   min-height: 280px;
   min-width: 0;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -1244,6 +1241,7 @@ nav[aria-label="Site navigation"] {
   overflow: hidden;
   flex-shrink: 0;
   min-width: 0;
+  width: 100%;
 }
 
 .loader-ticker-inner {
@@ -1299,6 +1297,7 @@ nav[aria-label="Site navigation"] {
   padding: 7px 10px;
   background-color: #1a1a1a;
   min-width: 0;
+  width: 100%;
 }
 
 .loader-url-text {
