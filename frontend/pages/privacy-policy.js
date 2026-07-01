@@ -7,7 +7,7 @@ export default function PrivacyPolicy() {
         <title>Privacy Policy - brnk.in</title>
         <meta name="description" content="Privacy Policy for brnk.in URL shortener." />
       </Head>
-      <div className="form-container" style={{ marginTop: '24px', maxWidth: '800px', lineHeight: '1.6' }}>
+      <div className="form-container" style={{ marginTop: '24px', lineHeight: '1.6' }}>
         <header style={{ marginBottom: '24px' }}>
           <h1 className="title">Privacy Policy</h1>
           <p className="subtitle">Last Updated: October 2025</p>

@@ -66,7 +66,7 @@ export default function BlogPost({ post }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       </Head>
-      <article className="form-container" style={{ marginTop: '24px', maxWidth: '800px', width: '100%', lineHeight: '1.8' }}>
+      <article className="form-container" style={{ marginTop: '24px', lineHeight: '1.8' }}>
         <header style={{ marginBottom: '30px', borderBottom: '3px solid #ff6600', paddingBottom: '20px' }}>
           <nav aria-label="Breadcrumb" style={{ marginBottom: '15px', color: '#a8a8a8', fontSize: '0.85rem', fontWeight: 'bold' }}>
             <Link href="/" style={{ color: '#ff6600', textDecoration: 'none' }}>Home</Link>

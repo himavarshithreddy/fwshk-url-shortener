@@ -21,6 +21,7 @@ const Header = () => {
       </div>
       <nav style={{ display: 'flex', gap: '20px' }}>
         <Link href="/" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Home</Link>
+        <Link href="/track" style={{ color: '#ff6600', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Track Link</Link>
         <Link href="/blog" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Blog</Link>
         <Link href="/about" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>About</Link>
         <Link href="/contact" style={{ color: '#FFFDF7', textDecoration: 'none', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.9rem' }}>Contact</Link>

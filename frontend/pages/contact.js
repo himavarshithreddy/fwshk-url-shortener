@@ -40,7 +40,7 @@ export default function Contact() {
         <title>Contact Us - brnk.in</title>
         <meta name="description" content="Contact the brnk.in team for support, feature requests, or business inquiries." />
       </Head>
-      <div className="form-container" style={{ marginTop: '24px', maxWidth: '600px', width: '100%' }}>
+      <div className="form-container" style={{ marginTop: '24px' }}>
         <header style={{ marginBottom: '24px', textAlign: 'center' }}>
           <h1 className="title">Contact Us</h1>
           <p className="subtitle" style={{ marginTop: '10px' }}>

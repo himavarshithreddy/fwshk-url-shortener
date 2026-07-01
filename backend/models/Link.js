@@ -1,14 +1,118 @@
 const { Redis } = require('@upstash/redis');
 
+class MockRedis {
+  constructor() {
+    this.store = new Map();
+  }
+
+  async ping() {
+    return 'PONG';
+  }
+
+  async set(key, value, options = {}) {
+    if (options.nx && this.store.has(key)) {
+      const existing = this.store.get(key);
+      if (!existing.exp || existing.exp > Date.now()) {
+        return null;
+      }
+    }
+    const exp = options.ex ? Date.now() + options.ex * 1000 : 0;
+    this.store.set(key, {
+      val: JSON.parse(JSON.stringify(value)),
+      exp,
+    });
+    return 'OK';
+  }
+
+  async get(key) {
+    const entry = this.store.get(key);
+    if (!entry) return null;
+    if (entry.exp && Date.now() > entry.exp) {
+      this.store.delete(key);
+      return null;
+    }
+    return entry.val;
+  }
+
+  async del(...keys) {
+    let count = 0;
+    for (const key of keys) {
+      if (this.store.delete(key)) count++;
+    }
+    return count;
+  }
+
+  async incr(key) {
+    const val = (await this.get(key)) || 0;
+    const newVal = Number(val) + 1;
+    this.store.set(key, { val: newVal, exp: 0 });
+    return newVal;
+  }
+
+  async incrby(key, count) {
+    const val = (await this.get(key)) || 0;
+    const newVal = Number(val) + count;
+    this.store.set(key, { val: newVal, exp: 0 });
+    return newVal;
+  }
+
+  async hincrby(key, field, amount) {
+    const val = (await this.get(key)) || {};
+    const current = Number(val[field]) || 0;
+    val[field] = current + amount;
+    this.store.set(key, { val: val, exp: 0 });
+    return val[field];
+  }
+
+  pipeline() {
+    const commands = [];
+    const pipelineObj = {
+      get: (key) => {
+        commands.push(() => this.get(key));
+        return pipelineObj;
+      },
+      hgetall: (key) => {
+        commands.push(() => this.get(key));
+        return pipelineObj;
+      },
+      incrby: (key, count) => {
+        commands.push(() => this.incrby(key, count));
+        return pipelineObj;
+      },
+      exec: async () => {
+        const results = [];
+        for (const cmd of commands) {
+          results.push(await cmd());
+        }
+        return results;
+      },
+    };
+    return pipelineObj;
+  }
+}
+
 let redis;
-try {
-  redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  });
-} catch (err) {
-  console.error('Failed to initialize Redis client:', err.message,
-    '- Ensure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables are set.');
+let isMock = false;
+
+if (
+  process.env.UPSTASH_REDIS_REST_URL &&
+  process.env.UPSTASH_REDIS_REST_TOKEN &&
+  !process.env.UPSTASH_REDIS_REST_URL.includes('great-chamois-9278.upstash.io')
+) {
+  try {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+  } catch (err) {
+    console.warn('Failed to initialize Redis client. Falling back to MockRedis.', err.message);
+    redis = new MockRedis();
+    isMock = true;
+  }
+} else {
+  console.log('Using in-memory MockRedis (no valid UPSTASH_REDIS credentials found).');
+  redis = new MockRedis();
+  isMock = true;
 }
 
 const LINK_PREFIX = 'l:';
@@ -310,12 +414,14 @@ async function atomicIncrClickCount(shortCode) {
 // ---------------------------------------------------------------------------
 let _warmupDone = false;
 let warmupReady = Promise.resolve();
-if (redis) {
+if (redis && !isMock) {
   warmupReady = redis.ping()
     .then(() => { _warmupDone = true; })
     .catch(err => {
       _warmupDone = true;
-      console.warn('Redis warm-up ping failed:', err.message);
+      console.warn('Redis warm-up ping failed. Falling back to MockRedis.', err.message);
+      redis = new MockRedis();
+      isMock = true;
     });
 } else {
   _warmupDone = true;

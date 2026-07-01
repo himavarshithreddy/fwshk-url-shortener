@@ -13,11 +13,17 @@ export async function getServerSideProps(context) {
     const res = await fetch(`${apiUrl}/link-info/${encodeURIComponent(shortCode)}`);
     const data = await res.json();
 
-    if (res.ok && data.originalUrl && !data.passwordProtected && !data.showWarning) {
+    if (
+      res.ok &&
+      data.originalUrl &&
+      !data.passwordProtected &&
+      !data.showWarning &&
+      (data.redirectType === '308' || data.redirectType === '301')
+    ) {
       return {
         redirect: {
           destination: data.originalUrl,
-          permanent: data.redirectType === '308' || data.redirectType === '301',
+          permanent: true,
         },
       };
     }

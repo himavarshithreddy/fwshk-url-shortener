@@ -1,13 +1,14 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const dotenv = require('dotenv');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const linkRoutes = require('./routes/linkRoutes');
 const { proxyDetection } = require('./middleware/security');
 
-dotenv.config();
 
 const app = express();
 

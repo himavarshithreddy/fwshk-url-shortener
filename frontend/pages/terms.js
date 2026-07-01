@@ -7,7 +7,7 @@ export default function TermsOfService() {
         <title>Terms of Service - brnk.in</title>
         <meta name="description" content="Terms of Service for brnk.in URL shortener." />
       </Head>
-      <div className="form-container" style={{ marginTop: '24px', maxWidth: '800px', lineHeight: '1.6' }}>
+      <div className="form-container" style={{ marginTop: '24px', lineHeight: '1.6' }}>
         <header style={{ marginBottom: '24px' }}>
           <h1 className="title">Terms of Service</h1>
           <p className="subtitle">Last Updated: October 2025</p>

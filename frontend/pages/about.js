@@ -7,7 +7,7 @@ export default function About() {
         <title>About Us - brnk.in</title>
         <meta name="description" content="Learn about brnk.in, the minimalist URL shortener and QR code generator." />
       </Head>
-      <div className="form-container" style={{ marginTop: '24px', maxWidth: '800px', lineHeight: '1.6' }}>
+      <div className="form-container" style={{ marginTop: '24px', lineHeight: '1.6' }}>
         <header style={{ marginBottom: '24px' }}>
           <h1 className="title">About brnk.in</h1>
           <p className="subtitle">Putting your URLs on a diet.</p>

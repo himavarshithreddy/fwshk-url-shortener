@@ -300,6 +300,13 @@ function Main() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // Force redirectType to 302 if selfDestruct, usePassword, or maxClicks is active
+  useEffect(() => {
+    if (selfDestruct || usePassword || (maxClicks && maxClicks !== '')) {
+      setRedirectType('302');
+    }
+  }, [selfDestruct, usePassword, maxClicks]);
+
   // ---------------------------------------------------------------------------
   // Link history — persisted in localStorage
   // ---------------------------------------------------------------------------
@@ -704,12 +711,6 @@ function Main() {
           }
         `}} />
       </Head>
-      <nav aria-label="Site navigation">
-        <Link href="/track" className="track-links-btn">
-          <span className="tracking-icon">→</span>
-          Track a Link
-        </Link>
-      </nav>
       <main className="main-layout">
         {/* Left panel — branding + form */}
         <section className="left-panel" aria-label="URL shortener form">
@@ -816,6 +817,8 @@ function Main() {
                   className="ttl-select"
                   value={redirectType}
                   onChange={(e) => setRedirectType(e.target.value)}
+                  disabled={selfDestruct || usePassword || (maxClicks && maxClicks !== '')}
+                  title={selfDestruct || usePassword || (maxClicks && maxClicks !== '') ? "Redirect type is locked to 302 because an advanced feature (Self Destruct, Password, or Max Clicks) is enabled." : undefined}
                 >
                   <option value="301">Permanent (301)</option>
                   <option value="308">Permanent (308)</option>
@@ -893,6 +896,9 @@ function Main() {
             </button>
           </form>
           {error && <p className="error-message" role="alert">{error}</p>}
+          <div className="track-helper-container">
+            Already have a short link? <Link href="/track" className="track-helper-link">Track its clicks →</Link>
+          </div>
         </section>
 
         {/* Right panel — result / loader */}

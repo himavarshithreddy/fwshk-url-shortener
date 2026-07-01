@@ -40,7 +40,7 @@ export default function Report() {
         <title>Report Abuse - brnk.in</title>
         <meta name="description" content="Report malicious links, spam, or copyright infringement to the brnk.in trust and safety team." />
       </Head>
-      <div className="form-container" style={{ marginTop: '24px', maxWidth: '800px', lineHeight: '1.6' }}>
+      <div className="form-container" style={{ marginTop: '24px', lineHeight: '1.6' }}>
         <header style={{ marginBottom: '24px', textAlign: 'center' }}>
           <h1 className="title">Report Abuse</h1>
           <p className="subtitle" style={{ marginTop: '10px' }}>

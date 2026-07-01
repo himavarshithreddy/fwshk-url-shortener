@@ -10,7 +10,7 @@ export default function BlogIndex({ posts }) {
         <title>brnk.in Blog - URL Shortening Tips & Guides</title>
         <meta name="description" content="Learn everything about URL shorteners, link tracking, QR codes, and marketing strategies on the brnk.in blog." />
       </Head>
-      <div className="form-container" style={{ marginTop: '24px', maxWidth: '800px', width: '100%' }}>
+      <div className="form-container" style={{ marginTop: '24px' }}>
         <header style={{ marginBottom: '40px', textAlign: 'center' }}>
           <h1 className="title">brnk.in Blog</h1>
           <p className="subtitle" style={{ marginTop: '10px' }}>Tips, guides, and tutorials for mastering your links.</p>
