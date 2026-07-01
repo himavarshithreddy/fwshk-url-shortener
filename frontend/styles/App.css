@@ -1174,8 +1174,8 @@ nav[aria-label="Site navigation"] {
     box-shadow: none !important;
     border: none !important;
     background-color: transparent !important;
-    height: 100%;
     min-height: unset;
+    padding: 0 !important;
   }
 
   .empty-state {
@@ -1678,7 +1678,7 @@ nav[aria-label="Site navigation"] {
     box-shadow: none !important;
     border: none !important;
     background-color: transparent !important;
-    height: 100%;
+    padding: 0 !important;
     min-height: unset;
   }
 }
